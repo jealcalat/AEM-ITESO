@@ -96,7 +96,8 @@ Tarea 1:
 3. Calcular los estadísticos descriptivos para la variable alcohol. Separarlos por estadísticos de tendencia central y de dispersión. Nota: ver cómo seleccioné una variable en el ejercicio de Iris.
 4. Obtener una matriz de correlaciones de todas las variables numéricas excepto `quality`.
 5. Ordenar en orden descendente las correlaciones con respecto a `density`.
-6. Seleccionar aquellas variables cuyo valor absoluto de correlación con respecto a `density` sea mayor o igual a 0.4
+6. Seleccionar aquellas variables cuyo valor absoluto de correlación con respecto a `density` sea mayor o igual a 0.4.
+7. ¿De qué variables depende (linealmente) *más* la densidad?
 
 Para la entrega de tareas, usar la plantilla de RMarkdown de la sección Documentos reproducibles con [RMarkdown](#documentos-reproducibles-con-rmarkdown).
 
