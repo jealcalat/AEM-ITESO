@@ -1,4 +1,3 @@
-
 # Análisis Estadístico Multivariable
 
 Curso de la maestría en ciencia de datos (MCD) del ITESO.
@@ -12,6 +11,7 @@ Fin: 15 de mayo de 2023
 **Asesorías**: solicitar cita.
 
 ---
+
 **Contenido**
 
 - [Análisis Estadístico Multivariable](#análisis-estadístico-multivariable)
@@ -39,53 +39,55 @@ Para ver el calendario del curso, revisa el siguiente enlace: [Calendario del cu
 
 Algunos recursos que he ido recopilando, como una recomendación que han hecho los propios alumnos, se encuentran en [Lecturas y recursos recomendados](lecturas_recursos.md). Estos mismos recursos y lecturas pueden ser usados para sus presentaciones.
 
-
 ## Temas del curso
 
 1. Variables aleatorias multivariadas
+
    1. [Correlaciónes y covarianzas](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/1_variables_aleatorias_multivariadas/1.1_correlaciones_covarianzas.ipynb)
 
 2. Modelos de distribución multivariados
+
    1. [Funciones de distribución y densidad](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/2_modelos_multivariados/2.1_funciones_distribucion_densidad.ipynb)
    2. [Distribucion multinormal](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/2_modelos_multivariados/2.2_distribucion_multinormal.ipynb)
 
 3. Teoría de la estimación
+
    1. [Función de verosimilitud](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/3_teoria_de_estimacion/3.1_funcion_verosimilitud.ipynb)
    2. [Prueba de verosimilitud](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/3_teoria_de_estimacion/3.2_prueba_verosimilitud.ipynb)
    3. [Prueba de hipótesis lineal (regresión lineal)](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/3_teoria_de_estimacion/3.3_prueba_hipotesis_lineal.ipynb)
    4. [Regresión logística](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/3_teoria_de_estimacion/3.4_regresion_logistica.ipynb)
 
 4. Técnicas multivariadas
+
    1. [ANOVA, MANOVA, ANCOVA](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/4_tecnicas_multivariadas/4.1_anova_manova_ancova.ipynb)
    2. [Modelos log-lineal](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/4_tecnicas_multivariadas/4.2_modelos_log-lineal.ipynb)
    3. [Selección de variables](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/4_tecnicas_multivariadas/4.3_seleccion_de_variables)
 
 5. Descomposición de datos y técnicas de análisis
+
    1. [Análisis de componentes principales](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/5_descomposicion_datos_tecnicas/5.1_analisis_de_componentes_principales.ipynb)
    2. [Análisis factorial](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/5_descomposicion_datos_tecnicas/5.2_analisis_factorial.ipynb)
    3. [Análisis de clúster](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/5_descomposicion_datos_tecnicas/5.3_analisis_de_cluster.ipynb)
    4. [Modelos de Mezclas Gaussianas]()
    5. [Análisis discriminante](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/5_descomposicion_datos_tecnicas/5.4_analisis_discriminante.ipynb)
 
-6. Aplicaciones
-
 ---
+
 ## Bibliografía
 
-- [*Applied Multivariate Statistical Analysis*](https://link.springer.com/content/pdf/10.1007/978-3-662-45171-7.pdf). Wolfgang H. and Simar. L. Springer, 2015
-- *Applied Multivariate Statistical Concepts*. Hahs-Vaughn, D. Editorial Routledge, 2016.
-- [*Applied Multivariate Statistics with R*](https://web.uniroma1.it/memotef/sites/default/files/file%20lezioni/102b_textbook.pdf). Zelterman, D. Editorial Springer, 2015.
+- [_Applied Multivariate Statistical Analysis_](https://link.springer.com/content/pdf/10.1007/978-3-662-45171-7.pdf). Wolfgang H. and Simar. L. Springer, 2015
+- _Applied Multivariate Statistical Concepts_. Hahs-Vaughn, D. Editorial Routledge, 2016.
+- [_Applied Multivariate Statistics with R_](https://web.uniroma1.it/memotef/sites/default/files/file%20lezioni/102b_textbook.pdf). Zelterman, D. Editorial Springer, 2015.
 
 ## Evaluación
 
-| RUBROS                                                    | PORCENTAJE |
-| --------------------------------------------------------- | ---------- |
-| 1. [Tareas](#tareas)                                      | 30%        |
-| 2. [Participación en clase](#participación-en-clase)      | 15%        |
-| 3. [Proyectos (Solución de casos de estudio)](#proyectos) | 25%        |
-| 4. [Exámenes](#exámenes)                                  | 30%        |
-| Total                                                     | 100%       |
-
+| RUBROS                                            | PORCENTAJE |
+| ------------------------------------------------- | ---------- |
+| 1. [Tareas. Una por tema](#tareas)                | 50%        |
+| 2. [Exposición en grupo](#participación-en-clase) | 15%        |
+| 3. [Proyecto final](#proyectos)                   | 25%        |
+| 4. [Quizzes. Al final de cada tema.](#exámenes)   | 10%        |
+| Total                                             | 100%       |
 
 ### Tareas
 
@@ -97,7 +99,7 @@ Tarea 1:
 4. Obtener una matriz de correlaciones de todas las variables numéricas excepto `quality`.
 5. Ordenar en orden descendente las correlaciones con respecto a `density`.
 6. Seleccionar aquellas variables cuyo valor absoluto de correlación con respecto a `density` sea mayor o igual a 0.4.
-7. ¿De qué variables depende (linealmente) *más* la densidad?
+7. ¿De qué variables depende (linealmente) _más_ la densidad?
 
 Para la entrega de tareas, usar la plantilla de RMarkdown de la sección Documentos reproducibles con [RMarkdown](#documentos-reproducibles-con-rmarkdown).
 
@@ -115,22 +117,23 @@ La participación en clase se evaluará con exposiciones grupales, una exposici�
 Organización sugerida de las exposiciones:
 
 **Regresión logística**
+
 1. Modelos lineales generalizados (énfasis en función de enlace).
 2. Implementación y diagnóstico de modelo de regresión logística en R/Python.
 3. Interpretación de resultados (efectos marginales, odds ratio, intervalos de confianza, etc).
-   
+
 **PCA**
+
 1. Estructura matemática (combinación lineal).
 2. Método de obtención con factorización matricial.
 3. Implementación e interpretación en R/Python
-
 
 ### Proyectos
 
 Resolver un caso de estudio escogiendo alguno de los temas de las unidades 3, 4 y 5. Los proyectos son individuales y deben entregarse también según la estructura que se les pida; pueden usar[RMarkdown](#documentos-reproducibles-con-rmarkdown). Deberán tener las siguientes secciones
 
 1. Introducción: describir un problema o una pregunta. Ver [este ejemplo]() si tienes dudas de cómo hacerlo.
-2. Datos: describir los datos que se van a usar, sus variables, si se hizo un tratamiento o tranformación (e.g., ingeniería de características). 
+2. Datos: describir los datos que se van a usar, sus variables, si se hizo un tratamiento o tranformación (e.g., ingeniería de características).
 3. Presentación del análisis:
    1. Métodos: el análisis que harás. Debes describir formalmente dicho análisis (aquí me entero de que tienes una comprensión formal de dicho análisis).
    2. Resultados: gráficos principales y tablas de estadísticos, lo más refinado que puedas.
@@ -140,6 +143,7 @@ Resolver un caso de estudio escogiendo alguno de los temas de las unidades 3, 4 
 
 - [Examen 1](examenes/examen1.pdf)
 - [Examen 2](examenes/examen2.pdf)
+
 ---
 
 <!-- ## Datasets
@@ -169,18 +173,18 @@ Al ser básicos, no enseñan algunas cosas avanzadas tales como construir nuestr
 Para una introducción básica a esto, revisar el tutorial
 
 - [`R: control de flujo y funciones`](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/R_tutorials/r_flujo_funciones.ipynb). Notar que está en forma de jupyter notebook. El código en las celdas se puede copiar a un script de `R` o, si se tiene instalado `IRkernel`, se puede correr directamente en jupyter seleccionando el kernel de `R`.
-- [`R Workflow`](http://hbiostat.org/rflow/) de Frank Harrell es un libro-curso en línea que va desde lo [básico](https://hbiostat.org/rflow/rbasics.html) hasta temas más avanzados como [simulación](https://hbiostat.org/rflow/sim.html) o [cómputo paralelo](https://hbiostat.org/rflow/parallel.html). Tiene una *desventaja*: para los temas avanzados, hay que familiarizarse con la librería del autor, [`rms`](https://cran.r-project.org/web/packages/rms/index.html), que proviene del libro *Regresion Modeling Strategies*. En el apartado 1.1 del libro menciona los repositorios usados.
+- [`R Workflow`](http://hbiostat.org/rflow/) de Frank Harrell es un libro-curso en línea que va desde lo [básico](https://hbiostat.org/rflow/rbasics.html) hasta temas más avanzados como [simulación](https://hbiostat.org/rflow/sim.html) o [cómputo paralelo](https://hbiostat.org/rflow/parallel.html). Tiene una _desventaja_: para los temas avanzados, hay que familiarizarse con la librería del autor, [`rms`](https://cran.r-project.org/web/packages/rms/index.html), que proviene del libro _Regresion Modeling Strategies_. En el apartado 1.1 del libro menciona los repositorios usados.
 
 ### Cargar datos (csv, xlsx) en R con RStudio
 
 - [Navegar en directorios y fijar el directorio de trabajo](https://www.youtube.com/watch?v=OJ4WBjV5o1I). Asume que se tiene instalado R y RStudio.
-- [Importar datos con R](https://www.youtube.com/watch?v=WWY8VPh6ryo) 
+- [Importar datos con R](https://www.youtube.com/watch?v=WWY8VPh6ryo)
 
 ### Data wrangling con `{dplyr}` y `{tidyr}`
 
 Tutorial avanzado.
 
-En la [`esta`](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/R_tutorials/data_wrangling_dplyr.ipynb) notebook se encuentra un tutorial sencillo de *data wrangling* usando los paquetes de `{dplyr}` y `{tidyr}`. Se cubren aspectos como transformación, enriquecimiento y limpieza de tal forma que tengamos un estándar llamado `tidy data`.
+En la [`esta`](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/R_tutorials/data_wrangling_dplyr.ipynb) notebook se encuentra un tutorial sencillo de _data wrangling_ usando los paquetes de `{dplyr}` y `{tidyr}`. Se cubren aspectos como transformación, enriquecimiento y limpieza de tal forma que tengamos un estándar llamado `tidy data`.
 
 ### Visualización con `{ggplot}`
 
@@ -190,7 +194,7 @@ En [`esta`](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/mai
 
 ### Documentos reproducibles con RMarkdown
 
-Consultar [esta plantilla de RMarkdown](R_tutorials/rmarkdown_plantilla.Rmd), que se usará para la entrega de tareas *opcionalmente*. 
+Consultar [esta plantilla de RMarkdown](R_tutorials/rmarkdown_plantilla.Rmd), que se usará para la entrega de tareas _opcionalmente_.
 
 ### Modelamiento con `{tidymodels}`
 
