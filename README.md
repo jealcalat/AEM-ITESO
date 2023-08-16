@@ -35,7 +35,7 @@ Fin: 15 de mayo de 2023
 
 ## Calendario del curso
 
-Para ver el calendario del curso, revisa el siguiente enlace: [Calendario del curso](listas/calendario_del_curso_P.md). Las fechas se pueden reajustar de acuerdo a cómo avancemos. Para este curso es más importante entender los conceptos que abarcar un temario.
+Para ver el calendario del curso, revisa el siguiente enlace: [Calendario del curso](calendario_del_curso.md). Las fechas se pueden reajustar de acuerdo a cómo avancemos. Para este curso es más importante entender los conceptos que abarcar un temario.
 
 Algunos recursos que he ido recopilando, como una recomendación que han hecho los propios alumnos, se encuentran en [Lecturas y recursos recomendados](lecturas_recursos.md). Estos mismos recursos y lecturas pueden ser usados para sus presentaciones.
 
@@ -89,15 +89,8 @@ Algunos recursos que he ido recopilando, como una recomendación que han hecho l
 
 ### Tareas
 
-Tarea 1:
+- [Tarea 1](tareas/tarea_1.md)
 
-1. Descargar el conjunto de datos `winequality-red.csv`. Se puede descargar desde [aquí](https://archive.ics.uci.edu/dataset/186/wine+quality).
-2. Indicar cuáles son las variables numéricas y cuáles son las categóricas.
-3. Calcular los estadísticos descriptivos para la variable alcohol. Separarlos por estadísticos de tendencia central y de dispersión. Nota: ver cómo seleccioné una variable en el ejercicio de Iris.
-4. Obtener una matriz de correlaciones de todas las variables numéricas excepto `quality`.
-5. Ordenar en orden descendente las correlaciones con respecto a `density`.
-6. Seleccionar aquellas variables cuyo valor absoluto de correlación con respecto a `density` sea mayor o igual a 0.4.
-7. ¿De qué variables depende (linealmente) *más* la densidad?
 
 Para la entrega de tareas, usar la plantilla de RMarkdown de la sección Documentos reproducibles con [RMarkdown](#documentos-reproducibles-con-rmarkdown).
 
@@ -140,66 +133,15 @@ Resolver un caso de estudio escogiendo alguno de los temas de las unidades 3, 4 
 
 - [Examen 1](examenes/examen1.pdf)
 - [Examen 2](examenes/examen2.pdf)
----
 
-<!-- ## Datasets
+## Recursos para Python
 
-- [RDatasets](https://vincentarelbundock.github.io/Rdatasets/articles/data.html)
-- [The Humanitarian Data Exchange](https://data.humdata.org/)
-- [TidyTuesday](https://github.com/rfordatascience/tidytuesday)
-- [Openpsychometrics](https://openpsychometrics.org/_rawdata/) -->
+En este curso usaremos Python como lenguaje de programación. Para ello, necesitaremos instalar Anaconda, que es una distribución de Python que incluye las librerías más comunes para análisis de datos.
 
-## Tutoriales de `R`
-
-### Fundamentos de `R`
-
-Existen muchos tutoriales básicos de R. Estos son algunos de mis favoritos:
-
-- [Data Carpentry: Intro to R](https://datacarpentry.org/R-genomics/01-intro-to-R.html)
-  - Comenzar [aquí](https://datacarpentry.org/R-genomics/00-before-we-start.html).
-- [Data Carpentry: Starting with data](https://datacarpentry.org/R-genomics/02-starting-with-data.html)
-- [Data Carpentry: Data frames](https://datacarpentry.org/R-genomics/03-data-frames.html)
-
-Otro recurso:
-
-- [`En este tutorial`](R_tutorials/r_intro.md) se puede consultar una introducción rapidísima, básica, a `R`. Se tratan cosas como operadores, sintaxis, vectores, matrices, listas, data.frames y su indexación, subsetting, etc.
-
-Al ser básicos, no enseñan algunas cosas avanzadas tales como construir nuestras propias funciones, control de flujo (ciclos `for` o `while`, enunciados con `if-else`, etc.).
-
-Para una introducción básica a esto, revisar el tutorial
-
-- [`R: control de flujo y funciones`](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/R_tutorials/r_flujo_funciones.ipynb). Notar que está en forma de jupyter notebook. El código en las celdas se puede copiar a un script de `R` o, si se tiene instalado `IRkernel`, se puede correr directamente en jupyter seleccionando el kernel de `R`.
-- [`R Workflow`](http://hbiostat.org/rflow/) de Frank Harrell es un libro-curso en línea que va desde lo [básico](https://hbiostat.org/rflow/rbasics.html) hasta temas más avanzados como [simulación](https://hbiostat.org/rflow/sim.html) o [cómputo paralelo](https://hbiostat.org/rflow/parallel.html). Tiene una *desventaja*: para los temas avanzados, hay que familiarizarse con la librería del autor, [`rms`](https://cran.r-project.org/web/packages/rms/index.html), que proviene del libro *Regresion Modeling Strategies*. En el apartado 1.1 del libro menciona los repositorios usados.
-
-### Cargar datos (csv, xlsx) en R con RStudio
-
-- [Navegar en directorios y fijar el directorio de trabajo](https://www.youtube.com/watch?v=OJ4WBjV5o1I). Asume que se tiene instalado R y RStudio.
-- [Importar datos con R](https://www.youtube.com/watch?v=WWY8VPh6ryo) 
-
-### Data wrangling con `{dplyr}` y `{tidyr}`
-
-Tutorial avanzado.
-
-En la [`esta`](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/R_tutorials/data_wrangling_dplyr.ipynb) notebook se encuentra un tutorial sencillo de *data wrangling* usando los paquetes de `{dplyr}` y `{tidyr}`. Se cubren aspectos como transformación, enriquecimiento y limpieza de tal forma que tengamos un estándar llamado `tidy data`.
-
-### Visualización con `{ggplot}`
-
-`{ggplot}` (oficialmente, `{ggplot2}`) es un paquete popular para la visualización de datos que implementa un conjunto de principios de visualización llamado "the grammar of graphics". Ha sido tan influyente que existen implementaciones en Python y Matlab.
-
-En [`esta`](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/R_tutorials/data_viz_ggplot.ipynb) notebook de jupyter se encuentra un sencillo tutorial con los fundamentos.
-
-### Documentos reproducibles con RMarkdown
-
-Consultar [esta plantilla de RMarkdown](R_tutorials/rmarkdown_plantilla.Rmd), que se usará para la entrega de tareas *opcionalmente*. 
-
-### Modelamiento con `{tidymodels}`
-
-- [recipes]
-- [parsnip]:
-  - Regresión lineal
-    - The MLW way
-    - The OLS way
-  - ANOVA
+1. Para instalar Anaconda, sigan las instrucciones [aquí](https://github.com/jealcalat/python4da/blob/main/intro.md).
+2. Para empezar a usar Jupyter Notebook, sigan las instrucciones [aquí](https://www.youtube.com/watch?v=Xws9V34-CFo&ab_channel=PabloPaniagua), y para una introducción muy básica a lo que necesitaremos de Python, consulta [aquí](https://github.com/jealcalat/python4da/blob/main/nbs/pt1_intro_python.ipynb).
+3. El uso de las librerías NumPy, Pandas y Matplotlib se explica brevemente [aquí](https://github.com/jealcalat/python4da/blob/main/nbs/pt2_numpy-pandas-matplotlib.ipynb).
+4. Para una introducción en video para usar Pandas, la librería más usada para manipulación de datos, consulta [aquí](https://www.youtube.com/watch?v=ZyhVh-qRZPA&list=PL-osiE80TeTsWmV9i9c58mdDCSskIFdDS), a partir del minuto 7.
 
 ## Tutoriales de MML
 
