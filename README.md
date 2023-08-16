@@ -130,7 +130,7 @@ Organización sugerida de las exposiciones:
 
 ### Proyectos
 
-Resolver un caso de estudio escogiendo alguno de los temas de las unidades 3, 4 y 5. Los proyectos son individuales y deben entregarse también según la estructura que se les pida; pueden usar[RMarkdown](#documentos-reproducibles-con-rmarkdown). Deberán tener las siguientes secciones
+Contenido:
 
 1. Introducción: describir un problema o una pregunta. Ver [este ejemplo]() si tienes dudas de cómo hacerlo.
 2. Datos: describir los datos que se van a usar, sus variables, si se hizo un tratamiento o tranformación (e.g., ingeniería de características).
@@ -139,71 +139,6 @@ Resolver un caso de estudio escogiendo alguno de los temas de las unidades 3, 4 
    2. Resultados: gráficos principales y tablas de estadísticos, lo más refinado que puedas.
 4. Conclusión: transmite tus hallazgos a una audiencia más amplia.
 
-### Exámenes
-
-- [Examen 1](examenes/examen1.pdf)
-- [Examen 2](examenes/examen2.pdf)
-
----
-
-<!-- ## Datasets
-
-- [RDatasets](https://vincentarelbundock.github.io/Rdatasets/articles/data.html)
-- [The Humanitarian Data Exchange](https://data.humdata.org/)
-- [TidyTuesday](https://github.com/rfordatascience/tidytuesday)
-- [Openpsychometrics](https://openpsychometrics.org/_rawdata/) -->
-
-## Tutoriales de `R`
-
-### Fundamentos de `R`
-
-Existen muchos tutoriales básicos de R. Estos son algunos de mis favoritos:
-
-- [Data Carpentry: Intro to R](https://datacarpentry.org/R-genomics/01-intro-to-R.html)
-  - Comenzar [aquí](https://datacarpentry.org/R-genomics/00-before-we-start.html).
-- [Data Carpentry: Starting with data](https://datacarpentry.org/R-genomics/02-starting-with-data.html)
-- [Data Carpentry: Data frames](https://datacarpentry.org/R-genomics/03-data-frames.html)
-
-Otro recurso:
-
-- [`En este tutorial`](R_tutorials/r_intro.md) se puede consultar una introducción rapidísima, básica, a `R`. Se tratan cosas como operadores, sintaxis, vectores, matrices, listas, data.frames y su indexación, subsetting, etc.
-
-Al ser básicos, no enseñan algunas cosas avanzadas tales como construir nuestras propias funciones, control de flujo (ciclos `for` o `while`, enunciados con `if-else`, etc.).
-
-Para una introducción básica a esto, revisar el tutorial
-
-- [`R: control de flujo y funciones`](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/R_tutorials/r_flujo_funciones.ipynb). Notar que está en forma de jupyter notebook. El código en las celdas se puede copiar a un script de `R` o, si se tiene instalado `IRkernel`, se puede correr directamente en jupyter seleccionando el kernel de `R`.
-- [`R Workflow`](http://hbiostat.org/rflow/) de Frank Harrell es un libro-curso en línea que va desde lo [básico](https://hbiostat.org/rflow/rbasics.html) hasta temas más avanzados como [simulación](https://hbiostat.org/rflow/sim.html) o [cómputo paralelo](https://hbiostat.org/rflow/parallel.html). Tiene una _desventaja_: para los temas avanzados, hay que familiarizarse con la librería del autor, [`rms`](https://cran.r-project.org/web/packages/rms/index.html), que proviene del libro _Regresion Modeling Strategies_. En el apartado 1.1 del libro menciona los repositorios usados.
-
-### Cargar datos (csv, xlsx) en R con RStudio
-
-- [Navegar en directorios y fijar el directorio de trabajo](https://www.youtube.com/watch?v=OJ4WBjV5o1I). Asume que se tiene instalado R y RStudio.
-- [Importar datos con R](https://www.youtube.com/watch?v=WWY8VPh6ryo)
-
-### Data wrangling con `{dplyr}` y `{tidyr}`
-
-Tutorial avanzado.
-
-En la [`esta`](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/R_tutorials/data_wrangling_dplyr.ipynb) notebook se encuentra un tutorial sencillo de _data wrangling_ usando los paquetes de `{dplyr}` y `{tidyr}`. Se cubren aspectos como transformación, enriquecimiento y limpieza de tal forma que tengamos un estándar llamado `tidy data`.
-
-### Visualización con `{ggplot}`
-
-`{ggplot}` (oficialmente, `{ggplot2}`) es un paquete popular para la visualización de datos que implementa un conjunto de principios de visualización llamado "the grammar of graphics". Ha sido tan influyente que existen implementaciones en Python y Matlab.
-
-En [`esta`](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/R_tutorials/data_viz_ggplot.ipynb) notebook de jupyter se encuentra un sencillo tutorial con los fundamentos.
-
-### Documentos reproducibles con RMarkdown
-
-Consultar [esta plantilla de RMarkdown](R_tutorials/rmarkdown_plantilla.Rmd), que se usará para la entrega de tareas _opcionalmente_.
-
-### Modelamiento con `{tidymodels}`
-
-- [recipes]
-- [parsnip]:
-  - Regresión lineal
-    - The MLW way
-    - The OLS way
-  - ANOVA
 
 ## Tutoriales de MML
 
