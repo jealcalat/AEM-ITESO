@@ -2,8 +2,10 @@
 
 Curso de la maestría en ciencia de datos (MCD) del ITESO.
 
-Inicio: 15 de enero de 2023
-Fin: 15 de mayo de 2023
+Inicio: 15 de agosto de 2023
+
+Fin: 30 de noviembre de 2023
+
 **Plataforma**: Teams (reuniones virtuales), CANVAS (administración del curso), y GitHub (materiales del curso y calendario)
 
 **Instructor**: Emmanuel Alcalá
