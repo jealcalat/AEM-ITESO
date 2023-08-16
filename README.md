@@ -9,7 +9,9 @@ Fin: 30 de noviembre de 2023
 **Plataforma**: Teams (reuniones virtuales), CANVAS (administración del curso), y GitHub (materiales del curso y calendario)
 
 **Instructor**: Emmanuel Alcalá
+
 **Correo**: <jaime.alcala@iteso.mx>
+
 **Asesorías**: solicitar cita.
 
 ---
@@ -94,20 +96,14 @@ Algunos recursos que he ido recopilando, como una recomendación que han hecho l
 ### Tareas
 
 - [Tarea 1](tareas/tarea_1.md)
+- [Tarea 2](tareas/tarea_2.md)
+- [Tarea 3](tareas/tarea_3.md)
+- [Tarea 4](tareas/tarea_4.md)
+- [Tarea 5](tareas/tarea_5.md)
 
-1. Descargar el conjunto de datos `winequality-red.csv`. Se puede descargar desde [aquí](https://archive.ics.uci.edu/dataset/186/wine+quality).
-2. Indicar cuáles son las variables numéricas y cuáles son las categóricas.
-3. Calcular los estadísticos descriptivos para la variable alcohol. Separarlos por estadísticos de tendencia central y de dispersión. Nota: ver cómo seleccioné una variable en el ejercicio de Iris.
-4. Obtener una matriz de correlaciones de todas las variables numéricas excepto `quality`.
-5. Ordenar en orden descendente las correlaciones con respecto a `density`.
-6. Seleccionar aquellas variables cuyo valor absoluto de correlación con respecto a `density` sea mayor o igual a 0.4.
-7. ¿De qué variables depende (linealmente) _más_ la densidad?
+### Exposiciones
 
-Para la entrega de tareas, usar la plantilla de RMarkdown de la sección Documentos reproducibles con [RMarkdown](#documentos-reproducibles-con-rmarkdown).
-
-### Participación en clase
-
-La participación en clase se evaluará con exposiciones grupales, una exposición por equipo. Las exposiciones estarán distribuidas de la siguiente manera:
+Una exposición por equipo. Las exposiciones estarán distribuidas de la siguiente manera:
 
 | Equipo   | Tema                   |
 | -------- | ---------------------- |
@@ -134,7 +130,7 @@ Organización sugerida de las exposiciones:
 
 Contenido:
 
-1. Introducción: describir un problema o una pregunta. Ver [este ejemplo]() si tienes dudas de cómo hacerlo.
+1. Introducción: describir un problema o una pregunta. 
 2. Datos: describir los datos que se van a usar, sus variables, si se hizo un tratamiento o tranformación (e.g., ingeniería de características).
 3. Presentación del análisis:
    1. Métodos: el análisis que harás. Debes describir formalmente dicho análisis (aquí me entero de que tienes una comprensión formal de dicho análisis).
