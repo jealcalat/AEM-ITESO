@@ -46,34 +46,35 @@ Algunos recursos que he ido recopilando, como una recomendación que han hecho l
 ## Temas del curso
 
 1. Variables aleatorias multivariadas
-
-   1. [Correlaciónes y covarianzas](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/1_variables_aleatorias_multivariadas/1.1_correlaciones_covarianzas.ipynb)
+   1. [Preliminares](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/tema_1/0-variables_cuantitativas.ipynb)
+   2. [Correlaciónes y covarianzas](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/tema_1/1.1_correlaciones_covarianzas.ipynb)
 
 2. Modelos de distribución multivariados
-
-   1. [Funciones de distribución y densidad](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/2_modelos_multivariados/2.1_funciones_distribucion_densidad.ipynb)
-   2. [Distribucion multinormal](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/2_modelos_multivariados/2.2_distribucion_multinormal.ipynb)
+   
+   1. [Preliminares](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/tema_2/2.0_preliminares.ipynb)
+   2. [Funciones de distribución y densidad](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/tema_2/2.1_funciones_distribucion_densidad.ipynb)
+   3. [Distribucion multinormal](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/tema_2/2.2_distribucion_multinormal.ipynb)
 
 3. Teoría de la estimación
 
-   1. [Función de verosimilitud](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/3_teoria_de_estimacion/3.1_funcion_verosimilitud.ipynb)
-   2. [Prueba de verosimilitud](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/3_teoria_de_estimacion/3.2_prueba_verosimilitud.ipynb)
-   3. [Prueba de hipótesis lineal (regresión lineal)](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/3_teoria_de_estimacion/3.3_prueba_hipotesis_lineal.ipynb)
-   4. [Regresión logística](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/3_teoria_de_estimacion/3.4_regresion_logistica.ipynb)
+   1. [Función de verosimilitud](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/3_teoria_de_estimacion/3.1_funcion_verosimilitud.ipynb)
+   2. [Prueba de verosimilitud](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/3_teoria_de_estimacion/3.2_prueba_verosimilitud.ipynb)
+   3. [Prueba de hipótesis lineal (regresión lineal)](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/3_teoria_de_estimacion/3.3_prueba_hipotesis_lineal.ipynb)
+   4. [Regresión logística](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/3_teoria_de_estimacion/3.4_regresion_logistica.ipynb)
 
 4. Técnicas multivariadas
 
-   1. [ANOVA, MANOVA, ANCOVA](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/4_tecnicas_multivariadas/4.1_anova_manova_ancova.ipynb)
-   2. [Modelos log-lineal](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/4_tecnicas_multivariadas/4.2_modelos_log-lineal.ipynb)
-   3. [Selección de variables](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/4_tecnicas_multivariadas/4.3_seleccion_de_variables)
+   1. [ANOVA, MANOVA, ANCOVA](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/4_tecnicas_multivariadas/4.1_anova_manova_ancova.ipynb)
+   2. [Modelos log-lineal](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/4_tecnicas_multivariadas/4.2_modelos_log-lineal.ipynb)
+   3. [Selección de variables](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/4_tecnicas_multivariadas/4.3_seleccion_de_variables)
 
 5. Descomposición de datos y técnicas de análisis
 
-   1. [Análisis de componentes principales](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/5_descomposicion_datos_tecnicas/5.1_analisis_de_componentes_principales.ipynb)
-   2. [Análisis factorial](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/5_descomposicion_datos_tecnicas/5.2_analisis_factorial.ipynb)
-   3. [Análisis de clúster](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/5_descomposicion_datos_tecnicas/5.3_analisis_de_cluster.ipynb)
+   1. [Análisis de componentes principales](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/5_descomposicion_datos_tecnicas/5.1_analisis_de_componentes_principales.ipynb)
+   2. [Análisis factorial](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/5_descomposicion_datos_tecnicas/5.2_analisis_factorial.ipynb)
+   3. [Análisis de clúster](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/5_descomposicion_datos_tecnicas/5.3_analisis_de_cluster.ipynb)
    4. [Modelos de Mezclas Gaussianas]()
-   5. [Análisis discriminante](https://nbviewer.org/github/jealcalat/Analisis_multivariado/blob/main/5_descomposicion_datos_tecnicas/5.4_analisis_discriminante.ipynb)
+   5. [Análisis discriminante](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/5_descomposicion_datos_tecnicas/5.4_analisis_discriminante.ipynb)
 
 ---
 
