@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2. Modelos de distribución multivariados</title>
+<title>funciones_distribucion_densidad_code_only</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,22 +57,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="2.1_funciones_distribucion_densidad_files/libs/clipboard/clipboard.min.js"></script>
-<script src="2.1_funciones_distribucion_densidad_files/libs/quarto-html/quarto.js"></script>
-<script src="2.1_funciones_distribucion_densidad_files/libs/quarto-html/popper.min.js"></script>
-<script src="2.1_funciones_distribucion_densidad_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="2.1_funciones_distribucion_densidad_files/libs/quarto-html/anchor.min.js"></script>
-<link href="2.1_funciones_distribucion_densidad_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="2.1_funciones_distribucion_densidad_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="2.1_funciones_distribucion_densidad_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="2.1_funciones_distribucion_densidad_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="2.1_funciones_distribucion_densidad_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="2.1_funciones_distribucion_densidad_code_only_files/libs/clipboard/clipboard.min.js"></script>
+<script src="2.1_funciones_distribucion_densidad_code_only_files/libs/quarto-html/quarto.js"></script>
+<script src="2.1_funciones_distribucion_densidad_code_only_files/libs/quarto-html/popper.min.js"></script>
+<script src="2.1_funciones_distribucion_densidad_code_only_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="2.1_funciones_distribucion_densidad_code_only_files/libs/quarto-html/anchor.min.js"></script>
+<link href="2.1_funciones_distribucion_densidad_code_only_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="2.1_funciones_distribucion_densidad_code_only_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="2.1_funciones_distribucion_densidad_code_only_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="2.1_funciones_distribucion_densidad_code_only_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="2.1_funciones_distribucion_densidad_code_only_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -82,137 +80,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">2. Modelos de distribución multivariados</h1>
-</div>
 
 
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-</header>
-
-<section id="funciones-de-distribución-y-densidad" class="level2">
-<h2 class="anchored" data-anchor-id="funciones-de-distribución-y-densidad">2.1. Funciones de distribución y densidad</h2>
-<p align="right">
-Autor: Emmanuel Alcalá <br> <a href="https://scholar.google.com.mx/citations?hl=en&amp;user=3URusCgAAAAJ&amp;view_op=list_works&amp;sortby=pubdate">Google Scholar</a>
-</p>
-<p align="left">
-<br> <a href="https://jealcalat.github.io/Analisis_multivariado/">Regresar a la página del curso</a>
-</p>
-<hr>
-</section>
-<section id="preliminares" class="level2">
-<h2 class="anchored" data-anchor-id="preliminares">2.1.0. Preliminares</h2>
-<p>Referencia: <a href="https://mml-book.github.io/book/mml-book.pdf">Capítulo 6 de Mathematics for Machine Learning</a></p>
-<hr>
-<section id="variables-aleatorias" class="level3">
-<h3 class="anchored" data-anchor-id="variables-aleatorias">Variables aleatorias</h3>
-<p>Suponer que <span class="math inline">\(X\)</span> representa una cantidad desconocida de interés, como la temperatura de una máquina. Si los valores de <span class="math inline">\(X\)</span> son desconocidos o cambian, decimos que <span class="math inline">\(X\)</span> es una variable aleatoria, o <strong>VA</strong>. El conjunto de todos los valores <em>posibles</em> se denota como <span class="math inline">\(\mathcal{X}\)</span>, llamado espacio muestral o espacio de estados. Un evento es un <em>sub</em>conjunto de valores del espacio muestral. Por ejemplo, si <span class="math inline">\(\mathcal{X}\)</span> es el lado de un dado al ser lanzado, <span class="math inline">\(\mathcal{X} = \{ 1, 2, 3, 4, 5, 6 \}\)</span>, el evento “cae 1” se denota <span class="math inline">\(X = 1\)</span>, y “ver un número impar” se denota <span class="math inline">\(X \in \{ 1, 3, 4\}\)</span>, el evento “cae entre 4 y 6” como <span class="math inline">\(4 \leq X \leq 6\)</span>.</p>
-<p><strong>Nota</strong>: no confundir el espacio muestral <span class="math inline">\(\mathcal{X}\)</span> con la VA <span class="math inline">\(X\)</span>. En el segundo caso, la VA toma valores numéricos, es una función de los elementos de <span class="math inline">\(\mathcal{X}\)</span> que mapea de <span class="math inline">\(\mathcal{X}\)</span> al conjunto de los reales o naturales. <span class="math inline">\(\mathcal{X}\)</span> puede o no consistir en valores numéricos. Por ejemplo, si el espacio muestral <span class="math inline">\(\mathcal{X}\)</span> son los posibles resultados de lanzar dos monedas tenemos <span class="math inline">\(\mathcal{X}=\{HH, HT, TT\}\)</span>. Al evento “cantidad de veces que sale caras, o <span class="math inline">\(H\)</span>”, la variable <span class="math inline">\(X\)</span> mapea de <span class="math inline">\(\mathcal{X}\)</span> tres posibles resultados: <span class="math inline">\(X(HH)=2, X(HT)=1, H(TT)=0\)</span>.</p>
-</section>
-</section>
-<section id="variables-aleatorias-y-sus-distribuciones" class="level2">
-<h2 class="anchored" data-anchor-id="variables-aleatorias-y-sus-distribuciones">2.1.1. Variables aleatorias y sus distribuciones</h2>
-<section id="va-discretas" class="level3">
-<h3 class="anchored" data-anchor-id="va-discretas">VA discretas</h3>
-<p>Si <span class="math inline">\(\mathcal{X}\)</span> es finito o contable infinito (cada miembro de <span class="math inline">\(\mathcal{X}\)</span> puede asociarse con un elemento de <span class="math inline">\(\mathbb{N}\)</span>), entonces <span class="math inline">\(X\)</span> es una variable aleatoria <em>discreta</em>. En este caso, denotamos la probabilidad de un evento que <span class="math inline">\(X\)</span> toma como <span class="math inline">\(\text{Pr}(X=x)\)</span>. Definimos la <strong>función de masa de probabilidad</strong> (<span class="math inline">\(\text{\sf pmf}\)</span> en inglés) como la función que computa la probabilidad de cada valor de la VA</p>
-<p><span class="math display">\[
-  p(x) \overset{\Delta}{=} \text{Pr}(X = x)
-\]</span></p>
-<p><span class="math inline">\(p(x)\)</span> satisface <span class="math inline">\(0\leq p(x) \leq 1\)</span> y <span class="math inline">\(\sum_{x\in \mathcal{X}} p(x) = 1\)</span>.</p>
-<p>Algunas propiedades de <span class="math inline">\(\Pr\)</span> son:</p>
-<ol type="1">
-<li>Si <span class="math inline">\(\emptyset\)</span> es un conjunto nulo, entonces <span class="math inline">\(\Pr(\emptyset)=0\)</span>.</li>
-<li>Si <span class="math inline">\(A \subset B\)</span>, entonces <span class="math inline">\(\Pr(A)\leq \Pr(B)\)</span>.</li>
-<li>Si <span class="math inline">\(A^c\)</span> denota el complemento de <span class="math inline">\(A\)</span>, entonces <span class="math inline">\(\Pr(A^c)=1-\Pr(A)\)</span>.</li>
-<li>Si <span class="math inline">\(A \cap B = \emptyset\)</span> denota la intersección nula de <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span>, entonces <span class="math inline">\(\Pr(A \cup B)=\Pr(A) + \Pr(B)\)</span>, <span class="math inline">\(\Pr\)</span> es aditiva para eventos disjuntos.</li>
-<li>De otra manera, para eventos arbitrarios <span class="math inline">\(A, B\)</span>, <span class="math inline">\(\Pr(A \cup B)=\Pr(A) + \Pr(B)-\Pr(A\cap B)\)</span>.</li>
-<li>Dos eventos <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son independientes si <span class="math inline">\(\Pr(A \cup B)=\Pr(A)\Pr(B)\)</span>. Por ejemplo, lanzar una moneda dos veces. Cada lanzamiento es independiente del otro. Si queremos saber la probabilidad de que en ambos lanzamientos salga caras, esa probabilidad sería <span class="math inline">\(\Pr(H_1\cap H_2)=(1/2)(1/2)\)</span>.</li>
-</ol>
-<hr>
-<p>Podemos imaginarnos la distribución de probabilidad de muchas variables aleatorias como el llenado de un arreglo multidimensional. Por ejemplo, en la siguiente imagen (adaptado de MML-6.2)</p>
-<p align="center">
-<img src="img/joint_dist_tikz.svg" width="40%">
-</p>
-<p>muestra dos variables aleatorias bivariadas, <span class="math inline">\(X\)</span> (que puede tomar valores <span class="math inline">\(x_j, j = 1, 2, \dots, M\)</span>) y <span class="math inline">\(Y\)</span> (que puede tomar valores <span class="math inline">\(i=1, 2, \dots, L\)</span>).</p>
-<ul>
-<li><span class="math inline">\(c_j\)</span>: conteo marginal en <span class="math inline">\(x_j\)</span></li>
-<li><span class="math inline">\(r_i\)</span>: conteo marginal en <span class="math inline">\(y_i\)</span></li>
-<li><span class="math inline">\(n_{ij}\)</span>: casos en la celda <span class="math inline">\(x_j, y_i\)</span></li>
-</ul>
-<p>La probabilidad (<em>conjunta</em>) de que <span class="math inline">\(X=x, Y=y\)</span> se define como</p>
-<p><span class="math display">\[
-  p(x, y) \overset{\Delta}{=} \text{Pr}(X = x, Y = y)
-\]</span></p>
-<p><span class="math inline">\(p(x, y)\)</span> se lee “la probabilidad de <span class="math inline">\(x\)</span> y <span class="math inline">\(y\)</span>”, en ocasiones escrito usando notación de teoría de conjuntos como <span class="math inline">\(p(x \cap y)\)</span>. Cada entrada (cada celda) en la tabla se calcula contando la cantidad de casos que <span class="math inline">\((x_j,y_i)\)</span> suceden conjuntamente</p>
-<p><span class="math display">\[
-\text{Pr}(X = x_j, Y = y_i) = \frac{n_{ij}}{N} \tag{1}
-\]</span></p>
-<p>En la tabla, si contamos todos los casos de la fila <span class="math inline">\(i\)</span> tenemos la cantidad total de veces que <span class="math inline">\(y_i\)</span> sucede, y lo llamamos <span class="math inline">\(r_i\)</span>. Si contamos la columna <span class="math inline">\(j\)</span> tenemos la cantidad total de veces que <span class="math inline">\(x_j\)</span> sucede, y que llamamos <span class="math inline">\(c_j\)</span>.</p>
-<p>La <em>probabilidad marginal</em> de <span class="math inline">\(x\)</span>, es decir, la probabilidad que <span class="math inline">\(X=x\)</span> sin importar el valor de <span class="math inline">\(Y\)</span> se escribe como <span class="math inline">\(p(x)\)</span> y se calcula como sigue</p>
-<p><span class="math display">\[
-  p(X = x_j) = p(x_j) = \frac{c_j}{N} \tag{2}
-\]</span></p>
-<p>El número de casos en la columna <span class="math inline">\(j\)</span> es la suma de casos en cada celda <em>en esa columna</em>, por lo que <span class="math inline">\(c_j = \sum_i n_{ij}\)</span> (dejando fija <span class="math inline">\(i\)</span>). Por lo tanto,</p>
-<p><span class="math display">\[
-  p(x_j) = \sum_{i=1}^Lp(x_j, y_i) \tag{3}
-\]</span></p>
-<p>A la ecuación (3) se le conoce como la <em>regla de la suma</em>. Notar que se fija la columna <span class="math inline">\(j\)</span> y se itera sobre las filas <span class="math inline">\(i=1, 2, 3\)</span>, por lo que por cada columna <span class="math inline">\(j\)</span> tenemos una probabilidad <span class="math inline">\(p(x_j)\)</span>, que llamamos <em>la distribución marginal</em> de <span class="math inline">\(x\)</span>.</p>
-<p>Si consideramos los casos en los que <span class="math inline">\(X=x_j\)</span>, la <em>fracción</em> de casos en los que <span class="math inline">\(Y=y_i\)</span> se escribe como <span class="math inline">\(p(Y=y_i | X=x_j)\)</span>, probabilidad que es conocida como <em>probabilidad condicional</em> de <span class="math inline">\(Y=y_i\)</span> <em>dado</em> que <span class="math inline">\(X=x_j\)</span>. Se obtiene encontrando la fracción de puntos en una columna <span class="math inline">\(j\)</span> que caen en una celda <span class="math inline">\((i,j)\)</span> dada</p>
-<p><span class="math display">\[
-  p(y_i | x_j) = \frac{n_{ij}}{c_j} \tag{4}
-\]</span></p>
-<p>Notar que <span class="math inline">\(c_j\)</span> es la cantidad total de valores para los cuales <span class="math inline">\(X=x_j\)</span>, y <span class="math inline">\(n_{ij}\)</span> es una celda particular. Con las ecuaciones (1), (2) y (4) podemos derivar la siguiente relación:</p>
-<p><span class="math display">\[
-  \begin{align*}
-    p(x_j, y_i) &amp;=  \frac{n_{ij}}{N} =  \frac{n_{ij}}{c_j} \frac{c_j}{N}\\
-                &amp;= p(y_i | x_j)p(x_j) \tag{5}
-  \end{align*}
-\]</span></p>
-<p>La ecuación (5) es conocida como <em>regla del producto</em>.</p>
-<p>Eliminando la notación excesiva, podemos sintetizar las dos reglas como sigue</p>
-<p><span class="math display">\[
-  \begin{align*}
-    \text{ \bf{regla de la suma}}\quad\quad   &amp;p(x) = \sum_{y}p(x,y) \\
-    \text{ \bf{regla del producto}}\quad\quad &amp;p(x, y) = p(y|x)p(x)
-  \end{align*}
-\]</span></p>
-<!-- <p align="center">
-  <img src="img/regla_sum_prod2.png" width='50%' />
-</p> -->
-<p>Considerando la simetría <span class="math inline">\(p(x,y) = p(y,x)\)</span> y que <span class="math inline">\(p(y,x) = p(x|y)p(y)\)</span>, encontramos la siguiente relación</p>
-<p><span class="math display">\[
-\begin{align*}
-  p(y|x)p(x) &amp;=  p(x|y)p(y)\\
-  p(y|x)     &amp;=  \frac{ p(x|y)p(y)}{p(x)}
-\end{align*} \tag{6}
-\]</span></p>
-<p>Con</p>
-<p><span class="math display">\[\begin{align*}
-1.  &amp; f(x, y) \geq 0\\
-2.  &amp; \sum_{x,y}f(x, y) = 1
-\end{align*}\]</span></p>
-<p>La ecuación (6) es llamada <em>Teorema de Bayes</em>, y tiene una importancia en ML y estadística que no puede ser exagerada.</p>
-<hr>
-</section>
-</section>
-<section id="función-de-distribución-para-va-discretas" class="level2">
-<h2 class="anchored" data-anchor-id="función-de-distribución-para-va-discretas">Función de distribución para VA discretas</h2>
-<p>Para cualesquiera variables <span class="math inline">\(X_1, X_2\)</span>, la función de distribución conjunta es</p>
-<p><span class="math display">\[
-  F(x_1, x_2) = \Pr(X_1 \leq x_1, X_2 \leq x_2)=\sum_{X_1 \leq x_1}\sum_{X_2 \leq x_2}f(x_1,x_2)
-\]</span></p>
-<section id="muestreando-de-una-distribución-conjunta" class="level4">
-<h4 class="anchored" data-anchor-id="muestreando-de-una-distribución-conjunta">Muestreando de una distribución conjunta</h4>
-<p>Crearemos un data frame que contenga posibles valores de <span class="math inline">\(X\)</span> y <span class="math inline">\(Y\)</span>, así como sus frecuencias de ocurrencia. Después, usando la función <code>slice_sample()</code> del paquete <code>{dplyr}</code> tomaremos una muestra aleatoria. Básicamente, lo que hace <code>slice_sample()</code> es tomar filas (<em>slices</em>) del data frame original, solo que en este caso permitiremos que cada fila pueda ser seleccionada más de una vez. La cantidad de veces que cada fila puede ser seleccionada será, aproximadamente, <code>wgts/sum(wgts) * n</code>.</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
@@ -350,15 +219,6 @@ Warning message:
 </table>
 </div>
 </div>
-</section>
-</section>
-<section id="ejercicios-a-mano" class="level2">
-<h2 class="anchored" data-anchor-id="ejercicios-a-mano">Ejercicios a mano</h2>
-<ol type="1">
-<li>La segunda tabla muestra la tabla de frecuencias de la muestra total, ¿cuál es la probabilidad <span class="math inline">\(p(y=0, x=1)\)</span>?</li>
-<li>¿Cuál es la probabilidad <span class="math inline">\(p(x=1 \mid y=0)\)</span>?</li>
-<li>Encontrar <span class="math inline">\(F(X\leq 1,Y\leq 2)\)</span></li>
-</ol>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ejercicio 1</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># xy &lt;- sampled_data[, c(1, 2)] |&gt; head(5)</span></span>
@@ -381,26 +241,6 @@ Warning message:
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#   'covarianza real' = cov_r</span></span>
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<!-- Para el ejercicio 1:
-
-Las medias son $\bar x=0.8, \bar y = 1.4$, 
-$$
-  \mathbf{x}_0 = \{0.2,-0.8,0.2,0.2,0.2\}, \mathbf{y}_0 = \{0.6,-0.4,-0.4,1.6,-1.4\}
-$$
-el producto punto
-
-$$
-\mathbf{x}_0^\top \mathbf{y}_0 = 
-  \begin{bmatrix}
-  0.2 & -0.8 & 0.2 & 0.2 & 0.2
-  \end{bmatrix}
-  \begin{bmatrix}
-  0.6\\ -0.4\\ -0.4\\ 1.6\\ -1.4
-  \end{bmatrix} = 0.2*0.6 + -0.8*-0.4 + 0.2*-0.4 + 0.2*1.6 + 0.2*-1.4 = 0.4
-$$
-
-Dividido entre $1/(n-1)$ es $\frac{1}{5-1}0.4=0.1$ -->
-<p>Para el ejercicio 2</p>
 <div class="cell" data-tags="[&quot;hide_code&quot;]" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">table</span>(sampled_data[, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)]) <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame.matrix</span>()</span>
@@ -454,12 +294,6 @@ Dividido entre $1/(n-1)$ es $\frac{1}{5-1}0.4=0.1$ -->
 </table>
 </div>
 </div>
-<p>La celda en rojo corresponde a la probabilidad</p>
-<p><span class="math display">\[
-  p(y=0, x=1) = \frac{325}{10000}
-\]</span></p>
-<p>Para el ejercicio 3</p>
-<p>Ahora, para calcular la probabilidad condicional <span class="math inline">\(p(x=1|y=0)\)</span> debemos obtener la probabilidad marginal de <span class="math inline">\(y\)</span>, o <span class="math inline">\(p(y=0)\)</span>.</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glue)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>xt_py <span class="ot">&lt;-</span> xt <span class="sc">|&gt;</span></span>
@@ -517,11 +351,6 @@ Dividido entre $1/(n-1)$ es $\frac{1}{5-1}0.4=0.1$ -->
 </table>
 </div>
 </div>
-<p>Luego, la probabilidad condicional será la probabilidad conjunta <span class="math inline">\(p(y=0, x=1)\)</span> dividida por la probabilidad marginal <span class="math inline">\(p(y=0)\)</span></p>
-<p><span class="math display">\[
-  p(x=1|y=0) = \frac{p(y=0,x=1)}{p(y=0)} = \frac{325/10000}{725/10000} = \frac{13}{29}
-\]</span></p>
-<p>En general, la distribución condicional <span class="math inline">\(p(x | y=0)\)</span> se puede obtener como sigue</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sampled_data <span class="sc">|&gt;</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># filtrar la fila</span></span>
@@ -559,8 +388,6 @@ Dividido entre $1/(n-1)$ es $\frac{1}{5-1}0.4=0.1$ -->
 </table>
 </div>
 </div>
-<p>Para el ejercicio 4.</p>
-<p><span class="math inline">\(F(X\leq 1,Y\leq 2) = p(x=0, y=0)+p(x=0, y=1)+p(x=0, y=2)+p(x=1, y=0)+p(x=1, y=1)+p(x=1, y=2)=0 + 0.0493+0.1273+0.0433+0.0325+0.2544+0.2524=0.7592\)</span></p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">table</span>(sampled_data[, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)]) <span class="sc">|&gt;</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame.matrix</span>()</span>
@@ -612,30 +439,6 @@ Dividido entre $1/(n-1)$ es $\frac{1}{5-1}0.4=0.1$ -->
 </table>
 </div>
 </div>
-<p>La distribución condicional de <span class="math inline">\(x|y=y\)</span> puede verse totalmente diferente que la distribución marginal <span class="math inline">\(p(x)\)</span>. En la siguiente imagen, tomada de Bishop (PRML-1.1), se ilustra la distribución de dos variables <span class="math inline">\(X\)</span> y <span class="math inline">\(Y\)</span>. <span class="math inline">\(X\)</span> puede tomar 9 valores posibles, y <span class="math inline">\(Y\)</span> 2. La distribución marginal de <span class="math inline">\(X\)</span>, la distribución independientemente de qué valores tome <span class="math inline">\(Y\)</span>, tiene una forma más achatada (más amplia, con mayor varianza) que la distribución condicional a <span class="math inline">\(Y=1\)</span>.</p>
-<p align="center">
-<img src="img/marginal_conditional.png" width="60%">
-</p>
-<section id="va-continuas" class="level4">
-<h4 class="anchored" data-anchor-id="va-continuas">VA continuas</h4>
-<p>Si <span class="math inline">\(X\in \mathbb{R}\)</span> es una función real, se denomina <em>variable aleatoria continua</em>, y es más natural especificar que <span class="math inline">\(X\)</span> se encuentre en un intervalo, e.g,, <span class="math inline">\(a \leq X \leq b\)</span>, dado que en este caso no se puede crear un conjunto <em>contable</em> de valores posibles que <span class="math inline">\(X\)</span> puede tomar, pero podemos crear un conjunto finito de <em>intervalos</em> en la linea real, y asociar los eventos de <span class="math inline">\(X\)</span> que están en esos intervalos.</p>
-<section id="distribución-acumulada-cdf" class="level5">
-<h5 class="anchored" data-anchor-id="distribución-acumulada-cdf">Distribución acumulada (cdf)</h5>
-<p>Sea <span class="math inline">\(A = (X \leq a)\)</span>, <span class="math inline">\(B = (X \leq b)\)</span> y <span class="math inline">\(C = (a &lt; X \leq b)\)</span> en donde <span class="math inline">\(a &lt; b\)</span>. Tenemos que <span class="math inline">\(B\)</span> es la unión de <span class="math inline">\(A\)</span> y <span class="math inline">\(C\)</span>, es decir, <span class="math inline">\(B\)</span> toma todos los valores que toman <span class="math inline">\(A\)</span> y <span class="math inline">\(C\)</span>. Dado que <span class="math inline">\(A\)</span> y <span class="math inline">\(C\)</span> son mutuamente excluyentes, la probabilidad de <span class="math inline">\(B\)</span> es</p>
-<p><span class="math display">\[\text{Pr}(B) = \text{Pr}(A) + \text{Pr}(C) \tag{7} \]</span></p>
-<p>Y la probabilidad de estar en el intervalo <span class="math inline">\(C\)</span> como</p>
-<p><span class="math display">\[
-  \text{Pr}(C) = \text{Pr}(B) - \text{Pr}(A) \tag{8}
-\]</span></p>
-<p>Definimos la distribución de probabilidad acumulada como</p>
-<p><span class="math display">\[
-   P(x) \overset{\Delta}{=} \text{Pr}(X \leq x)
-\]</span></p>
-<p>Con esto, podemos calcular la probabilidad de estar en un intervalo como</p>
-<p><span class="math display">\[
-  \text{Pr}(a &lt; X \leq b) = P(b) - P(a) \tag{9}
-\]</span></p>
-<p>La cdf gráficamente tiene esta forma, cuyo eje Y se lee “probabilidad de que <span class="math inline">\(X\)</span> tome valores igual o menor a <span class="math inline">\(x\)</span>”. Notar que esto es una suma acumulada (o integral) que termina en 1.</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">las=</span><span class="dv">1</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">repr.plot.width=</span><span class="dv">7</span>, <span class="at">repr.plot.height=</span><span class="dv">5</span>)</span>
@@ -646,49 +449,9 @@ Dividido entre $1/(n-1)$ es $\frac{1}{5-1}0.4=0.1$ -->
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> <span class="st">'blue'</span>, <span class="at">lwd =</span> <span class="dv">2</span></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2.1_funciones_distribucion_densidad_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+<p><img src="2.1_funciones_distribucion_densidad_code_only_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-</section>
-<section id="función-de-densidad" class="level5">
-<h5 class="anchored" data-anchor-id="función-de-densidad">Función de densidad</h5>
-<p>Podemos definir la función de densidad de probabilidad, o <em>pdf</em>, como la derivada de la cdf</p>
-<p><span class="math display">\[
-  p(x) \overset{\Delta}{=} \frac{d}{dx}P(x)
-\]</span></p>
-<p>Alternativamente, en vez de <span class="math inline">\(p(x)\)</span> y <span class="math inline">\(P(x)\)</span> se suele usar, para VA continuas, <span class="math inline">\(f(x)\)</span> y <span class="math inline">\(F(x)\)</span> respectivamente.</p>
-<p>Y viceversa: la cdf como la integral de la pdf. Dada la pdf, podemos calcular la probabilidad de una variable continua en un intervalo finito como sigue</p>
-<p><span class="math display">\[
-  \text{Pr}(a &lt;X\leq b) = \int_a^b p(x)dx = P(b) - P(a) \tag{10}
-\]</span></p>
-<p>La función de densidad de probabilidad debe satisfacer</p>
-<p><span class="math display">\[
-\begin{align*}
-1)\ &amp;f(x) \geq 0,\ \text{para toda } x,\ -\infty &lt; x &lt; \infty\\
-2)\ &amp;\int_{-\infty}^\infty f(x)\text{d}x = 1
-\end{align*}
-\]</span></p>
-<hr>
-<p><strong>Ejemplo con distribución normal</strong></p>
-<p>La pdf de una normal está dada por</p>
-<p><span class="math display">\[
-  \mathcal{N}(x\mid \mu, \sigma^2)=  p(x) = \frac{1}{\sigma \sqrt{2\pi}} e\left\{\frac{-(x-\mu)^2}{2\sigma^2}\right\} \tag{10}
-\]</span></p>
-<p>que es gobernada (es decir, su forma y sus valores quedan completamente especificados) por <span class="math inline">\(\mu\)</span>, la media o el valor central, y <span class="math inline">\(\sigma^2\)</span>, llamada la varianza (cuya raíz cuadrada es la desviación estándar <span class="math inline">\(\sigma\)</span>, y está en las unidades de <span class="math inline">\(x\)</span> y <span class="math inline">\(\mu\)</span>).El recíproco de la varianza es llamado <em>precisión</em>, <span class="math inline">\(\tau=1/\sigma^2\)</span>.</p>
-<p>En la ecuación (10), el término <span class="math inline">\(\frac{1}{\sigma \sqrt{2\pi}}\)</span> es una constante de <em>normalización</em>, que asegura que <span class="math inline">\(p(x)\)</span> sume 1, por lo que</p>
-<p><span class="math display">\[
-  \int_{-\infty}^\infty p(x)\text{d}x=1
-\]</span></p>
-<p>Las siguientes expresiones se cumplen en (10). El valor esperado de <span class="math inline">\(x\)</span> es</p>
-<p><span class="math display">\[
-  \mathbf{E}[x]=\int_{-\infty}^\infty p(x)x\text{d}x=\mu
-\]</span></p>
-<p>Y el valor esperado de <span class="math inline">\(x^2\)</span></p>
-<p><span class="math display">\[
-  \mathbf{E}[x^2] =  \int_{-\infty}^\infty p(x)x\text{d}x^2=\mu^2 + \sigma^2
-\]</span></p>
-<p>La varianza está dada por <span class="math inline">\(\text{var}[x]=\mathbf{E}[x^2] - \mathbf{E}[x]^2\)</span>, por lo que <span class="math inline">\(\text{var}[x]=\sigma^2\)</span>.</p>
-<p>En R se puede confirmar usando <code>rnorm(n, mean=4, sd=2)</code>, que regresa una variable aleatoria normalmente distribuida con media de 0 y desviación estándar de 1</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100000</span>, <span class="dv">4</span>, <span class="dv">3</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x) <span class="co"># media próxima a 4</span></span>
@@ -706,8 +469,6 @@ Dividido entre $1/(n-1)$ es $\frac{1}{5-1}0.4=0.1$ -->
 8.99881505706676
 </div>
 </div>
-<p>En la siguiente figura a la izquierda se representa una variable aleatoria normal con media 0 y desviación estándar de 1, conocida como distribución normal estándar, y representada como <span class="math inline">\(\mathcal{N}(\mu=0, \sigma = 1)\)</span> o simplemente <span class="math inline">\(\mathcal{N}(0, 1)\)</span>. Para la densidad de probabilidad normal, en R usamos <code>dnorm(x, mean, sd)</code>, que nos retorna la densidad en <code>x</code>.</p>
-<p>A la derecha se representa el área equivalente en la cdf, usando <code>pnorm</code>.</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">repr.plot.width=</span><span class="dv">7</span><span class="sc">*</span><span class="dv">2</span>, <span class="at">repr.plot.height=</span><span class="dv">5</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">las =</span> <span class="dv">1</span>, <span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
@@ -762,11 +523,9 @@ Dividido entre $1/(n-1)$ es $\frac{1}{5-1}0.4=0.1$ -->
 <span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> <span class="st">"#B3B3FF"</span></span>
 <span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2.1_funciones_distribucion_densidad_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+<p><img src="2.1_funciones_distribucion_densidad_code_only_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<p>En <code>R</code>, la función de densidad acumulada (<span class="math inline">\(\text{\sf cdf}\)</span>) para la distribución normal se obtiene con <code>pnorm(x, mean, sd)</code> en donde <code>x</code> es un vector de <em>cuantiles</em>, que es el, o los, valores en <span class="math inline">\(x\)</span> para el cual(es) deseamos obtener su probabilidad (básicamente, un cuantil es la función inversa de <span class="math inline">\(P(x)\)</span>).</p>
-<p>Para obtener el área sombreada en la anterior figura, usamos <code>pnorm(b) - pnorm(a)</code></p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="fl">1.5</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="fl">1.5</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># mean = 0, sd = 1 están por defecto, pero los ponemos para mayor claridad</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -774,238 +533,6 @@ Dividido entre $1/(n-1)$ es $\frac{1}{5-1}0.4=0.1$ -->
 0.866385597462284
 </div>
 </div>
-<p>El área que cubre <code>pnorm(1.5)</code> va desde <span class="math inline">\(-\infty\)</span> a 1.5, y el área de <code>pnorm(-1.5)</code> va de <span class="math inline">\(-\infty\)</span> a -1.5. Matemáticamente, lo anterior se expresaría como</p>
-<p><span class="math display">\[
-  P(-1.5 &lt; X &lt; 1.5) = \int_{-1.5}^{1.5}\frac{1}{\sigma \sqrt{2\pi}} e\left\{\frac{-(x-\mu)^2}{2\sigma^2}\right\}\text{d}x
-\]</span></p>
-<p>En contraste con las <strong>VA</strong> discretas, la probabilidad de que una variable continua <span class="math inline">\(X\in \mathbb{R}\)</span> tome un valor particular, <span class="math inline">\(p(X = x)\)</span>, es 0. Es como integrar la función de densidad de la siguiente manera:</p>
-<p><span class="math display">\[
-  Pr(a \leq X \leq a) = \int_a^b f(x)dx = P(a) - P(a)
-\]</span></p>
-<p>Por esta razón, con <span class="math inline">\(\text{\sf pdf}\)</span> solo calculamos probabilidades en intervalos.</p>
-<hr>
-<p>Para VA continuas, las reglas de suma y producto son</p>
-<p><span class="math display">\[
-  \begin{align*}
-    \text{ \bf{regla de la suma}}  \quad\quad   &amp;f(x) = \int_y f(x,y)\text{d}y \\
-    \text{ \bf{regla del producto}}\quad\quad &amp;f(x, y) = f(y|x)f(x)
-  \end{align*}
-\]</span></p>
-<p>En donde <span class="math inline">\(f(x)\)</span> es la función de probabilidad marginal, y se integra <em>con respecto a</em> <span class="math inline">\(y\)</span>. Lo mismo si queremos encontrar la marginal de <span class="math inline">\(y\)</span> tenemos que integrar <span class="math inline">\(f(x,y)\)</span> <em>con respecto a</em> <span class="math inline">\(x\)</span>.</p>
-</section>
-</section>
-</section>
-<section id="función-acumulada-de-probabilidad-conjunta" class="level2">
-<h2 class="anchored" data-anchor-id="función-acumulada-de-probabilidad-conjunta">Función acumulada de probabilidad conjunta</h2>
-<p>Sean <span class="math inline">\(X_1, X_2\)</span> variables aleatorias continuas con función de distribución conjunta <span class="math inline">\(F(x_1, x_2)\)</span>. La función de distribución bivariante <span class="math inline">\(F(x_1, x_2)\)</span> es</p>
-<p><span class="math display">\[
-  F(x_1, x_2) = P(X_1 \leq x_1, X_2 \leq x_2),\quad -\infty &lt; x_1 &lt; \infty, -\infty &lt; x_2&lt;\infty
-\]</span></p>
-<p>Si existe una función no negativa <span class="math inline">\(f(x_1, x_2)\)</span>, se obtiene</p>
-<p><span class="math display">\[\begin{align*}
-  F(x_1, x_2) = \int_{-\infty}^{x_2} \int_{-\infty}^{x_1} f(t_1, t_2)\text{d}t_1\text{d}t_2
-\end{align*}\]</span></p>
-<p>Para toda <span class="math inline">\(-\infty &lt; x_1&lt;\infty, -\infty &lt; x_2&lt;\infty\)</span>. En donde <span class="math inline">\(t_1, t_2\)</span> son solo variables de integración.</p>
-<p>Satisfacen</p>
-<p><span class="math display">\[\begin{align*}
-  1. &amp;f(x_1, x_2)\geq 0\quad \text{para toda }x_1, x_2\\
-  2. &amp;\int_{-\infty}^\infty f(x_1, x_2) \text{d}x_1\text{d}x_2= 1
-\end{align*}\]</span></p>
-<p><strong>Ejemplos</strong></p>
-<ol type="1">
-<li>Dada <span class="math inline">\(f(y) = cy^2,\ 0 \leq y \leq 2\)</span> y <span class="math inline">\(f(y)=0\)</span> en cualquier otra parte, encuentre el valor de <span class="math inline">\(c\)</span> para el cuál <span class="math inline">\(f(y)\)</span> es una función de densidad válida.</li>
-</ol>
-<blockquote class="blockquote">
-<p><em>Solución</em></p>
-</blockquote>
-<blockquote class="blockquote">
-<p>Para obtener <span class="math inline">\(c\)</span>, requerimos un valor tal que se cumpla</p>
-</blockquote>
-<blockquote class="blockquote">
-<p><span class="math display">\[
-F(y) = \int_{-\infty}^\infty f(y)\text{d}y = 1
-\]</span></p>
-<p>Lo que nos da <span class="math display">\[
-F(y) = \int_0^2 cy^2\text{d}y=\frac{cy^3}{3} \Bigg|_0^2=\frac{8}{3}c
-\]</span></p>
-<p>Sustituyendo <span class="math inline">\(\frac{8}{3}c=1\)</span> nos da que <span class="math inline">\(c=3/8\)</span>.</p>
-</blockquote>
-<ol start="2" type="1">
-<li>Encontrar <span class="math inline">\(P(1\leq Y \leq 2)\)</span> para la función del ejemplo 1, también encontrar <span class="math inline">\(P(1&lt; Y &lt; 2)\)</span></li>
-</ol>
-<blockquote class="blockquote">
-<p><em>Solución</em></p>
-</blockquote>
-<blockquote class="blockquote">
-<p>Dado que ya encontramos el valor de que satisface <span class="math inline">\(F(y) = \int_{-\infty}^\infty f(y)\text{d}y = 1\)</span>, la sustituimos.</p>
-<p><span class="math display">\[
-P(1\leq Y \leq 2) = \int_1^2 f(y)\text{d}y= \frac{3}{8}\int_1^2 y^2\text{d}y=7/8
-\]</span></p>
-</blockquote>
-<ol start="3" type="1">
-<li>Como una medida de inteligencia, a unos ratones se les toma el tiempo que tardan para pasar por un laberinto para llegar a una recompensa (alimento). El tiempo en segundos necesario para cualquier ratón es una variable aleatoria <span class="math inline">\(Y\)</span> con función de densidad dada por</li>
-</ol>
-<p><span class="math display">\[
-  f(y) = \begin{cases}
-    \frac{b}{y^2},\ &amp;y\geq b\\
-    0,\ &amp;\text{en cualquier otro punto}
-  \end{cases}
-\]</span></p>
-<p>En donde <span class="math inline">\(b\)</span> es el tiempo mínimo posible para recorrer el laberinto. Demostrar que <span class="math inline">\(f(y)\)</span> tiene las propiedades de una función de densidad.</p>
-<blockquote class="blockquote">
-<p><em>Solución</em></p>
-</blockquote>
-<blockquote class="blockquote">
-<p>Dado que <span class="math inline">\(b\)</span> es un tiempo, no puede ser negativo. Además, <span class="math inline">\(f(y)\)</span> tiene el término cuadrático <span class="math inline">\(y^2\)</span>, que tampoco puede ser negativo, por lo que <span class="math inline">\(f(y) \geq 0\)</span>.</p>
-<p>El mínimo valor que puede tener <span class="math inline">\(y\)</span> es <span class="math inline">\(b\)</span>. Por lo tanto</p>
-<p><span class="math display">\[\begin{align*}
-F(y) &amp;= \int_{b}^\infty \frac{b}{y^2}\text{d}y= 1\\  
-    &amp;= \frac{by^{-2+1}}{-2+1}\Bigg|_b^\infty=-\frac{b}{y}\Bigg|_b^\infty=0-\left(-\frac{b}{b}\right)=1
-\end{align*}\]</span></p>
-</blockquote>
-<ol start="4" type="1">
-<li>En el ejemplo 1 determinamos que <span class="math inline">\(f(y)=(3/8)y^2\)</span> para <span class="math inline">\(0\leq y \leq 2, f(y)=0\)</span> en cualquier otra parte. Si la variable <span class="math inline">\(Y\)</span> tiene esta función de densidad, encontrar <span class="math inline">\(\mu=\mathbf{E}[Y], \sigma^2=\text{var}[Y]\)</span>, recordando que <span class="math inline">\(\text{var}[x]=\mathbf{E}[x^2]-(\mathbf{E}[x])^2\)</span>.</li>
-</ol>
-<blockquote class="blockquote">
-<p><em>Solución</em></p>
-</blockquote>
-<blockquote class="blockquote">
-<p><span class="math display">\[\begin{align*}
-\mathbf{E}[Y] &amp;= \int_{-\infty}^\infty yf(y)\text{d}y= \int_{-\infty}^\infty y\frac{3y^2}{8}\text{d}y = \frac{3}{8}\cdot\frac{1}{4}y^4 \Bigg|_0^2=1.5\\
-\text{para } &amp;\mathbf{E}[Y^2]\quad \text{se obtiene}\\
-\mathbf{E}[Y^2] &amp;= \int_{-\infty}^\infty y^2f(y)\text{d}y= \int_{-\infty}^\infty y^2\frac{3y^2}{8}\text{d}y = \frac{3}{8}\cdot\frac{1}{5}y^5 \Bigg|_0^2=2.4\\
-\text{por }&amp;\text{lo que}\\
-\text{var}[x]&amp;=\mathbf{E}[x^2]-(\mathbf{E}[x])^2 = 2.4 - 1.5^2 = 0.15
-\end{align*}\]</span></p>
-</blockquote>
-<ol start="5" type="1">
-<li>Una partícula radiactiva se localiza en un cuadrado con lados de longitud 1. Denotar como <span class="math inline">\(Y_1, Y_2\)</span> las coordenadas de la ubicación de la partícula. Un modelo razonable para el histograma de frecuencia relativa para <span class="math inline">\(Y_1, Y_2\)</span> es la función bivariante de densidad</li>
-</ol>
-<p><span class="math display">\[
-  f(y_1, y_2) = \begin{cases}
-  1,\quad &amp; 0 \leq y_1 \leq 1, 0 \leq y_2 \leq 1\\
-  0, \quad &amp; \text{en cualquier otro punto}
-  \end{cases}
-\]</span></p>
-<p>Econtrar <span class="math inline">\(F(y_1=0.2, y_2=0.4)\)</span>, que es lo mismo que encontrar la probabilidad <span class="math inline">\(P(y_1&lt;0.2, y_2&lt;0.4)\)</span>.</p>
-<blockquote class="blockquote">
-<p><em>Solución</em></p>
-</blockquote>
-<blockquote class="blockquote">
-<p><span class="math display">\[\begin{align}
-F(y_1=0.2, y_2=0.4)%
-     &amp;= \int_{-\infty}^{0.4} \int_{-\infty}^{0.2} f(y_1, y_2)\text{d}y_1\text{d}y_2 \\
-     &amp;= \int_{-\infty}^{0.4} \int_{-\infty}^{0.2} (1)\text{d}y_1\text{d}y_2 \\
-     &amp;= \int_{-\infty}^{0.4} \left(\int_{-\infty}^{0.2} \text{d}y_1\right)\text{d}y_2\\
-     &amp;= \int_{-\infty}^{0.4} \Bigg( y_1\Big|_0^{0.2} \Bigg)\text{d}y_2\\
-     &amp;= \int_{-\infty}^{0.4} 0.2 \text{d}y_2 = 0.2y_2\Big|_0^{0.4} = 0.08
-\end{align}\]</span></p>
-</blockquote>
-<ol start="6" type="1">
-<li>Sea</li>
-</ol>
-<hr>
-<p><span class="math display">\[
-  f(y_1, y_2) = \begin{cases}
-    2y_1\quad 0 \leq y_1 \leq, 0 \leq y_2 \leq\\
-    0,\quad \text{en otro punto}
-  \end{cases}
-\]</span></p>
-<ol type="a">
-<li>Obtener las funciones de densidad marginal <span class="math inline">\(f(y_1)\)</span> y <span class="math inline">\(f(y_2)\)</span>.</li>
-<li>Obtener la función condicional <span class="math inline">\(f(y_1 | y_2)\)</span></li>
-<li>Demostrar si las variables <span class="math inline">\(Y_1, Y_2\)</span> son independientes.</li>
-</ol>
-<blockquote class="blockquote">
-<p><em>Solución</em></p>
-</blockquote>
-<blockquote class="blockquote">
-<ol type="a">
-<li>La marginal de <span class="math inline">\(f(y_1)\)</span> se obtiene aplicando la regla <span class="math display">\[
-f(x) = \int_{-\infty}^\infty f(x, y)\text{d}y
-\]</span> Notar que para obtener la marginal de la variable <span class="math inline">\(x\)</span> se integra la función conjunta con respecto a <span class="math inline">\(y\)</span>. Esto significa que trataremos a <span class="math inline">\(x\)</span> como <em>constante</em>. En este caso, como tenemos <span class="math inline">\(y_1, y_2\)</span> en vez de <span class="math inline">\(x, y\)</span>, la marginal sería <span class="math display">\[
-f(y_1)= \int_{-\infty}^\infty f(y_1, y_2)\text{d}y_2=\int_{0}^12y_1\text{d}y_2
-\]</span> Y trataremos a <span class="math inline">\(y_1\)</span> como constante, y usamos la regla <span class="math inline">\(\int \text{d}x=x\)</span> <span class="math display">\[
-f(y_1)=\int_{0}^12y_1\text{d}y_2=2y_1\int_{0}^1\text{d}y_2=2y_1\left(y_2\Big|_0^1\right)=2y_1
-\]</span> Para <span class="math inline">\(f(y_2)\)</span> seguimos un razonamiento similar. <span class="math display">\[
-f(y_2)= \int_{-\infty}^\infty f(y_1, y_2)\text{d}y_1=\int_{0}^12y_1\text{d}y_1
-\]</span> Pero ahora integramos con respecto a <span class="math inline">\(y_1\)</span>. Aplicamos la regla <span class="math inline">\(\int x^n \text{d}x=\frac{x^{n+1}}{n+1}\)</span> <span class="math display">\[
-f(y_2)=\int_{0}^12y_1\text{d}y_1=2\frac{y_1^2}{2}\Big|_0^1=y_1^2\Big|_0^1=1
-\]</span> La marginal de <span class="math inline">\(y_2\)</span> es una constante.</li>
-<li>La función condicional se puede obtener con la siguiente regla <span class="math display">\[
-f(x|y) = \frac{f(x, y)}{f(x)}
-\]</span> Por lo que para obtener <span class="math inline">\(f(y_1|y_2)\)</span> necesitamos la densidad conjunta (que ya tenemos), y la marginal de <span class="math inline">\(f(y_2)\)</span>, que ya tenemos también. <span class="math display">\[
-f(y_1|y_2) = \frac{f(y_1, y_2)}{f(y_2)} = \frac{2y_1}{1}=2y_1
-\]</span> La condicional sigue siendo la conjunta porque la marginal es una constante.</li>
-<li>La demostración de que las variables son independientes es trivial siguiendo la regla: <span class="math inline">\(x,y\)</span> son independientes <em>si y solo si</em> <span class="math inline">\(f(x,y)=f(x)f(y)\)</span></li>
-</ol>
-</blockquote>
-<ol start="7" type="1">
-<li>Sea la función de densidad conjunta</li>
-</ol>
-<hr>
-<p><span class="math display">\[
-  f(y_1, y_2) = \begin{cases}
-    e^{-(y_1 + y_2)}\quad y_1&gt;0, y_2&gt;0\\
-    0,\quad \text{en otro punto}
-  \end{cases}
-\]</span></p>
-<ol type="a">
-<li><p>Encontrar <span class="math inline">\(f(y_1)\)</span> y <span class="math inline">\(f(y_2)\)</span>.</p></li>
-<li><p>¿Cuál es la probabilidad <span class="math inline">\(P(1 &lt; Y_1 &lt; 2.5)\)</span> y <span class="math inline">\(P(1 &lt; Y_2 &lt; 2.5)\)</span>?</p></li>
-<li><p>Para cualquier <span class="math inline">\(Y_2&gt;0\)</span>, ¿cuál es la función <span class="math inline">\(f(y_1|y_2)\)</span>?</p></li>
-</ol>
-<blockquote class="blockquote">
-<p><em>Solución</em></p>
-</blockquote>
-<blockquote class="blockquote">
-<ol type="a">
-<li>Primero notar que tanto <span class="math inline">\(y_1\)</span> como <span class="math inline">\(y_2\)</span> están en el intervalo <span class="math inline">\((0, \infty)\)</span>, por lo que esos son sus límites de integración. Formalmente, lo correcto sería encontrar el límite de la integral</li>
-</ol>
-<p><span class="math display">\[
-f(y_1)=\lim_{t\rightarrow \infty}\int_{-\infty}^{\infty}f(y_1,y_2)\text{d}y_2
-\]</span> Sin embargo, <em>informalmente</em> sabemos que <span class="math inline">\(e^{-\infty}=0\)</span>. Aplicamos la regla de los exponentes <span class="math inline">\(a^na^m=a^{n+m}\)</span> a <span class="math inline">\(e^{-(y_1+y_2)}=e^{-y_1}e^{-y_2}\)</span></p>
-<p><span class="math display">\[
-f(y_1)=\int_{-\infty}^{\infty}f(y_1,y_2)\text{d}y_2=\int_0^{\infty}e^{-y_1}e^{-y_2}\text{d}y_2=e^{-y_1}\int_0^{\infty}e^{-y_2}\text{d}y_2
-\]</span> Para integrar lo anterior, consideramos la siguiente regla <span class="math inline">\(\int e^{-u}du=-e^{-u}\)</span> <span class="math display">\[
-f(y_1) = e^{-y_1}\int_0^{\infty}e^{-y_2}\text{d}y_2=e^{-y_1}\left(-e^{-y_2}\Big|_0^\infty\right)=e^{-y_1}\left(-(e^\infty-e^0)\right)=\cdots=e^{-y_1}
-\]</span> El mismo razonamiento para <span class="math inline">\(f(y_2)\)</span> nos da un resultado similar <span class="math display">\[
-f(y_2)=\int_{-0}^{\infty}e^{-(y_1+y_2)}\text{d}y_1=\cdots=e^{-y_2}
-\]</span></p>
-</blockquote>
-<blockquote class="blockquote">
-<ol start="2" type="a">
-<li>Para obtener esta probabilidad (acumulada) necesitamos la regla</li>
-</ol>
-</blockquote>
-<blockquote class="blockquote">
-<p><span class="math display">\[
-P(a &lt; X &lt; b)=\int_a^b f(x)\text{d}x
-\]</span> En donde <span class="math inline">\(f(x)\)</span> en nuestro caso corresponde a las marginales <span class="math inline">\(f(y_1)=e^{-y_1}, f(y_2)=e^{-y_2}\)</span> <span class="math display">\[
-P(1&lt;Y_1&lt;2.5)=\int_1^{2.5}e^{-y_1}\text{d}y_1=-e^{-y_1}\Big|_1^{2-5}=-\left(e^{-2.5}-e^{-1}\right)=\cdots=0.285
-\]</span> Un razonamiento similar aplica para la segunda parte del ejercicio.</p>
-</blockquote>
-<blockquote class="blockquote">
-<ol start="3" type="a">
-<li>Usamos la regla del producto ya revisada: <span class="math inline">\(f(x|y)=f(x,y)/f(y)\)</span>. La conjunta es <span class="math inline">\(f(y_1,y_2)=e^{-(y_1+y_2)}=e^{-y_1}e^{-y_2}\)</span> y la marginal <span class="math inline">\(f(y_2)=e^{-y_2}\)</span></li>
-</ol>
-<p><span class="math display">\[
-f(y_1|y_2)=\frac{e^{-y_1}e^{-y_2}}{e^{-y_2}}=e^{-y_1},\quad \text{para todo } y_2&gt;0
-\]</span> Un razonamiento similar aplica a <span class="math inline">\(f(y_2|y_2)\)</span>.</p>
-</blockquote>
-<ol start="8" type="1">
-<li>Ejemplo de una normal</li>
-</ol>
-<p>La temperatura promedio de una máquina es de 37°C, con una desviación estándar medida de 1.5. Suponiendo que la distribución de la temperatura puede ser aproximada por una normal, ¿qué tan probable es encontrar una temperatura de 35 o menos?</p>
-<blockquote class="blockquote">
-<p><em>Solución</em></p>
-</blockquote>
-<blockquote class="blockquote">
-<p>Queremos hallar la probabilidad <span class="math inline">\(P(X&lt;35)\)</span> sabiendo que <span class="math inline">\(X\sim \mathcal{N}(\mu=37, \sigma=1.5)\)</span>. Es decir</p>
-<p><span class="math display">\[
-P(X&lt;35)=\int_{0}^{35}\frac{1}{1.5 \sqrt{2\pi}} e\left\{\frac{-(x-37)^2}{2(1.5)^2}\right\}\text{d}x
-\]</span></p>
-</blockquote>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">repr.plot.width=</span><span class="dv">7</span><span class="sc">*</span><span class="dv">2</span>, <span class="at">repr.plot.height=</span><span class="dv">5</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">las =</span> <span class="dv">1</span>, <span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
@@ -1053,10 +580,9 @@ P(X&lt;35)=\int_{0}^{35}\frac{1}{1.5 \sqrt{2\pi}} e\left\{\frac{-(x-37)^2}{2(1.5
 <span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>  <span class="at">cex =</span> <span class="fl">1.5</span></span>
 <span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2.1_funciones_distribucion_densidad_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+<p><img src="2.1_funciones_distribucion_densidad_code_only_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<p>El área se obtiene en R con el siguiente código, que usa la cdf normal, <code>pnorm</code>. El primer argumento es el <em>cuantil</em> <code>q</code>, el valor en el eje <em>x</em> del cual queremos saber el área bajo la curva.</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="at">q =</span> <span class="dv">35</span>, <span class="at">mean =</span> <span class="dv">37</span>, <span class="at">sd =</span> <span class="fl">1.5</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ¿cuál sería la probabilidad de tener 37 o menos?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1064,7 +590,6 @@ P(X&lt;35)=\int_{0}^{35}\frac{1}{1.5 \sqrt{2\pi}} e\left\{\frac{-(x-37)^2}{2(1.5
 0.0912112197258678
 </div>
 </div>
-<p>Equivalentemente, en R se puede integrar la pdf con integración numérica</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">integrate</span>(</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  dnorm, <span class="co"># el primer argumento de integrate es la función que se va a integrar</span></span>
@@ -1077,10 +602,6 @@ P(X&lt;35)=\int_{0}^{35}\frac{1}{1.5 \sqrt{2\pi}} e\left\{\frac{-(x-37)^2}{2(1.5
 <pre><code>0.09121122 with absolute error &lt; 6.7e-10</code></pre>
 </div>
 </div>
-<p>En Python se obtiene con</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>scipy.stats.norm(<span class="dv">37</span>, <span class="fl">1.5</span>).cdf(<span class="dv">35</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
 
 </main>
 <!-- /main column -->

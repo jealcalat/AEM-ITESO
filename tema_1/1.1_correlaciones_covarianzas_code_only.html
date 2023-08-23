@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.361">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>correlaciones_covarianzas_code_only</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="1.1_correlaciones_covarianzas_code_only_files/libs/clipboard/clipboard.min.js"></script>
+<script src="1.1_correlaciones_covarianzas_code_only_files/libs/quarto-html/quarto.js"></script>
+<script src="1.1_correlaciones_covarianzas_code_only_files/libs/quarto-html/popper.min.js"></script>
+<script src="1.1_correlaciones_covarianzas_code_only_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="1.1_correlaciones_covarianzas_code_only_files/libs/quarto-html/anchor.min.js"></script>
+<link href="1.1_correlaciones_covarianzas_code_only_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="1.1_correlaciones_covarianzas_code_only_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="1.1_correlaciones_covarianzas_code_only_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="1.1_correlaciones_covarianzas_code_only_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="1.1_correlaciones_covarianzas_code_only_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> linregress</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># rho only measures linear dependence, not dependence in general</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fun_quadratic(x):</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    xmax <span class="op">=</span> np.<span class="bu">max</span>(x)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x <span class="op">*</span> (xmax <span class="op">-</span> x) <span class="op">+</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.1</span> <span class="op">*</span> xmax, <span class="bu">len</span>(x))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">456</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">10</span>, <span class="fl">0.1</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> fun_quadratic(x)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>plt.scatter(x, y, color<span class="op">=</span><span class="st">'blue'</span>, s<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>slope, intercept, _, _, _ <span class="op">=</span> linregress(x, y)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>plt.plot(x, intercept <span class="op">+</span> slope <span class="op">*</span> x, color<span class="op">=</span><span class="st">'red'</span>)  <span class="co"># linear regression line</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Print correlation</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"La correlación es de </span><span class="sc">{</span>np<span class="sc">.</span>corrcoef(x, y)[<span class="dv">0</span>, <span class="dv">1</span>]<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="1.1_correlaciones_covarianzas_code_only_files/figure-html/cell-2-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>La correlación es de 0.011</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the data from the URL, the California housing dataset</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. longitude: A measure of how far west a house is; a higher value is farther west</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. latitude: A measure of how far north a house is; a higher value is farther north</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. housingMedianAge: Median age of a house within a block; a lower number is a newer building</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. totalRooms: Total number of rooms within a block</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. totalBedrooms: Total number of bedrooms within a block</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 6. population: Total number of people residing within a block</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 7. households: Total number of households, a group of people residing within a home unit, for a block</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 8. medianIncome: Median income for households within a block of houses (measured in tens of thousands of US Dollars)</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 9. medianHouseValue: Median house value for households within a block (measured in US Dollars)</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 10. oceanProximity: Location of the house w.r.t ocean/sea</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>housing <span class="op">=</span> pd.read_csv(<span class="st">'https://raw.githubusercontent.com/ageron/handson-ml/master/datasets/housing/housing.csv'</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># See the structure of the data</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(housing.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   longitude  latitude  housing_median_age  total_rooms  total_bedrooms  \
+0    -122.23     37.88                41.0        880.0           129.0   
+1    -122.22     37.86                21.0       7099.0          1106.0   
+2    -122.24     37.85                52.0       1467.0           190.0   
+3    -122.25     37.85                52.0       1274.0           235.0   
+4    -122.25     37.85                52.0       1627.0           280.0   
+
+   population  households  median_income  median_house_value ocean_proximity  
+0       322.0       126.0         8.3252            452600.0        NEAR BAY  
+1      2401.0      1138.0         8.3014            358500.0        NEAR BAY  
+2       496.0       177.0         7.2574            352100.0        NEAR BAY  
+3       558.0       219.0         5.6431            341300.0        NEAR BAY  
+4       565.0       259.0         3.8462            342200.0        NEAR BAY  </code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>housing.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">longitude</th>
+<th data-quarto-table-cell-role="th">latitude</th>
+<th data-quarto-table-cell-role="th">housing_median_age</th>
+<th data-quarto-table-cell-role="th">total_rooms</th>
+<th data-quarto-table-cell-role="th">total_bedrooms</th>
+<th data-quarto-table-cell-role="th">population</th>
+<th data-quarto-table-cell-role="th">households</th>
+<th data-quarto-table-cell-role="th">median_income</th>
+<th data-quarto-table-cell-role="th">median_house_value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>20640.000000</td>
+<td>20640.000000</td>
+<td>20640.000000</td>
+<td>20640.000000</td>
+<td>20433.000000</td>
+<td>20640.000000</td>
+<td>20640.000000</td>
+<td>20640.000000</td>
+<td>20640.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>-119.569704</td>
+<td>35.631861</td>
+<td>28.639486</td>
+<td>2635.763081</td>
+<td>537.870553</td>
+<td>1425.476744</td>
+<td>499.539680</td>
+<td>3.870671</td>
+<td>206855.816909</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>2.003532</td>
+<td>2.135952</td>
+<td>12.585558</td>
+<td>2181.615252</td>
+<td>421.385070</td>
+<td>1132.462122</td>
+<td>382.329753</td>
+<td>1.899822</td>
+<td>115395.615874</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>-124.350000</td>
+<td>32.540000</td>
+<td>1.000000</td>
+<td>2.000000</td>
+<td>1.000000</td>
+<td>3.000000</td>
+<td>1.000000</td>
+<td>0.499900</td>
+<td>14999.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>-121.800000</td>
+<td>33.930000</td>
+<td>18.000000</td>
+<td>1447.750000</td>
+<td>296.000000</td>
+<td>787.000000</td>
+<td>280.000000</td>
+<td>2.563400</td>
+<td>119600.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>-118.490000</td>
+<td>34.260000</td>
+<td>29.000000</td>
+<td>2127.000000</td>
+<td>435.000000</td>
+<td>1166.000000</td>
+<td>409.000000</td>
+<td>3.534800</td>
+<td>179700.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>-118.010000</td>
+<td>37.710000</td>
+<td>37.000000</td>
+<td>3148.000000</td>
+<td>647.000000</td>
+<td>1725.000000</td>
+<td>605.000000</td>
+<td>4.743250</td>
+<td>264725.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>-114.310000</td>
+<td>41.950000</td>
+<td>52.000000</td>
+<td>39320.000000</td>
+<td>6445.000000</td>
+<td>35682.000000</td>
+<td>6082.000000</td>
+<td>15.000100</td>
+<td>500001.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a list of all variables except ocean proximity</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>vars_to_plot <span class="op">=</span> [var <span class="cf">for</span> var <span class="kw">in</span> housing.columns <span class="cf">if</span> var <span class="op">!=</span> <span class="st">'ocean_proximity'</span>]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a figure and a subplot for each variable</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="bu">len</span>(vars_to_plot), ncols<span class="op">=</span><span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">20</span>),constrained_layout<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot a histogram for each variable</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, var <span class="kw">in</span> <span class="bu">enumerate</span>(vars_to_plot):</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    axes[i].hist(housing[var])</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    axes[i].set_title(var)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plot</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="1.1_correlaciones_covarianzas_code_only_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Variables del data set housing</p>
+<p>households: número de hogares en el bloque censal</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the correlation matrix excluding 'ocean_proximity'</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>corr_matrix <span class="op">=</span> housing.drop(<span class="st">'ocean_proximity'</span>, axis<span class="op">=</span><span class="dv">1</span>).corr()</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a heatmap of the correlation matrix</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>sns.heatmap(corr_matrix, annot<span class="op">=</span><span class="va">True</span>, cmap<span class="op">=</span><span class="st">'coolwarm'</span>, vmin<span class="op">=-</span><span class="dv">1</span>, vmax<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Correlation Matrix (Correlogram) of Housing Variables'</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="1.1_correlaciones_covarianzas_code_only_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>corr_matrix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">longitude</th>
+<th data-quarto-table-cell-role="th">latitude</th>
+<th data-quarto-table-cell-role="th">housing_median_age</th>
+<th data-quarto-table-cell-role="th">total_rooms</th>
+<th data-quarto-table-cell-role="th">total_bedrooms</th>
+<th data-quarto-table-cell-role="th">population</th>
+<th data-quarto-table-cell-role="th">households</th>
+<th data-quarto-table-cell-role="th">median_income</th>
+<th data-quarto-table-cell-role="th">median_house_value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">longitude</td>
+<td>1.000000</td>
+<td>-0.924664</td>
+<td>-0.108197</td>
+<td>0.044568</td>
+<td>0.069608</td>
+<td>0.099773</td>
+<td>0.055310</td>
+<td>-0.015176</td>
+<td>-0.045967</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">latitude</td>
+<td>-0.924664</td>
+<td>1.000000</td>
+<td>0.011173</td>
+<td>-0.036100</td>
+<td>-0.066983</td>
+<td>-0.108785</td>
+<td>-0.071035</td>
+<td>-0.079809</td>
+<td>-0.144160</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">housing_median_age</td>
+<td>-0.108197</td>
+<td>0.011173</td>
+<td>1.000000</td>
+<td>-0.361262</td>
+<td>-0.320451</td>
+<td>-0.296244</td>
+<td>-0.302916</td>
+<td>-0.119034</td>
+<td>0.105623</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">total_rooms</td>
+<td>0.044568</td>
+<td>-0.036100</td>
+<td>-0.361262</td>
+<td>1.000000</td>
+<td>0.930380</td>
+<td>0.857126</td>
+<td>0.918484</td>
+<td>0.198050</td>
+<td>0.134153</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">total_bedrooms</td>
+<td>0.069608</td>
+<td>-0.066983</td>
+<td>-0.320451</td>
+<td>0.930380</td>
+<td>1.000000</td>
+<td>0.877747</td>
+<td>0.979728</td>
+<td>-0.007723</td>
+<td>0.049686</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">population</td>
+<td>0.099773</td>
+<td>-0.108785</td>
+<td>-0.296244</td>
+<td>0.857126</td>
+<td>0.877747</td>
+<td>1.000000</td>
+<td>0.907222</td>
+<td>0.004834</td>
+<td>-0.024650</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">households</td>
+<td>0.055310</td>
+<td>-0.071035</td>
+<td>-0.302916</td>
+<td>0.918484</td>
+<td>0.979728</td>
+<td>0.907222</td>
+<td>1.000000</td>
+<td>0.013033</td>
+<td>0.065843</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">median_income</td>
+<td>-0.015176</td>
+<td>-0.079809</td>
+<td>-0.119034</td>
+<td>0.198050</td>
+<td>-0.007723</td>
+<td>0.004834</td>
+<td>0.013033</td>
+<td>1.000000</td>
+<td>0.688075</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">median_house_value</td>
+<td>-0.045967</td>
+<td>-0.144160</td>
+<td>0.105623</td>
+<td>0.134153</td>
+<td>0.049686</td>
+<td>-0.024650</td>
+<td>0.065843</td>
+<td>0.688075</td>
+<td>1.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sort the correlation matrix by the correlation with median_house_value</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>corr_matrix[<span class="st">'median_house_value'</span>].sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>median_house_value    1.000000
+median_income         0.688075
+total_rooms           0.134153
+housing_median_age    0.105623
+households            0.065843
+total_bedrooms        0.049686
+population           -0.024650
+longitude            -0.045967
+latitude             -0.144160
+Name: median_house_value, dtype: float64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>correlations <span class="op">=</span> corr_matrix[<span class="st">'median_house_value'</span>].sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>correlations[correlations.<span class="bu">abs</span>() <span class="op">&gt;</span> <span class="fl">0.1</span>].sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>median_house_value    1.000000
+median_income         0.688075
+total_rooms           0.134153
+housing_median_age    0.105623
+latitude             -0.144160
+Name: median_house_value, dtype: float64</code></pre>
+</div>
+</div>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

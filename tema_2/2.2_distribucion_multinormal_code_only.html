@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2. Modelos de distribución multivariados</title>
+<title>distribucion_multinormal_code_only</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,22 +57,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="2.2_distribucion_multinormal_files/libs/clipboard/clipboard.min.js"></script>
-<script src="2.2_distribucion_multinormal_files/libs/quarto-html/quarto.js"></script>
-<script src="2.2_distribucion_multinormal_files/libs/quarto-html/popper.min.js"></script>
-<script src="2.2_distribucion_multinormal_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="2.2_distribucion_multinormal_files/libs/quarto-html/anchor.min.js"></script>
-<link href="2.2_distribucion_multinormal_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="2.2_distribucion_multinormal_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="2.2_distribucion_multinormal_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="2.2_distribucion_multinormal_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="2.2_distribucion_multinormal_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="2.2_distribucion_multinormal_code_only_files/libs/clipboard/clipboard.min.js"></script>
+<script src="2.2_distribucion_multinormal_code_only_files/libs/quarto-html/quarto.js"></script>
+<script src="2.2_distribucion_multinormal_code_only_files/libs/quarto-html/popper.min.js"></script>
+<script src="2.2_distribucion_multinormal_code_only_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="2.2_distribucion_multinormal_code_only_files/libs/quarto-html/anchor.min.js"></script>
+<link href="2.2_distribucion_multinormal_code_only_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="2.2_distribucion_multinormal_code_only_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="2.2_distribucion_multinormal_code_only_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="2.2_distribucion_multinormal_code_only_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="2.2_distribucion_multinormal_code_only_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -82,46 +80,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">2. Modelos de distribución multivariados</h1>
-</div>
 
 
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-</header>
-
-<p align="right">
-Autor: Emmanuel Alcalá <br> <a href="https://scholar.google.com.mx/citations?hl=en&amp;user=3URusCgAAAAJ&amp;view_op=list_works&amp;sortby=pubdate">Google Scholar</a>
-</p>
-<p align="left">
-<br> <a href="https://jealcalat.github.io/Analisis_multivariado/">Regresar a la página del curso</a>
-</p>
-<hr>
 <div class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cargar algunas funciones que se utilizarán para simular y graficar</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>source(<span class="st">"../r_scripts/utilities.r"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="distribución-multinormal" class="level2">
-<h2 class="anchored" data-anchor-id="distribución-multinormal">2.2. Distribución multinormal</h2>
-<p>Ya vimos que para la distribución normal univariada, la función de densidad está dada por</p>
-<p><span class="math display">\[
-  p(x) = \frac{1}{\sigma \sqrt{2\pi}} e\left\{\frac{-(x-\mu)^2}{2\sigma^2}\right\}  \tag{8}
-\]</span></p>
-<p>Cuando <span class="math inline">\(\mu = 0, \sigma = 1\)</span>, la ecuación (8) es una distribución especial llamada <em>distribución normal estándar</em>. La distribución normal estándar <span class="math inline">\(\mathcal{N}(0, 1)\)</span> tiene ciertas propiedades interesantes:</p>
-<ol type="1">
-<li>En el intervalo <span class="math inline">\(\left[\mu - \sigma, \mu + \sigma \right]\)</span> se cubre el 0.683 del área total, es decir, <span class="math inline">\(p(\mu - \sigma \leq X \leq \mu + \sigma) \approx 0.68\)</span>.</li>
-<li>En el intervalo <span class="math inline">\(\left[\mu - 2\sigma, \mu + 2\sigma \right]\)</span> se cubre el .954 del área total.</li>
-<li>El área en <span class="math inline">\(X \leq \mu - \sigma\)</span> es <span class="math inline">\(1 - p(X &gt; \mu - \sigma)\)</span></li>
-</ol>
 <div class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dado que la distribución es simétrica, p(mu - sigma &lt;= X &lt;= mu+sigma)</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># la región mu-sigma es igual que mu+sigma, por lo tanto, es suficiente</span></span>
@@ -215,74 +179,9 @@ Autor: Emmanuel Alcalá <br> <a href="https://scholar.google.com.mx/citations?hl
 <span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>  label <span class="op">=</span> glue::glue(<span class="st">"sum = {(0.954 - 0.683)} + 0.683 = {0.683 + (0.954 - 0.683)}"</span>)</span>
 <span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2.2_distribucion_multinormal_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
+<p><img src="2.2_distribucion_multinormal_code_only_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<p>El término en el exponente en la ecuación (8)</p>
-<p><span class="math display">\[
-  \frac{(x-\mu)^2}{2\sigma^2}
-\]</span></p>
-<p>Puede ser convenientemente reescrito como</p>
-<p><span class="math display">\[
-  \frac{(x-\mu)^2}{2\sigma^2} = (x - \mu)(\sigma^2)^{-1}(x-\mu)
-\]</span></p>
-<p>Para mostrar que este término mide el cuadrado de la distancia entre <span class="math inline">\(x\)</span> y <span class="math inline">\(\mu\)</span> en unidades de desviación estándar. Esta distancia ser generalizada para un vector <span class="math inline">\(\mathbf{x} \in \mathbb{R}^D\)</span> de <span class="math inline">\(D\)</span> variables como</p>
-<p><span class="math display">\[
-  (\mathbf{x}-\boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu}) \tag{9}
-\]</span></p>
-<p>A la ecuación (9) se le conoce como distancia de Mahalanobis (en realidad, el cuadrado de la distancia de Mahalanobis), que es la distancia entre un punto y su distribución (univariada o multivariada). El significado de los parámetros se describe en la siguiente sección.</p>
-<section id="distribución-bivariada" class="level3">
-<h3 class="anchored" data-anchor-id="distribución-bivariada">2.2.1. Distribución bivariada</h3>
-<p>La distribución normal multivariada (MVN) se caracteriza completamente por el vector de medias <span class="math inline">\(\boldsymbol{\mu}\)</span> y la matriz de covarianzas <span class="math inline">\(\boldsymbol{\Sigma}\)</span></p>
-<p><span class="math display">\[
-  p(\mathbf{x} \mid \boldsymbol{\mu},\boldsymbol{\Sigma}) = \frac{1}{(2\pi)^{D/2}|\boldsymbol{\Sigma}|^{1/2}}e\left\{ -\frac{1}{2}(\boldsymbol{y}-\boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1}(\boldsymbol{y}-\boldsymbol{\mu}) \right\} \tag{10}
-\]</span></p>
-<p>En donde <span class="math inline">\(\boldsymbol{\mu}=\mathbb{E}[y]\)</span> y <span class="math inline">\(D=\text{dim}(\boldsymbol{y})\)</span> (la dimensión de <span class="math inline">\(\boldsymbol{y}\)</span>; en el caso de una normal bivariada <span class="math inline">\(D=2\)</span>). <span class="math inline">\(\boldsymbol{\Sigma}\)</span> es la matriz simétrica <span class="math inline">\(D\times D\)</span> de covarianza. En <span class="math inline">\(D=2\)</span> (bivariada), <span class="math inline">\(\boldsymbol{\Sigma}\)</span> es</p>
-<p><span class="math display">\[
-  \boldsymbol{\Sigma} = \begin{bmatrix}
-  \sigma_1^2 &amp; \sigma_{12}^2\\
-  \sigma_{21}^2 &amp; \sigma_{2}^2
-  \end{bmatrix}
-\]</span></p>
-<p>Como se vio en la lección 1, el coeficiente de correlación <span class="math inline">\(\rho\)</span> es igual a la covarianza <span class="math inline">\(\sigma_{12}^2\)</span> dividida por el producto de las desviaciones estándar <span class="math inline">\(\sigma_1\sigma_2\)</span></p>
-<p><span class="math display">\[
-  \rho_{X_1,X_2} = \frac{\sigma_{12}^2}{\sigma_1\sigma_2}
-\]</span></p>
-<p>Por lo que, despejando, tenemos <span class="math inline">\(\sigma_{12}^2 = \rho\sigma_1\sigma_2\)</span>. La matriz de covarianzas puede ser reescrita como</p>
-<p><span class="math display">\[
-  \boldsymbol{\Sigma} = \begin{bmatrix}
-  \sigma_1^2 &amp; \rho\sigma_1\sigma_2\\
-  \rho\sigma_1\sigma_2 &amp; \sigma_{2}^2
-  \end{bmatrix} \tag{11}
-\]</span></p>
-<p>El determinante <span class="math inline">\(|\Sigma|\)</span> para la bivariada es, de acuerdo con la ecuación (2)</p>
-<p><span class="math display">\[
-\begin{align*}
-  \text{det}(\Sigma) &amp;= \sigma_1^2\sigma_2^2 - (\rho\sigma_1\sigma_2)^2\\
-                     &amp;= \sigma_1^2\sigma_2^2 - \rho^2\sigma_1^2\sigma_2^2\\
-                     &amp;= \sigma_1^2\sigma_2^2(1-\rho^2) \tag{12}
-\end{align*}
-\]</span></p>
-<p>Esta forma de representar la distribución bivariada (aplica también para al MVN) enfatiza la influencia de la correlación en la pdf conjunta. En la siguiente sección simulamos dicha influencia.</p>
-<p><strong>Propiedades de la MVN</strong>:</p>
-<ol type="1">
-<li>Las combinaciones lineales de los componentes de <span class="math inline">\(\mathbf{x}\sim \mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma})\)</span> también están distribuidas normalmente, <span class="math inline">\(\mathbf{a^\top x} = a_1x_1 + \dots + a_Dx_D \sim \mathcal{N}(\boldsymbol{a^\top\mu}, \boldsymbol{a^\top\Sigma})\)</span></li>
-<li>Covarianza de cero implica que los componentes de <span class="math inline">\(\mathbf{x}\)</span> están distribuidos independientemente.</li>
-<li>Las distribuciones condicionales de los componentes, e.g., <span class="math inline">\(x_1 | x_2\)</span> (<span class="math inline">\(x_1\)</span> dado <span class="math inline">\(x_2\)</span>), también están distribuidas normalmente, con media <span class="math inline">\(\mu_1 + \frac{\sigma_{12}}{\sigma_{22}}(x_2 - \mu_2)\)</span> y desviación estándar <span class="math inline">\(\sigma_{11}(1-\rho_{12}^2)\)</span> (para el caso de la bivariada, <span class="math inline">\(\rho_{12}=\rho\)</span>), es decir, <span class="math display">\[
-x_1|x_2 \sim \mathcal{N}\left(%
-  \mu_1 + \frac{\sigma_{12}}{\sigma_{22}}(x_2 - \mu_2),\sigma_{11}(1-\rho_{12}^2)%
-  \right)
-\]</span></li>
-</ol>
-<section id="muestras-bivariadas" class="level4">
-<h4 class="anchored" data-anchor-id="muestras-bivariadas">Muestras bivariadas</h4>
-<p>Algoritmo para generar muestras <span class="math inline">\(\mathbf{x} \sim \mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma})\)</span><a name="cite_ref-1" href=""></a><a href="#cite_note-1"><sup>[1]</sup></a> con media aribitraria <span class="math inline">\(\mathbf{x}\)</span> y matriz de covarianza <span class="math inline">\(\boldsymbol{\Sigma}\)</span> con generador gaussiano (i.e., normal):</p>
-<ol type="1">
-<li>Computar la <a href="../Preliminares_AL.ipynb">factorización de Cholesky</a> <span class="math inline">\(L\)</span> de una matriz positiva definida <span class="math inline">\(\boldsymbol{\Sigma}=LL^\top\)</span>, en donde <span class="math inline">\(L\)</span> es la matriz <a href="../Preliminares_AL.ipynb">triangular inferior</a>.</li>
-<li>Generar una muestra <span class="math inline">\(\mathbf{u} \sim \mathcal{N}(\mathbf{0}, I)\)</span> (normal estándar).</li>
-<li>Computar <span class="math inline">\(\mathbf{x} = \boldsymbol{\mu} + L\mathbf{u}\)</span>, que tendrá la distribución deseada.</li>
-</ol>
-<p><a name="cite_note-1" href=""></a>1. [^](#cite_ref-1) C. E. Rasmussen &amp; C. K. I. Williams (2006). <em>Gaussian Processes for Machine Learning</em>. The MIT Press, 2006</p>
 <div class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>options(<span class="bu">repr</span>.plot.width <span class="op">=</span> <span class="dv">7</span>, <span class="bu">repr</span>.plot.height <span class="op">=</span> <span class="dv">6</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>rho <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">0.6</span></span>
@@ -329,24 +228,9 @@ x_1|x_2 \sim \mathcal{N}\left(%
 </table>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="2.2_distribucion_multinormal_files/figure-html/cell-5-output-2.png" class="img-fluid"></p>
+<p><img src="2.2_distribucion_multinormal_code_only_files/figure-html/cell-5-output-2.png" class="img-fluid"></p>
 </div>
 </div>
-<p>Ahora vamos a evaluar el efecto de <span class="math inline">\(\rho\)</span> sobre la distribución bivariada. Primero, recordar de la ecuación (9)</p>
-<p><span class="math display">\[
-  d_M^2 = (\mathbf{x}-\boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu}) \tag{9}
-\]</span></p>
-<p>Es la distancia cuadrada de Mahalanobis, que mide la distancia de un punto <span class="math inline">\(p=(x_1, x_2)\)</span> al centroide $ = $, considerando la correlación, a diferencia de la distancia euclideana. Notar que, dado que depende de <span class="math inline">\(\boldsymbol{\Sigma}\)</span>, está influenciada por la correlación.</p>
-<p>Vamos a notar algunas cosas sobre <span class="math inline">\(d_M^2\)</span>:</p>
-<ol type="1">
-<li>Todos los valores de <span class="math inline">\(\mathbf{x}\)</span> cuyo valor de <span class="math inline">\(d_M^2\)</span> son iguales tienen la misma densidad <span class="math inline">\(f(\mathbf{x})\)</span>.</li>
-<li>A medida que <span class="math inline">\(d_M^2\)</span> incrementa, <span class="math inline">\(f(\mathbf{x})\)</span> <em>decrece</em>.</li>
-<li>A medida que <span class="math inline">\(d_M^2\)</span> incrementa la distancia entre <span class="math inline">\(\mathbf{x}\)</span> y <span class="math inline">\(\boldsymbol{\mu}\)</span> incrementa, esto equivale a que un valor se mueva hacia las colas de una distribución.</li>
-<li>La variable <span class="math inline">\(d_M^2\)</span> tiene una distribución <span class="math inline">\(\chi^2\)</span> con <span class="math inline">\(p\)</span> grados de libertad, en donde <span class="math inline">\(p\)</span> es la dimensión de <span class="math inline">\(\mathbf{x}\)</span>. Se pueden obtener valores de <span class="math inline">\(d_M\)</span> obteniendo el valor en <span class="math inline">\(x\)</span> de la distribución acumulada de <span class="math inline">\(\chi^2\)</span> que corresponde a un cuantil (una proporción del área bajo la curva). Abajo se ilustra la forma de una distribución de <span class="math inline">\(\chi^2\)</span> con 3 grados de libertad.</li>
-<li>El cuantil en <span class="math inline">\(\chi^2(1-\alpha,df=p)\)</span> corresponde al cuadrado del radio de un (hiper)-elipse, en donde <span class="math inline">\(1-\alpha\)</span> es un nivel de significancia (una densidad de probabilidad).</li>
-</ol>
-<p>Los puntos 2 y 3 permiten obtener una aplicación interesante: dado que los puntos se alejan del centro de la distribución, un punto que tenga una distancia de Mahalanobis probablemente no pertenece a la distribución, es decir es un outlier.</p>
-<p>Los puntos 4 y 5 permite construir elipses de confianza (análogos a los intervalos de confianza para 2D), lo que facilita la visualización.</p>
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>options(<span class="bu">repr</span>.plot.width<span class="op">=</span><span class="dv">7</span>, <span class="bu">repr</span>.plot.height<span class="op">=</span><span class="dv">5</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>par(</span>
@@ -363,7 +247,7 @@ x_1|x_2 \sim \mathcal{N}\left(%
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  col <span class="op">=</span> <span class="st">'blue'</span></span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2.2_distribucion_multinormal_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
+<p><img src="2.2_distribucion_multinormal_code_only_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <div class="cell" data-execution_count="28">
@@ -396,7 +280,7 @@ x_1|x_2 \sim \mathcal{N}\left(%
 <span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  plot_ellipse(x, rad, colores <span class="op">=</span> c(<span class="st">"navy"</span>, <span class="st">"red"</span>))</span>
 <span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2.2_distribucion_multinormal_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
+<p><img src="2.2_distribucion_multinormal_code_only_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <div class="cell" data-execution_count="29">
@@ -452,110 +336,9 @@ x_1|x_2 \sim \mathcal{N}\left(%
 <span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>  lwd <span class="op">=</span> <span class="dv">2</span></span>
 <span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2.2_distribucion_multinormal_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+<p><img src="2.2_distribucion_multinormal_code_only_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<p>Notar que los eigenvectores son ortogonales entre sí (su producto punto es 0, <code>eigVec[,1] %*% eigVec[,2]</code>). Luego en el tema de PCA veremos que el eigenvector correspondiente al eigenvalor más largo corresponde al componente principal 1, que es el componente en una matriz en donde existe mayor variación.</p>
-<p><strong>Ejemplo</strong></p>
-<p>Suponer una distribución bivariada normal <span class="math inline">\(X\sim \mathcal{N}(\bm\mu, \Sigma)\)</span> con centroide</p>
-<p><span class="math display">\[
-  \boldsymbol{\mu} = \begin{bmatrix}
-  3.1 \\ 3.0
-  \end{bmatrix}
-\]</span></p>
-<p>Y matriz de covarianzas</p>
-<p><span class="math display">\[
-  \Sigma = \begin{bmatrix}
-    0.7163324 &amp; 0.6876791\\
-    0.6876791 &amp; 1.0601719
-  \end{bmatrix}
-\]</span></p>
-<p>Cuya inversa <span class="math inline">\(\Sigma^{-1}\)</span> (ver los Preliminares de esta Notebook)</p>
-<p><span class="math display">\[
-  \Sigma^{-1}=\begin{bmatrix}
-    3.7 &amp; -2.4\\
-   -2.4 &amp; 2.5
-  \end{bmatrix}
-\]</span></p>
-<ol type="1">
-<li>Encontrar la distancia euclideana de los puntos <span class="math inline">\(p_1 = (5, 5), p_2 = (5, 2)\)</span> con respecto a <span class="math inline">\(\bm\mu\)</span>.</li>
-<li>Encontrar <span class="math inline">\(d_M\)</span>, la distancia cuadrática de Malahanobis.</li>
-<li>Verificar si <span class="math inline">\(p_1, p_2\)</span> son outliers de acuerdo a <span class="math inline">\(d_M\)</span> y su distribución, al <span class="math inline">\(\alpha = 0.05\)</span> de confianza.</li>
-</ol>
-<p><em>Solución</em></p>
-<ol type="1">
-<li>Con respecto a <span class="math inline">\(\bm\mu\)</span>, tenemos para <span class="math inline">\(p_1\)</span></li>
-</ol>
-<p><span class="math display">\[
-  d_E = \sqrt{(5-3.1)^2 + (5-3)^2} = 2.7586
-\]</span></p>
-<p>y para <span class="math inline">\(p_2\)</span></p>
-<p><span class="math display">\[
-  d_E = \sqrt{(5-3.1)^2 + (2-3)^2} = 2.147
-\]</span></p>
-<p>Ambos puntos están muy próximos al centroide.</p>
-<ol start="2" type="1">
-<li>Para la distancia de Malahanobis, usamos su definición (9)</li>
-</ol>
-<p><span class="math display">\[
-  d_M = \sqrt{(\mathbf{x}-\boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu})}
-\]</span></p>
-<p>Para <span class="math inline">\(p_1\)</span> da</p>
-<p><span class="math display">\[
-  d_M = \sqrt{
-    \begin{bmatrix}
-    5-3.1\\
-    5-3
-    \end{bmatrix}^\top
-    \begin{bmatrix}
-    3.7 &amp; -2.4\\
-   -2.4 &amp; 2.5
-    \end{bmatrix}
-    \begin{bmatrix}
-    5-3.1\\
-    5-3
-    \end{bmatrix}
-  } = \sqrt{
-    \begin{bmatrix}
-    1.9 &amp; 2
-    \end{bmatrix}
-    \begin{bmatrix}
-    3.7 &amp; -2.4\\
-   -2.4 &amp; 2.5
-    \end{bmatrix}
-    \begin{bmatrix}
-    1.9 \\ 2
-    \end{bmatrix}
-  } = \sqrt{5.117} = 2.26
-\]</span></p>
-<p>Para <span class="math inline">\(p_2\)</span></p>
-<p><span class="math display">\[
-  d_M = \sqrt{
-    \begin{bmatrix}
-    5-3.1\\
-    2-3
-    \end{bmatrix}^\top
-    \begin{bmatrix}
-    3.7 &amp; -2.4\\
-   -2.4 &amp; 2.5
-    \end{bmatrix}
-    \begin{bmatrix}
-    5-3.1\\
-    2-3
-    \end{bmatrix}
-  } = \sqrt{
-    \begin{bmatrix}
-    1.9 &amp; -1
-    \end{bmatrix}
-    \begin{bmatrix}
-    3.7 &amp; -2.4\\
-   -2.4 &amp; 2.5
-    \end{bmatrix}
-    \begin{bmatrix}
-    1.9 \\ -1
-    \end{bmatrix}
-  } = \sqrt{24.977} = 4.9976
-\]</span></p>
 <div class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># En R lo anterior sería</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># matriz inversa</span></span>
@@ -598,7 +381,6 @@ x_1|x_2 \sim \mathcal{N}\left(%
 </table>
 </div>
 </div>
-<p>Verificamos ahora si <span class="math inline">\(p_1, p_2\)</span> son outliers considerando que la distancia de Mahalanobis al cuadrado tiene distribución <span class="math inline">\(\chi^2\)</span> con <span class="math inline">\(1-\alpha\)</span> nivel de significancia y <span class="math inline">\(\dim(X)=2\)</span> grados de libertad. En R <code>qchisq(1-alfa, 2)</code> nos da el valor de <span class="math inline">\(d_M^2\)</span> al <span class="math inline">\(1-\alpha\)</span> de confianza, por lo que si le sacamos la raíz cuadrada obtendríamos el valor <span class="math inline">\(d_M\)</span> <em>teórico</em> con el que sería igual, o por encima del cual, nuestro punto <span class="math inline">\(p_i\)</span> podría ser un outlier.</p>
 <div class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>d_teorico_cuadratico <span class="op">&lt;-</span> qchisq(<span class="dv">1</span> <span class="op">-</span> <span class="fl">0.05</span>, <span class="dv">2</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sqrt(d_teorico_cuadratico)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -606,17 +388,6 @@ x_1|x_2 \sim \mathcal{N}\left(%
 2.44774683068082
 </div>
 </div>
-<p>Vemos que <span class="math inline">\(d_M\)</span> de <span class="math inline">\(p_1\)</span> es menor a este valor, pero <span class="math inline">\(d_M\)</span> de <span class="math inline">\(p_2\)</span> (4.99) no lo es. Por lo tanto, al <span class="math inline">\(1-\alpha\)</span> de confianza, concluimos que <span class="math inline">\(p_2\)</span> es un outlier.</p>
-</section>
-<section id="gráficos-marginales-usando" class="level4">
-<h4 class="anchored" data-anchor-id="gráficos-marginales-usando">Gráficos marginales usando</h4>
-<p>Los gráficos de histogramas marginales al gráfico de dispersión pueden aportar información adicional que no es del todo visible con el mero gráfico de dispersión. Por ejemplo, la existencia de outliers, la normalidad de las distribuciones marginales, etc.</p>
-<ol type="1">
-<li>Opción <code>{ggplot}</code> y <code>{ggExtra}</code>.</li>
-<li>Opción <code>{base}</code> usando la función <code>scatter_marginal()</code> personalizada del script <code>utilities</code>.</li>
-</ol>
-<section id="opción-1" class="level5">
-<h5 class="anchored" data-anchor-id="opción-1">Opción 1</h5>
 <div class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>library(tidyverse)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>library(ggExtra)</span>
@@ -641,12 +412,9 @@ Warning message:
   Please report the issue at &lt;https://github.com/daattali/ggExtra/issues&gt;.”</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="2.2_distribucion_multinormal_files/figure-html/cell-11-output-2.png" class="img-fluid"></p>
+<p><img src="2.2_distribucion_multinormal_code_only_files/figure-html/cell-11-output-2.png" class="img-fluid"></p>
 </div>
 </div>
-</section>
-<section id="opción-2" class="level5">
-<h5 class="anchored" data-anchor-id="opción-2">Opción 2</h5>
 <div class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># revisar el código del script utilities.r</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>scatter_marginal(</span>
@@ -657,12 +425,9 @@ Warning message:
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  cex.lab <span class="op">=</span> <span class="fl">1.4</span></span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2.2_distribucion_multinormal_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+<p><img src="2.2_distribucion_multinormal_code_only_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<p>Ejemplo: Supongamos que tenemos un conjunto de datos de alturas y pesos de personas. Podemos modelar estas dos variables como una distribución multinormal, con una media de 170 cm y 70 kg, y una desviación estándar de 10 cm y 15 kg, respectivamente.</p>
-<p>Una vez que tenemos un modelo para las alturas y pesos, podemos usar Python para calcular la probabilidad de que una persona aleatoria tenga una altura entre 160 y 180 cm y un peso entre 60 y 80 kg. Para hacer esto, podemos usar la función <code>numpy.random.multivariate_normal()</code> para generar un número aleatorio de puntos a partir de la distribución multinormal. Luego, podemos usar la función numpy.where() para identificar los puntos que se encuentran dentro del rango deseado de alturas y pesos. Finalmente, podemos usar la función numpy.count_nonzero() para contar el número de puntos que se encuentran dentro del rango deseado.</p>
-<p>El siguiente código muestra cómo implementar este algoritmo en Python:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -684,10 +449,6 @@ Warning message:
 <span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(probability)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-</section>
-</section>
-</section>
 
 </main>
 <!-- /main column -->
