@@ -157,17 +157,13 @@ X(w, h) = \frac{w}{h^2}
 </ol>
 <p>Nota: generalmente, no se hace distinción entre una variable aleatoria y su realización. Por ejemplo, <span class="math inline">\(X\)</span> y <span class="math inline">\(x\)</span> se usan indistintamente para denotar la realización de una variable aleatoria. Así, aunque técnicamente deberíamos denotar la probabilidad de que el horno esté por debajo de 150 grados como <span class="math inline">\(P(X&lt;150)\)</span>, en la práctica, a menudo escribimos <span class="math inline">\(P(x&lt;150)\)</span>.</p>
 </section>
-</section>
-<section id="variables-aleatorias-y-sus-distribuciones" class="level2">
-<h2 class="anchored" data-anchor-id="variables-aleatorias-y-sus-distribuciones">2.1.1. Variables aleatorias y sus distribuciones</h2>
-<section id="va-discretas" class="level3">
-<h3 class="anchored" data-anchor-id="va-discretas">VA discretas</h3>
-<p>Si <span class="math inline">\(\mathcal{X}\)</span> es finito o contable infinito (cada miembro de <span class="math inline">\(\mathcal{X}\)</span> puede asociarse con un elemento de <span class="math inline">\(\mathbb{N}\)</span>), entonces <span class="math inline">\(X\)</span> es una variable aleatoria <em>discreta</em>. En este caso, denotamos la probabilidad de un evento que <span class="math inline">\(X\)</span> toma como <span class="math inline">\(\text{Pr}(X=x)\)</span>. Definimos la <strong>función de masa de probabilidad</strong> (<span class="math inline">\(\text{\sf pmf}\)</span> en inglés) como la función que computa la probabilidad de cada valor de la VA</p>
-<p><span class="math display">\[
-  p(x) \overset{\Delta}{=} \text{Pr}(X = x)
-\]</span></p>
-<p><span class="math inline">\(p(x)\)</span> satisface <span class="math inline">\(0\leq p(x) \leq 1\)</span> y <span class="math inline">\(\sum_{x\in \mathcal{X}} p(x) = 1\)</span>.</p>
-<p>Algunas propiedades de <span class="math inline">\(\Pr\)</span> son:</p>
+<section id="definición-de-probabilidad" class="level3">
+<h3 class="anchored" data-anchor-id="definición-de-probabilidad">Definición de probabilidad</h3>
+<p><strong>¿Qué es una probabilidad?</strong></p>
+<p><strong>Definición:</strong> La probabilidad es una medida que describe la posibilidad de que ocurra un evento en relación con la totalidad de posibles eventos. Se expresa numéricamente entre 0 y 1, donde 0 indica imposibilidad y 1 indica certeza.</p>
+<p><strong>Matemáticamente:</strong> Sea $ S $ un espacio muestral, es decir, el conjunto de todos los posibles resultados de un experimento, y $ A $ un evento específico que pertenece a $ S $. La probabilidad $ P(A) $ de que ocurra $ A $ se define como:</p>
+<p><span class="math display">\[ P(A) = \frac{\text{número de casos favorables para } A}{\text{número total de casos en } S} \]</span></p>
+<p>Algunas propiedades de las <span class="math inline">\(P()\)</span> son:</p>
 <ol type="1">
 <li>Si <span class="math inline">\(\emptyset\)</span> es un conjunto nulo, entonces <span class="math inline">\(\Pr(\emptyset)=0\)</span>.</li>
 <li>Si <span class="math inline">\(A \subset B\)</span>, entonces <span class="math inline">\(\Pr(A)\leq \Pr(B)\)</span>.</li>
@@ -176,10 +172,18 @@ X(w, h) = \frac{w}{h^2}
 <li>De otra manera, para eventos arbitrarios <span class="math inline">\(A, B\)</span>, <span class="math inline">\(\Pr(A \cup B)=\Pr(A) + \Pr(B)-\Pr(A\cap B)\)</span>.</li>
 <li>Dos eventos <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son independientes si <span class="math inline">\(\Pr(A \cup B)=\Pr(A)\Pr(B)\)</span>. Por ejemplo, lanzar una moneda dos veces. Cada lanzamiento es independiente del otro. Si queremos saber la probabilidad de que en ambos lanzamientos salga caras, esa probabilidad sería <span class="math inline">\(\Pr(H_1\cap H_2)=(1/2)(1/2)\)</span>.</li>
 </ol>
-<p>Podemos imaginarnos la distribución de probabilidad de muchas variables aleatorias como el llenado de un arreglo multidimensional. Por ejemplo, en la siguiente imagen (adaptado de MML-6.2)</p>
-<p align="center">
-<img src="./img/joint_dist_tikz.svg" width="40%">
-</p>
+</section>
+<section id="probabilidades-empíricas" class="level3">
+<h3 class="anchored" data-anchor-id="probabilidades-empíricas">Probabilidades empíricas</h3>
+<p>Podemos ilustrar varios conceptos de probabilidad utilizando un arreglo en dos dimensiones. Por ejemplo, en la siguiente imagen (adaptado de MML-6.2)</p>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, HTML</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>image_path <span class="op">=</span>  <span class="st">"img/joint_dist_tikz.png"</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">'&lt;div style="text-align: center;"&gt;&lt;img src="</span><span class="sc">{}</span><span class="st">" width="30%"/&gt;&lt;/div&gt;'</span>.<span class="bu">format</span>(image_path)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div style="text-align: center;"><img src="img/joint_dist_tikz.png" width="30%"></div>
+</div>
+</div>
 <p>muestra dos variables aleatorias bivariadas, <span class="math inline">\(X\)</span> (que puede tomar valores <span class="math inline">\(x_j, j = 1, 2, \dots, M\)</span>) y <span class="math inline">\(Y\)</span> (que puede tomar valores <span class="math inline">\(i=1, 2, \dots, L\)</span>).</p>
 <ul>
 <li><span class="math inline">\(c_j\)</span>: conteo marginal en <span class="math inline">\(x_j\)</span></li>
@@ -209,75 +213,52 @@ X(w, h) = \frac{w}{h^2}
   p(y_i | x_j) = \frac{n_{ij}}{c_j} \tag{4}
 \]</span></p>
 <p>Notar que <span class="math inline">\(c_j\)</span> es la cantidad total de valores para los cuales <span class="math inline">\(X=x_j\)</span>, y <span class="math inline">\(n_{ij}\)</span> es una celda particular. Con las ecuaciones (1), (2) y (4) podemos derivar la siguiente relación:</p>
-<p><span class="math display">\[
-  \begin{align*}
-    p(x_j, y_i) &amp;=  \frac{n_{ij}}{N} =  \frac{n_{ij}}{c_j} \frac{c_j}{N}\\
-                &amp;= p(y_i | x_j)p(x_j) \tag{5}
-  \end{align*}
-\]</span></p>
+<p><span class="math display">\[\begin{align*}
+p(x_j, y_i) &amp;= \frac{n_{ij}}{N} = \frac{n_{ij}}{c_j} \frac{c_j}{N}\\
+&amp;= p(y_i | x_j)p(x_j) \tag{5}
+\end{align*}\]</span></p>
 <p>La ecuación (5) es conocida como <em>regla del producto</em>.</p>
 <p>Eliminando la notación excesiva, podemos sintetizar las dos reglas como sigue</p>
-<p><span class="math display">\[
-  \begin{align*}
-    \text{ \bf{regla de la suma}}\quad\quad   &amp;p(x) = \sum_{y}p(x,y) \\
-    \text{ \bf{regla del producto}}\quad\quad &amp;p(x, y) = p(y|x)p(x)
-  \end{align*}
-\]</span></p>
-<!-- <p align="center">
-  <img src="img/regla_sum_prod2.png" width='50%' />
-</p> -->
+<p><span class="math display">\[\begin{align*}
+\text{ \textbf{regla de la suma}}\quad\quad &amp;p(x) = \sum_{y}p(x,y) \\
+\text{ \textbf{regla del producto}}\quad\quad &amp;p(x, y) = p(y|x)p(x)
+\end{align*}\]</span></p>
 <p>Considerando la simetría <span class="math inline">\(p(x,y) = p(y,x)\)</span> y que <span class="math inline">\(p(y,x) = p(x|y)p(y)\)</span>, encontramos la siguiente relación</p>
-<p><span class="math display">\[
-\begin{align*}
-  p(y|x)p(x) &amp;=  p(x|y)p(y)\\
-  p(y|x)     &amp;=  \frac{ p(x|y)p(y)}{p(x)}
-\end{align*} \tag{6}
-\]</span></p>
+<p><span class="math display">\[\begin{align*}
+p(y|x)p(x) &amp;= p(x|y)p(y)\\
+p(y|x) &amp;= \frac{ p(x|y)p(y)}{p(x)}\tag{6}
+\end{align*}\]</span></p>
 <p>Con</p>
 <p><span class="math display">\[\begin{align*}
 1.  &amp; f(x, y) \geq 0\\
 2.  &amp; \sum_{x,y}f(x, y) = 1
 \end{align*}\]</span></p>
 <p>La ecuación (6) es llamada <em>Teorema de Bayes</em>, y tiene una importancia en ML y estadística que no puede ser exagerada.</p>
-<hr>
-</section>
-</section>
-<section id="función-de-distribución-para-va-discretas" class="level2">
-<h2 class="anchored" data-anchor-id="función-de-distribución-para-va-discretas">Función de distribución para VA discretas</h2>
-<p>Las funciones de masa de probabilidad (PMF), que ya revisamos, y de distribución de probabilidad (CDF, por sus siglas en inglés, <em>cumulative distribution function</em>) son las herramientas básicas para describir una VA discreta. La PMF de una VA <span class="math inline">\(X\)</span> es la función <span class="math inline">\(p(x)\)</span> que asigna una probabilidad a cada valor <span class="math inline">\(x\)</span> de <span class="math inline">\(X\)</span>. La CDF de una VA <span class="math inline">\(X\)</span> es la función <span class="math inline">\(F(x)\)</span> que asigna la probabilidad de que <span class="math inline">\(X\)</span> sea menor o igual a <span class="math inline">\(x\)</span>.</p>
-<p>Hay que distinguir entre la función de distribución de una VA y la función de distribución conjunta de dos VA. La función de distribución de una VA <span class="math inline">\(X\)</span> es</p>
-<p><span class="math display">\[
-  F(x) = \Pr(X \leq x) = \sum_{x_i \leq x}f(x_i)
-\]</span></p>
-<p>Para cualesquiera variables <span class="math inline">\(X_1, X_2\)</span>, la función de distribución conjunta es</p>
-<p><span class="math display">\[
-  F(x_1, x_2) = \Pr(X_1 \leq x_1, X_2 \leq x_2)=\sum_{X_1 \leq x_1}\sum_{X_2 \leq x_2}f(x_1,x_2)
-\]</span></p>
-<div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, HTML</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tabulate <span class="im">import</span> tabulate</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear distribución conjunta {X,Y}</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {<span class="st">'Y'</span>: np.tile(np.arange(<span class="dv">0</span>, <span class="dv">4</span>), <span class="dv">3</span>), </span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">'X'</span>: np.repeat(np.arange(<span class="dv">0</span>, <span class="dv">3</span>), <span class="dv">4</span>)}</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>data_for_sampling <span class="op">=</span> pd.DataFrame(data)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>data_for_sampling[<span class="st">'wgts'</span>] <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">9</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">18</span>, <span class="dv">18</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">9</span>, <span class="dv">3</span>, <span class="dv">0</span>]</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Tomar una muestra aleatoria de la distribución conjunta X,Y, usando wgts como pesos</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">452</span>)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>sampled_data <span class="op">=</span> data_for_sampling.sample(n<span class="op">=</span><span class="dv">10000</span>, replace<span class="op">=</span><span class="va">True</span>, weights<span class="op">=</span><span class="st">'wgts'</span>)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear una tabla de frecuencia</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>freq_table <span class="op">=</span> pd.crosstab(sampled_data[<span class="st">'Y'</span>], sampled_data[<span class="st">'X'</span>], rownames<span class="op">=</span>[<span class="st">'Y/X'</span>])</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar la tabla en formato HTML</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>display(HTML(tabulate(freq_table, headers<span class="op">=</span><span class="st">'keys'</span>, tablefmt<span class="op">=</span><span class="st">'html'</span>)))</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># X en las columnas, Y en las filas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, HTML</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tabulate <span class="im">import</span> tabulate</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear distribución conjunta {X,Y}</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {<span class="st">'Y'</span>: np.tile(np.arange(<span class="dv">0</span>, <span class="dv">4</span>), <span class="dv">3</span>), </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">'X'</span>: np.repeat(np.arange(<span class="dv">0</span>, <span class="dv">3</span>), <span class="dv">4</span>)}</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>data_for_sampling <span class="op">=</span> pd.DataFrame(data)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>data_for_sampling[<span class="st">'wgts'</span>] <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">9</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">18</span>, <span class="dv">18</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">9</span>, <span class="dv">3</span>, <span class="dv">0</span>]</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Tomar una muestra aleatoria de la distribución conjunta X,Y, usando wgts como pesos</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">452</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>sampled_data <span class="op">=</span> data_for_sampling.sample(n<span class="op">=</span><span class="dv">10000</span>, replace<span class="op">=</span><span class="va">True</span>, weights<span class="op">=</span><span class="st">'wgts'</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear una tabla de frecuencia</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>freq_table <span class="op">=</span> pd.crosstab(sampled_data[<span class="st">'Y'</span>], sampled_data[<span class="st">'X'</span>], rownames<span class="op">=</span>[<span class="st">'Y/X'</span>])</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar la tabla en formato HTML</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>display(HTML(tabulate(freq_table, headers<span class="op">=</span><span class="st">'keys'</span>, tablefmt<span class="op">=</span><span class="st">'html'</span>)))</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co"># X en las columnas, Y en las filas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 
 <table>
@@ -293,6 +274,18 @@ X(w, h) = \frac{w}{h^2}
 </table>
 </div>
 </div>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>freq_table.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>Y/X
+0     691
+1    4354
+2    4170
+3     785
+dtype: int64</code></pre>
+</div>
+</div>
+</section>
 </section>
 <section id="ejercicios-a-mano" class="level2">
 <h2 class="anchored" data-anchor-id="ejercicios-a-mano">Ejercicios a mano</h2>
@@ -301,52 +294,33 @@ X(w, h) = \frac{w}{h^2}
 <li>¿Cuál es la probabilidad <span class="math inline">\(p(x=1 \mid y=0)\)</span>?</li>
 <li>Encontrar <span class="math inline">\(F(X\leq 1,Y\leq 2)\)</span></li>
 </ol>
-<!-- Para el ejercicio 1:
-
-Las medias son $\bar x=0.8, \bar y = 1.4$, 
-$$
-  \mathbf{x}_0 = \{0.2,-0.8,0.2,0.2,0.2\}, \mathbf{y}_0 = \{0.6,-0.4,-0.4,1.6,-1.4\}
-$$
-el producto punto
-
-$$
-\mathbf{x}_0^\top \mathbf{y}_0 = 
-  \begin{bmatrix}
-  0.2 & -0.8 & 0.2 & 0.2 & 0.2
-  \end{bmatrix}
-  \begin{bmatrix}
-  0.6\\ -0.4\\ -0.4\\ 1.6\\ -1.4
-  \end{bmatrix} = 0.2*0.6 + -0.8*-0.4 + 0.2*-0.4 + 0.2*1.6 + 0.2*-1.4 = 0.4
-$$
-
-Dividido entre $1/(n-1)$ es $\frac{1}{5-1}0.4=0.1$ -->
 <p>Para el ejercicio 2</p>
-<div class="cell" data-tags="[&quot;hide_code&quot;]" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtener la distribución conjunta de cada celda</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>xt_prob <span class="op">=</span> freq_table <span class="op">/</span> freq_table.<span class="bu">sum</span>().<span class="bu">sum</span>()</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> highlight_cells(x, row<span class="op">=</span><span class="dv">0</span>, col<span class="op">=</span><span class="dv">1</span>):</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.DataFrame(<span class="st">''</span>, index<span class="op">=</span>x.index, columns<span class="op">=</span>x.columns)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    df.loc[row, col] <span class="op">=</span> <span class="st">'background-color: red; color: black'</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>styled_table <span class="op">=</span> xt_prob.style.<span class="bu">apply</span>(highlight_cells, axis<span class="op">=</span><span class="va">None</span>)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>display(styled_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-tags="[]" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtener la distribución conjunta de cada celda</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>xt_prob <span class="op">=</span> freq_table <span class="op">/</span> freq_table.<span class="bu">sum</span>().<span class="bu">sum</span>()</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> highlight_cells(x, row<span class="op">=</span><span class="dv">0</span>, col<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.DataFrame(<span class="st">''</span>, index<span class="op">=</span>x.index, columns<span class="op">=</span>x.columns)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    df.loc[row, col] <span class="op">=</span> <span class="st">'background-color: red; color: black'</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>styled_table <span class="op">=</span> xt_prob.style.<span class="bu">apply</span>(highlight_cells, axis<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>display(styled_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 
 <style type="text/css">
-#T_0d534_row0_col1 {
+#T_66cb8_row0_col1 {
   background-color: red;
   color: black;
 }
 </style>
-<table id="T_0d534">
+<table id="T_66cb8">
   <thead>
     <tr>
       <th class="index_name level0">X</th>
-      <th id="T_0d534_level0_col0" class="col_heading level0 col0">0</th>
-      <th id="T_0d534_level0_col1" class="col_heading level0 col1">1</th>
-      <th id="T_0d534_level0_col2" class="col_heading level0 col2">2</th>
+      <th id="T_66cb8_level0_col0" class="col_heading level0 col0">0</th>
+      <th id="T_66cb8_level0_col1" class="col_heading level0 col1">1</th>
+      <th id="T_66cb8_level0_col2" class="col_heading level0 col2">2</th>
     </tr>
     <tr>
       <th class="index_name level0">Y/X</th>
@@ -357,28 +331,28 @@ Dividido entre $1/(n-1)$ es $\frac{1}{5-1}0.4=0.1$ -->
   </thead>
   <tbody>
     <tr>
-      <th id="T_0d534_level0_row0" class="row_heading level0 row0">0</th>
-      <td id="T_0d534_row0_col0" class="data row0 col0">0.000000</td>
-      <td id="T_0d534_row0_col1" class="data row0 col1">0.027500</td>
-      <td id="T_0d534_row0_col2" class="data row0 col2">0.041600</td>
+      <th id="T_66cb8_level0_row0" class="row_heading level0 row0">0</th>
+      <td id="T_66cb8_row0_col0" class="data row0 col0">0.000000</td>
+      <td id="T_66cb8_row0_col1" class="data row0 col1">0.027500</td>
+      <td id="T_66cb8_row0_col2" class="data row0 col2">0.041600</td>
     </tr>
     <tr>
-      <th id="T_0d534_level0_row1" class="row_heading level0 row1">1</th>
-      <td id="T_0d534_row1_col0" class="data row1 col0">0.044600</td>
-      <td id="T_0d534_row1_col1" class="data row1 col1">0.257000</td>
-      <td id="T_0d534_row1_col2" class="data row1 col2">0.133800</td>
+      <th id="T_66cb8_level0_row1" class="row_heading level0 row1">1</th>
+      <td id="T_66cb8_row1_col0" class="data row1 col0">0.044600</td>
+      <td id="T_66cb8_row1_col1" class="data row1 col1">0.257000</td>
+      <td id="T_66cb8_row1_col2" class="data row1 col2">0.133800</td>
     </tr>
     <tr>
-      <th id="T_0d534_level0_row2" class="row_heading level0 row2">2</th>
-      <td id="T_0d534_row2_col0" class="data row2 col0">0.125100</td>
-      <td id="T_0d534_row2_col1" class="data row2 col1">0.252300</td>
-      <td id="T_0d534_row2_col2" class="data row2 col2">0.039600</td>
+      <th id="T_66cb8_level0_row2" class="row_heading level0 row2">2</th>
+      <td id="T_66cb8_row2_col0" class="data row2 col0">0.125100</td>
+      <td id="T_66cb8_row2_col1" class="data row2 col1">0.252300</td>
+      <td id="T_66cb8_row2_col2" class="data row2 col2">0.039600</td>
     </tr>
     <tr>
-      <th id="T_0d534_level0_row3" class="row_heading level0 row3">3</th>
-      <td id="T_0d534_row3_col0" class="data row3 col0">0.046200</td>
-      <td id="T_0d534_row3_col1" class="data row3 col1">0.032300</td>
-      <td id="T_0d534_row3_col2" class="data row3 col2">0.000000</td>
+      <th id="T_66cb8_level0_row3" class="row_heading level0 row3">3</th>
+      <td id="T_66cb8_row3_col0" class="data row3 col0">0.046200</td>
+      <td id="T_66cb8_row3_col1" class="data row3 col1">0.032300</td>
+      <td id="T_66cb8_row3_col2" class="data row3 col2">0.000000</td>
     </tr>
   </tbody>
 </table>
@@ -390,38 +364,38 @@ Dividido entre $1/(n-1)$ es $\frac{1}{5-1}0.4=0.1$ -->
 \]</span></p>
 <p>Para el ejercicio 3</p>
 <p>Ahora, para calcular la probabilidad condicional <span class="math inline">\(p(x=1|y=0)\)</span> debemos obtener la probabilidad marginal de <span class="math inline">\(y\)</span>, o <span class="math inline">\(p(y=0)\)</span>.</p>
-<div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate row sums</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>row_sums <span class="op">=</span> freq_table.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate p(y)</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>xt_py <span class="op">=</span> freq_table.copy()</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>xt_py[<span class="st">'p(y)'</span>] <span class="op">=</span> [<span class="ss">f"</span><span class="sc">{</span>row_sum<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>freq_table<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">=</span><span class="sc">{</span>row_sum<span class="op">/</span>freq_table<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:.4f}</span><span class="ss">"</span> <span class="cf">for</span> row_sum <span class="kw">in</span> row_sums]</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Style the table</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> highlight_column(x):</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.DataFrame(<span class="st">''</span>, index<span class="op">=</span>x.index, columns<span class="op">=</span>x.columns)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'p(y)'</span>] <span class="op">=</span> <span class="st">'background-color: #d4d1d1; color: black'</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>styled_table <span class="op">=</span> xt_py.style.<span class="bu">apply</span>(highlight_column, axis<span class="op">=</span><span class="va">None</span>)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>display(styled_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate row sums</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>row_sums <span class="op">=</span> freq_table.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate p(y)</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>xt_py <span class="op">=</span> freq_table.copy()</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>xt_py[<span class="st">'p(y)'</span>] <span class="op">=</span> [<span class="ss">f"</span><span class="sc">{</span>row_sum<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>freq_table<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">=</span><span class="sc">{</span>row_sum<span class="op">/</span>freq_table<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:.4f}</span><span class="ss">"</span> <span class="cf">for</span> row_sum <span class="kw">in</span> row_sums]</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Style the table</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> highlight_column(x):</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.DataFrame(<span class="st">''</span>, index<span class="op">=</span>x.index, columns<span class="op">=</span>x.columns)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'p(y)'</span>] <span class="op">=</span> <span class="st">'background-color: #d4d1d1; color: black'</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>styled_table <span class="op">=</span> xt_py.style.<span class="bu">apply</span>(highlight_column, axis<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>display(styled_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 
 <style type="text/css">
-#T_8e1f5_row0_col3, #T_8e1f5_row1_col3, #T_8e1f5_row2_col3, #T_8e1f5_row3_col3 {
+#T_05343_row0_col3, #T_05343_row1_col3, #T_05343_row2_col3, #T_05343_row3_col3 {
   background-color: #d4d1d1;
   color: black;
 }
 </style>
-<table id="T_8e1f5">
+<table id="T_05343">
   <thead>
     <tr>
       <th class="index_name level0">X</th>
-      <th id="T_8e1f5_level0_col0" class="col_heading level0 col0">0</th>
-      <th id="T_8e1f5_level0_col1" class="col_heading level0 col1">1</th>
-      <th id="T_8e1f5_level0_col2" class="col_heading level0 col2">2</th>
-      <th id="T_8e1f5_level0_col3" class="col_heading level0 col3">p(y)</th>
+      <th id="T_05343_level0_col0" class="col_heading level0 col0">0</th>
+      <th id="T_05343_level0_col1" class="col_heading level0 col1">1</th>
+      <th id="T_05343_level0_col2" class="col_heading level0 col2">2</th>
+      <th id="T_05343_level0_col3" class="col_heading level0 col3">p(y)</th>
     </tr>
     <tr>
       <th class="index_name level0">Y/X</th>
@@ -433,32 +407,32 @@ Dividido entre $1/(n-1)$ es $\frac{1}{5-1}0.4=0.1$ -->
   </thead>
   <tbody>
     <tr>
-      <th id="T_8e1f5_level0_row0" class="row_heading level0 row0">0</th>
-      <td id="T_8e1f5_row0_col0" class="data row0 col0">0</td>
-      <td id="T_8e1f5_row0_col1" class="data row0 col1">275</td>
-      <td id="T_8e1f5_row0_col2" class="data row0 col2">416</td>
-      <td id="T_8e1f5_row0_col3" class="data row0 col3">691/10000=0.0691</td>
+      <th id="T_05343_level0_row0" class="row_heading level0 row0">0</th>
+      <td id="T_05343_row0_col0" class="data row0 col0">0</td>
+      <td id="T_05343_row0_col1" class="data row0 col1">275</td>
+      <td id="T_05343_row0_col2" class="data row0 col2">416</td>
+      <td id="T_05343_row0_col3" class="data row0 col3">691/10000=0.0691</td>
     </tr>
     <tr>
-      <th id="T_8e1f5_level0_row1" class="row_heading level0 row1">1</th>
-      <td id="T_8e1f5_row1_col0" class="data row1 col0">446</td>
-      <td id="T_8e1f5_row1_col1" class="data row1 col1">2570</td>
-      <td id="T_8e1f5_row1_col2" class="data row1 col2">1338</td>
-      <td id="T_8e1f5_row1_col3" class="data row1 col3">4354/10000=0.4354</td>
+      <th id="T_05343_level0_row1" class="row_heading level0 row1">1</th>
+      <td id="T_05343_row1_col0" class="data row1 col0">446</td>
+      <td id="T_05343_row1_col1" class="data row1 col1">2570</td>
+      <td id="T_05343_row1_col2" class="data row1 col2">1338</td>
+      <td id="T_05343_row1_col3" class="data row1 col3">4354/10000=0.4354</td>
     </tr>
     <tr>
-      <th id="T_8e1f5_level0_row2" class="row_heading level0 row2">2</th>
-      <td id="T_8e1f5_row2_col0" class="data row2 col0">1251</td>
-      <td id="T_8e1f5_row2_col1" class="data row2 col1">2523</td>
-      <td id="T_8e1f5_row2_col2" class="data row2 col2">396</td>
-      <td id="T_8e1f5_row2_col3" class="data row2 col3">4170/10000=0.4170</td>
+      <th id="T_05343_level0_row2" class="row_heading level0 row2">2</th>
+      <td id="T_05343_row2_col0" class="data row2 col0">1251</td>
+      <td id="T_05343_row2_col1" class="data row2 col1">2523</td>
+      <td id="T_05343_row2_col2" class="data row2 col2">396</td>
+      <td id="T_05343_row2_col3" class="data row2 col3">4170/10000=0.4170</td>
     </tr>
     <tr>
-      <th id="T_8e1f5_level0_row3" class="row_heading level0 row3">3</th>
-      <td id="T_8e1f5_row3_col0" class="data row3 col0">462</td>
-      <td id="T_8e1f5_row3_col1" class="data row3 col1">323</td>
-      <td id="T_8e1f5_row3_col2" class="data row3 col2">0</td>
-      <td id="T_8e1f5_row3_col3" class="data row3 col3">785/10000=0.0785</td>
+      <th id="T_05343_level0_row3" class="row_heading level0 row3">3</th>
+      <td id="T_05343_row3_col0" class="data row3 col0">462</td>
+      <td id="T_05343_row3_col1" class="data row3 col1">323</td>
+      <td id="T_05343_row3_col2" class="data row3 col2">0</td>
+      <td id="T_05343_row3_col3" class="data row3 col3">785/10000=0.0785</td>
     </tr>
   </tbody>
 </table>
@@ -469,19 +443,19 @@ Dividido entre $1/(n-1)$ es $\frac{1}{5-1}0.4=0.1$ -->
   p(x=1|y=0) = \frac{p(y=0,x=1)}{p(y=0)} = \frac{325/10000}{725/10000} = \frac{13}{29}
 \]</span></p>
 <p>En general, la distribución condicional <span class="math inline">\(p(x | y=0)\)</span> se puede obtener como sigue</p>
-<div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter rows where Y == 0</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="op">=</span> sampled_data[sampled_data[<span class="st">'Y'</span>] <span class="op">==</span> <span class="dv">0</span>]</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Count occurrences of each X value</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>count_data <span class="op">=</span> filtered_data[<span class="st">'X'</span>].value_counts().reset_index()</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>count_data.columns <span class="op">=</span> [<span class="st">'X'</span>, <span class="st">'n'</span>]</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the conditional probability p(x|y=0)</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>count_data[<span class="st">'p(x|y=0)'</span>] <span class="op">=</span> count_data[<span class="st">'n'</span>] <span class="op">/</span> count_data[<span class="st">'n'</span>].<span class="bu">sum</span>()</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the table (you can further style this table if you'd like)</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>display(HTML(tabulate(count_data, headers<span class="op">=</span><span class="st">'keys'</span>, tablefmt<span class="op">=</span><span class="st">'html'</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter rows where Y == 0</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="op">=</span> sampled_data[sampled_data[<span class="st">'Y'</span>] <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Count occurrences of each X value</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>count_data <span class="op">=</span> filtered_data[<span class="st">'X'</span>].value_counts().reset_index()</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>count_data.columns <span class="op">=</span> [<span class="st">'X'</span>, <span class="st">'n'</span>]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the conditional probability p(x|y=0)</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>count_data[<span class="st">'p(x|y=0)'</span>] <span class="op">=</span> count_data[<span class="st">'n'</span>] <span class="op">/</span> count_data[<span class="st">'n'</span>].<span class="bu">sum</span>()</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the table (you can further style this table if you'd like)</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>display(HTML(tabulate(count_data, headers<span class="op">=</span><span class="st">'keys'</span>, tablefmt<span class="op">=</span><span class="st">'html'</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 
 <table>
@@ -497,14 +471,14 @@ Dividido entre $1/(n-1)$ es $\frac{1}{5-1}0.4=0.1$ -->
 </div>
 <p>Para el ejercicio 4.</p>
 <p><span class="math inline">\(F(X\leq 1,Y\leq 2) = p(x=0, y=0)+p(x=0, y=1)+p(x=0, y=2)+p(x=1, y=0)+p(x=1, y=1)+p(x=1, y=2)=\)</span></p>
-<div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a pivot table</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>xt <span class="op">=</span> pd.pivot_table(sampled_data, values<span class="op">=</span><span class="va">None</span>, index<span class="op">=</span><span class="st">'Y'</span>, columns<span class="op">=</span><span class="st">'X'</span>, aggfunc<span class="op">=</span><span class="st">'size'</span>, fill_value<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize to get probabilities</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>xt_prob <span class="op">=</span> xt <span class="op">/</span> xt.values.<span class="bu">sum</span>()</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>display(HTML(xt_prob.to_html()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a pivot table</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>xt <span class="op">=</span> pd.pivot_table(sampled_data, values<span class="op">=</span><span class="va">None</span>, index<span class="op">=</span><span class="st">'Y'</span>, columns<span class="op">=</span><span class="st">'X'</span>, aggfunc<span class="op">=</span><span class="st">'size'</span>, fill_value<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize to get probabilities</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>xt_prob <span class="op">=</span> xt <span class="op">/</span> xt.values.<span class="bu">sum</span>()</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>display(HTML(xt_prob.to_html()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 
 <table class="dataframe table table-sm table-striped">
@@ -553,13 +527,63 @@ Dividido entre $1/(n-1)$ es $\frac{1}{5-1}0.4=0.1$ -->
 </div>
 <p>La distribución condicional de <span class="math inline">\(x|y=y\)</span> puede verse totalmente diferente que la distribución marginal <span class="math inline">\(p(x)\)</span>. En la siguiente imagen, tomada de Bishop (PRML-1.1), se ilustra la distribución de dos variables <span class="math inline">\(X\)</span> y <span class="math inline">\(Y\)</span>. <span class="math inline">\(X\)</span> puede tomar 9 valores posibles, y <span class="math inline">\(Y\)</span> 2. La distribución marginal de <span class="math inline">\(X\)</span>, la distribución independientemente de qué valores tome <span class="math inline">\(Y\)</span>, tiene una forma más achatada (más amplia, con mayor varianza) que la distribución condicional a <span class="math inline">\(Y=1\)</span>.</p>
 <p align="center">
-<img src="img/marginal_conditional.png" width="60%">
+<img src="img/marginal_conditional.png" width="40%">
 </p>
-<section id="va-continuas" class="level4">
-<h4 class="anchored" data-anchor-id="va-continuas">VA continuas</h4>
+<section id="definición-de-funciones-de-masa-de-probabilidad-pmf" class="level3">
+<h3 class="anchored" data-anchor-id="definición-de-funciones-de-masa-de-probabilidad-pmf">Definición de Funciones de Masa de Probabilidad (PMF)</h3>
+<p>Si <span class="math inline">\(\mathcal{X}\)</span> es finito o contable infinito (cada miembro de <span class="math inline">\(\mathcal{X}\)</span> puede asociarse con un elemento de <span class="math inline">\(\mathbb{N}\)</span>), entonces <span class="math inline">\(X\)</span> es una variable aleatoria <em>discreta</em>. Una función de masa de probabilidad (PMF, por sus siglas en inglés) es una función que describe la probabilidad de que una variable aleatoria discreta tome un valor específico. En otras palabras, para cada posible resultado en el espacio de muestras, la PMF asigna una probabilidad.</p>
+<p>Matemáticamente, la PMF $ P(X = x) $ es una función que satisface las siguientes condiciones:</p>
+<ol type="1">
+<li><strong>Positividad</strong>: $ P(X = x) $ para todo $ x $.</li>
+<li><strong>Normalización</strong>: $ _{x } P(X = x) = 1 $, donde $ $ es el espacio de muestras.</li>
+</ol>
+</section>
+<section id="definición-de-funciones-de-densidad-de-probabilidad-pdf" class="level3">
+<h3 class="anchored" data-anchor-id="definición-de-funciones-de-densidad-de-probabilidad-pdf">Definición de Funciones de Densidad de Probabilidad (PDF)</h3>
 <p>Si <span class="math inline">\(X\in \mathbb{R}\)</span> es una función real, se denomina <em>variable aleatoria continua</em>, y es más natural especificar que <span class="math inline">\(X\)</span> se encuentre en un intervalo, e.g,, <span class="math inline">\(a \leq X \leq b\)</span>, dado que en este caso no se puede crear un conjunto <em>contable</em> de valores posibles que <span class="math inline">\(X\)</span> puede tomar, pero podemos crear un conjunto finito de <em>intervalos</em> en la linea real, y asociar los eventos de <span class="math inline">\(X\)</span> que están en esos intervalos.</p>
-<section id="distribución-acumulada-cdf" class="level5">
-<h5 class="anchored" data-anchor-id="distribución-acumulada-cdf">Distribución acumulada (cdf)</h5>
+<p>Si el conjunto de posibles valores que una variable aleatoria $ X $ puede tomar es un intervalo (o una unión de intervalos) en la recta real, entonces $ X $ es una variable aleatoria <em>continua</em>. Una función de densidad de probabilidad (PDF, por sus siglas en inglés) es una función que describe cómo se distribuyen las probabilidades a lo largo de los posibles valores de una variable aleatoria continua. A diferencia de una PMF, donde se asigna una probabilidad directamente a un valor específico, la PDF asigna una densidad. Para obtener una probabilidad real de que $ X $ caiga en un intervalo específico, se integra la PDF sobre ese intervalo.</p>
+<p>Matemáticamente, la PDF $ f(x) $ de una variable aleatoria continua $ X $ satisface las siguientes condiciones:</p>
+<ol type="1">
+<li><strong>No Negatividad</strong>: $ f(x) $ para todo $ x $.</li>
+<li><strong>Normalización</strong>: $ _{-}^{} f(x) , dx = 1 $. Esto significa que el área total bajo la curva de la PDF (desde el infinito negativo hasta el infinito positivo) es 1.</li>
+<li><strong>Probabilidad en un intervalo</strong>: La probabilidad de que $ X $ esté en el intervalo $ [a, b] $ es $ _{a}^{b} f(x) , dx $.</li>
+</ol>
+<p><strong>Nota:</strong> Dado que estamos tratando con variables continuas, la probabilidad de que $ X $ tome un valor específico es, en teoría, cero. Es decir, $ P(X = x) = 0 $ para cualquier $ x $. En su lugar, trabajamos con probabilidades en intervalos, como se indicó anteriormente.</p>
+</section>
+<section id="pmfs-y-pdfs-frecuentemente-usadas" class="level3">
+<h3 class="anchored" data-anchor-id="pmfs-y-pdfs-frecuentemente-usadas">PMFs y PDFs frecuentemente usadas</h3>
+<p>Las PMFs más usadas son:</p>
+<ol type="1">
+<li><strong>Bernoulli</strong>: <span class="math inline">\(p(x) = \begin{cases} 1-p &amp; \text{si } x=0 \\ p &amp; \text{si } x=1 \end{cases}\)</span></li>
+<li><strong>Binomial</strong>: <span class="math inline">\(p(x) = \binom{n}{x}p^x(1-p)^{n-x}\)</span></li>
+<li><strong>Poisson</strong>: <span class="math inline">\(p(x) = \frac{\lambda^x}{x!}e^{-\lambda}\)</span></li>
+<li><strong>Geométrica</strong>: <span class="math inline">\(p(x) = (1-p)^{x-1}p\)</span></li>
+</ol>
+<p>La distribución de Bernoulli es un caso especial de la distribución binomial, cuando <span class="math inline">\(n=1\)</span>.</p>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>image_path <span class="op">=</span> <span class="st">"img/pmf.png"</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">'&lt;div style="text-align: center;"&gt;&lt;img src="</span><span class="sc">{}</span><span class="st">" width="60%"/&gt;&lt;/div&gt;'</span>.<span class="bu">format</span>(image_path)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div style="text-align: center;"><img src="img/pmf.png" width="60%"></div>
+</div>
+</div>
+<p>Las PDFs más usadas son:</p>
+<ol type="1">
+<li><strong>Uniforme</strong>: <span class="math inline">\(f(x) = \begin{cases} \frac{1}{b-a} &amp; \text{si } a \leq x \leq b \\ 0 &amp; \text{en otro caso} \end{cases}\)</span></li>
+<li><strong>Normal</strong>: <span class="math inline">\(f(x) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\)</span></li>
+<li><strong>Exponencial</strong>: <span class="math inline">\(f(x) = \begin{cases} \lambda e^{-\lambda x} &amp; \text{si } x \geq 0 \\ 0 &amp; \text{si } x &lt; 0 \end{cases}\)</span></li>
+</ol>
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>image_path <span class="op">=</span> <span class="st">"img/pdfs.png"</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>display(HTML(<span class="st">'&lt;div style="text-align: center;"&gt;&lt;img src="</span><span class="sc">{}</span><span class="st">" width="60%"/&gt;&lt;/div&gt;'</span>.<span class="bu">format</span>(image_path)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div style="text-align: center;"><img src="img/pdfs.png" width="60%"></div>
+</div>
+</div>
+</section>
+<section id="distribución-acumulada-cdf" class="level3">
+<h3 class="anchored" data-anchor-id="distribución-acumulada-cdf">Distribución acumulada (cdf)</h3>
+<p>La CDF es estrictamente creciente, y tiene límites 0 y 1.</p>
 <p>Sea <span class="math inline">\(A = (X \leq a)\)</span>, <span class="math inline">\(B = (X \leq b)\)</span> y <span class="math inline">\(C = (a &lt; X \leq b)\)</span> en donde <span class="math inline">\(a &lt; b\)</span>. Tenemos que <span class="math inline">\(B\)</span> es la unión de <span class="math inline">\(A\)</span> y <span class="math inline">\(C\)</span>, es decir, <span class="math inline">\(B\)</span> toma todos los valores que toman <span class="math inline">\(A\)</span> y <span class="math inline">\(C\)</span>. Dado que <span class="math inline">\(A\)</span> y <span class="math inline">\(C\)</span> son mutuamente excluyentes, la probabilidad de <span class="math inline">\(B\)</span> es</p>
 <p><span class="math display">\[\text{Pr}(B) = \text{Pr}(A) + \text{Pr}(C) \tag{7} \]</span></p>
 <p>Y la probabilidad de estar en el intervalo <span class="math inline">\(C\)</span> como</p>
@@ -575,27 +599,68 @@ Dividido entre $1/(n-1)$ es $\frac{1}{5-1}0.4=0.1$ -->
   \text{Pr}(a &lt; X \leq b) = P(b) - P(a) \tag{9}
 \]</span></p>
 <p>La cdf gráficamente tiene esta forma, cuyo eje Y se lee “probabilidad de que <span class="math inline">\(X\)</span> tome valores igual o menor a <span class="math inline">\(x\)</span>”. Notar que esto es una suma acumulada (o integral) que termina en 1.</p>
-<div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting up plot dimensions</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">3</span>))</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PDF Gaussiana (Normal)</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">101</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> norm.pdf(x, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># CDF Gaussiana</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>y_cdf <span class="op">=</span> norm.cdf(x, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>axes.plot(x, y_cdf, color<span class="op">=</span><span class="st">'blue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>axes.set_title(<span class="st">'cdf gaussiana'</span>)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>axes.set_xlabel(<span class="st">'X'</span>)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>axes.set_ylabel(<span class="vs">r"$Pr(X \leq x)$"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="2.1_funciones_distribucion_densidad_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
-</div>
-</div>
 </section>
-<section id="función-de-densidad" class="level5">
-<h5 class="anchored" data-anchor-id="función-de-densidad">Función de densidad</h5>
+<section id="cdf-para-variables-discretas" class="level3">
+<h3 class="anchored" data-anchor-id="cdf-para-variables-discretas">CDF para Variables Discretas</h3>
+<p><strong>Definición:</strong> Para una variable aleatoria discreta <span class="math inline">\(X\)</span>, la Función de Distribución Acumulativa <span class="math inline">\(F(x)\)</span> es la probabilidad de que <span class="math inline">\(X\)</span> tome un valor menor o igual a <span class="math inline">\(x\)</span>. La CDF es una función escalonada, ya que aumenta solo en los puntos donde la función de masa de probabilidad (PMF) es positiva.</p>
+<p><strong>Matemáticamente:</strong> <span class="math display">\[ F(x) = P(X \leq x) = \sum\_{k \leq x} P(X = k) \]</span></p>
+<p>Dónde:</p>
+<ul>
+<li>La suma se extiende sobre todos los valores de <span class="math inline">\(k\)</span> que son menores o iguales a <span class="math inline">\(x\)</span>.</li>
+<li><span class="math inline">\(F(x)\)</span> es una función escalonada, ya que aumenta solo en los puntos donde la función de masa de probabilidad (PMF) es positiva.</li>
+</ul>
+<p><strong>Interpretación:</strong> Si tienes una variable aleatoria discreta que representa, por ejemplo, el número de veces que un evento ocurre, la CDF en un punto específico <span class="math inline">\(x\)</span> te dice la probabilidad acumulada de que ese evento ocurra (x) o menos veces.</p>
+</section>
+<section id="cdf-para-variables-continuas" class="level3">
+<h3 class="anchored" data-anchor-id="cdf-para-variables-continuas">CDF para Variables Continuas</h3>
+<p><strong>Definición:</strong> Para una variable aleatoria continua <span class="math inline">\(X\)</span>, la Función de Distribución Acumulativa <span class="math inline">\(F(x)\)</span> es la probabilidad de que <span class="math inline">\(X\)</span> tome un valor menor o igual a <span class="math inline">\(x\)</span>.</p>
+<p><strong>Matemáticamente:</strong> <span class="math display">\[ F(x) = P(X \leq x) = \int\_{-\infty}^{x} f(t) \, dt \]</span></p>
+<p>Dónde:</p>
+<ul>
+<li><span class="math inline">\(f(t)\)</span> es la función de densidad de probabilidad (PDF) de <span class="math inline">\(X\)</span>.</li>
+<li><span class="math inline">\(F(x)\)</span> es una función continua y no disminuyente.</li>
+</ul>
+<p><strong>Interpretación:</strong> Si tienes una variable aleatoria continua, como la altura de las personas en una población, la CDF en un punto específico <span class="math inline">\(x\)</span> te dice la probabilidad acumulada de que una persona seleccionada al azar tenga una altura de <span class="math inline">\(x\)</span> o menos.</p>
+<p>Para ambas variables, discretas y continuas, la CDF siempre satisface:</p>
+<ol type="1">
+<li><span class="math inline">\(0 \leq F(x) \leq 1\)</span></li>
+<li><span class="math inline">\(F(-\infty) = 0\)</span> y <span class="math inline">\(F(\infty) = 1\)</span></li>
+<li><span class="math inline">\(F(x)\)</span> es no decreciente, es decir, si <span class="math inline">\(a &lt; b\)</span>, entonces <span class="math inline">\(F(a) \leq F(b)\)</span>.</li>
+</ol>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting up plot dimensions</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">3</span>))</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PDF Gaussiana (Normal)</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">101</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> norm.pdf(x, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># CDF Gaussiana</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>y_cdf <span class="op">=</span> norm.cdf(x, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(x, y_cdf, color<span class="op">=</span><span class="st">'blue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'cdf gaussiana'</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">'X'</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="vs">r"$Pr(X \leq x)$"</span>)<span class="op">;</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co"># CDF para la distribución de Poisson</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="co"># PDF Poisson</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">20</span>)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> poisson.pmf(x, <span class="dv">5</span>)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="co"># CDF Poisson</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>y_cdf <span class="op">=</span> poisson.cdf(x, <span class="dv">5</span>)</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].step(x, y_cdf, color<span class="op">=</span><span class="st">'blue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].scatter(x, y_cdf, color<span class="op">=</span><span class="st">'blue'</span>)</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'cdf poisson'</span>)</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'X'</span>)</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="vs">r"$Pr(X \leq x)$"</span>)<span class="op">;</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2.1_funciones_distribucion_densidad_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p><strong>Relación entre función de densidad y función de distribución acumulativa</strong></p>
 <p>Podemos definir la función de densidad de probabilidad, o <em>pdf</em>, como la derivada de la cdf</p>
 <p><span class="math display">\[
   p(x) \overset{\Delta}{=} \frac{d}{dx}P(x)
@@ -606,12 +671,10 @@ Dividido entre $1/(n-1)$ es $\frac{1}{5-1}0.4=0.1$ -->
   \text{Pr}(a &lt;X\leq b) = \int_a^b p(x)dx = P(b) - P(a) \tag{10}
 \]</span></p>
 <p>La función de densidad de probabilidad debe satisfacer</p>
-<p><span class="math display">\[
-\begin{align*}
+<p><span class="math display">\[\begin{align*}
 1)\ &amp;f(x) \geq 0,\ \text{para toda } x,\ -\infty &lt; x &lt; \infty\\
-2)\ &amp;\int_{-\infty}^\infty f(x)\text{d}x = 1
-\end{align*}
-\]</span></p>
+2)\ &amp;\int\_{-\infty}^\infty f(x)\text{d}x = 1
+\end{align*}\]</span></p>
 <hr>
 <p><strong>Ejemplo con distribución normal</strong></p>
 <p>La pdf de una normal está dada por</p>
@@ -632,61 +695,61 @@ Dividido entre $1/(n-1)$ es $\frac{1}{5-1}0.4=0.1$ -->
   \mathbf{E}[x^2] =  \int_{-\infty}^\infty p(x)x\text{d}x^2=\mu^2 + \sigma^2
 \]</span></p>
 <p>La varianza está dada por <span class="math inline">\(\text{var}[x]=\mathbf{E}[x^2] - \mathbf{E}[x]^2\)</span>, por lo que <span class="math inline">\(\text{var}[x]=\sigma^2\)</span>.</p>
-<div class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.normal(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">10000</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x.mean())</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.mean(x<span class="op">**</span><span class="dv">2</span>) <span class="op">-</span> np.mean(x)<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.var(x))</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.std(x).<span class="bu">round</span>(<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.normal(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">10000</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x.mean())</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.mean(x<span class="op">**</span><span class="dv">2</span>) <span class="op">-</span> np.mean(x)<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.var(x))</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.std(x).<span class="bu">round</span>(<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>3.995972470917363
-8.931717659029095
-8.931717659029097
-2.99</code></pre>
+<pre><code>3.9881330919624323
+9.149508765663048
+9.149508765663052
+3.02</code></pre>
 </div>
 </div>
-<p>En la siguiente figura a la izquierda se representa una variable aleatoria normal con media 0 y desviación estándar de 1, conocida como distribución normal estándar, y representada como <span class="math inline">\(\mathcal{N}(\mu=0, \sigma = 1)\)</span> o simplemente <span class="math inline">\(\mathcal{N}(0, 1)\)</span>. Para la densidad de probabilidad normal, en R usamos <code>dnorm(x, mean, sd)</code>, que nos retorna la densidad en <code>x</code>.</p>
-<p>A la derecha se representa el área equivalente en la cdf, usando <code>pnorm</code>.</p>
-<div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting up plot dimensions</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">4</span>))</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PDF Gaussiana (Normal)</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">101</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> norm.pdf(x, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(x, y, color<span class="op">=</span><span class="st">'blue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'pdf gaussiana (normal)'</span>)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'p(x)'</span>)</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>from_x, to_x <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, <span class="fl">1.5</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>sx <span class="op">=</span> np.concatenate([[from_x], np.arange(from_x, to_x, <span class="fl">0.01</span>), [to_x]])</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>sy <span class="op">=</span> np.concatenate([[<span class="dv">0</span>], norm.pdf(np.arange(from_x, to_x, <span class="fl">0.01</span>)), [<span class="dv">0</span>]])</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].fill(sx, sy, color<span class="op">=</span><span class="st">'#B3B3FF'</span>)</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].text(<span class="op">-</span><span class="dv">1</span>, norm.pdf(<span class="dv">0</span>, <span class="dv">0</span>) <span class="op">/</span> <span class="dv">2</span>, <span class="vs">r"$\int_{-1,5}^</span><span class="sc">{1.5}</span><span class="vs"> p(x) dx$"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].text(<span class="op">-</span><span class="dv">1</span>, norm.pdf(<span class="dv">0</span>, <span class="dv">0</span>) <span class="op">/</span> <span class="dv">3</span>, <span class="st">"= P(1.5) - P(-1.5)"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="co"># CDF Gaussiana</span></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>y_cdf <span class="op">=</span> norm.cdf(x, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(x, y_cdf, color<span class="op">=</span><span class="st">'blue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'cdf gaussiana'</span>)</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'X'</span>)</span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="vs">r"$Pr(X \leq x)$"</span>)</span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>sy_cdf <span class="op">=</span> np.concatenate([[<span class="dv">0</span>], norm.cdf(np.arange(from_x, to_x, <span class="fl">0.01</span>)), [<span class="dv">0</span>]])</span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].fill_between(sx, sy_cdf, color<span class="op">=</span><span class="st">'#B3B3FF'</span>)</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>En la siguiente figura a la izquierda se representa una variable aleatoria normal con media 0 y desviación estándar de 1, conocida como distribución normal estándar, y representada como <span class="math inline">\(\mathcal{N}(\mu=0, \sigma = 1)\)</span> o simplemente <span class="math inline">\(\mathcal{N}(0, 1)\)</span>. Para la densidad de probabilidad normal, en Python usamos <code>scipy.stats.norm.pdf(x, loc=0, scale=1)</code>, que nos retorna la densidad en <code>x</code>. <code>norm.</code>, que nos retorna la densidad en <code>x</code>.</p>
+<p>A la derecha se representa el área equivalente en la cdf, usando <code>scipy.stats.norm.cdf(x, loc=0, scale=1)</code>.</p>
+<div class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting up plot dimensions</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">4</span>))</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PDF Gaussiana (Normal)</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">101</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> norm.pdf(x, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(x, y, color<span class="op">=</span><span class="st">'blue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'pdf gaussiana (normal)'</span>)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'p(x)'</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>from_x, to_x <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, <span class="fl">1.5</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>sx <span class="op">=</span> np.concatenate([[from_x], np.arange(from_x, to_x, <span class="fl">0.01</span>), [to_x]])</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>sy <span class="op">=</span> np.concatenate([[<span class="dv">0</span>], norm.pdf(np.arange(from_x, to_x, <span class="fl">0.01</span>)), [<span class="dv">0</span>]])</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].fill(sx, sy, color<span class="op">=</span><span class="st">'#B3B3FF'</span>)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].text(<span class="op">-</span><span class="dv">1</span>, norm.pdf(<span class="dv">0</span>, <span class="dv">0</span>) <span class="op">/</span> <span class="dv">2</span>, <span class="vs">r"$\int_{-1,5}^</span><span class="sc">{1.5}</span><span class="vs"> p(x) dx$"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].text(<span class="op">-</span><span class="dv">1</span>, norm.pdf(<span class="dv">0</span>, <span class="dv">0</span>) <span class="op">/</span> <span class="dv">3</span>, <span class="st">"= P(1.5) - P(-1.5)"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="co"># CDF Gaussiana</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>y_cdf <span class="op">=</span> norm.cdf(x, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(x, y_cdf, color<span class="op">=</span><span class="st">'blue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'cdf gaussiana'</span>)</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'X'</span>)</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="vs">r"$Pr(X \leq x)$"</span>)</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>sy_cdf <span class="op">=</span> np.concatenate([[<span class="dv">0</span>], norm.cdf(np.arange(from_x, to_x, <span class="fl">0.01</span>)), [<span class="dv">0</span>]])</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].fill_between(sx, sy_cdf, color<span class="op">=</span><span class="st">'#B3B3FF'</span>)</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2.1_funciones_distribucion_densidad_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
+<p><img src="2.1_funciones_distribucion_densidad_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<p>En <code>Python</code>, la función de densidad acumulada (<span class="math inline">\(\text{\sf cdf}\)</span>) para la distribución normal se obtiene con <code>pnorm(x, mean, sd)</code> <code>norm.cdf(x, mean, sd)</code> en donde <code>x</code> es un vector de <em>cuantiles</em>, que es el, o los, valores en <span class="math inline">\(x\)</span> para el cual(es) deseamos obtener su probabilidad (básicamente, un cuantil es la función inversa de <span class="math inline">\(P(x)\)</span>).</p>
+<p>En <code>Python</code>, la función de densidad acumulada CDF para la distribución normal se obtiene con <code>pnorm(x, mean, sd)</code> <code>norm.cdf(x, mean, sd)</code> en donde <code>x</code> es un vector de <em>cuantiles</em>, que es el, o los, valores en <span class="math inline">\(x\)</span> para el cual(es) deseamos obtener su probabilidad (básicamente, un cuantil es la función inversa de <span class="math inline">\(P(x)\)</span>).</p>
 <p>Para obtener el área sombreada en la anterior figura, usamos <code>norm.cdf(b)-norm.cdf(a)</code></p>
-<div class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>norm.cdf(<span class="fl">1.5</span>, <span class="dv">0</span>, <span class="dv">1</span>) <span class="op">-</span> norm.cdf(<span class="op">-</span><span class="fl">1.5</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
+<div class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>norm.cdf(<span class="fl">1.5</span>, <span class="dv">0</span>, <span class="dv">1</span>) <span class="op">-</span> norm.cdf(<span class="op">-</span><span class="fl">1.5</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="29">
 <pre><code>0.8663855974622838</code></pre>
 </div>
 </div>
@@ -701,14 +764,11 @@ Dividido entre $1/(n-1)$ es $\frac{1}{5-1}0.4=0.1$ -->
 <p>Por esta razón, con <span class="math inline">\(\text{\sf pdf}\)</span> solo calculamos probabilidades en intervalos.</p>
 <hr>
 <p>Para VA continuas, las reglas de suma y producto son</p>
-<p><span class="math display">\[
-  \begin{align*}
-    \text{ \bf{regla de la suma}}  \quad\quad   &amp;f(x) = \int_y f(x,y)\text{d}y \\
-    \text{ \bf{regla del producto}}\quad\quad &amp;f(x, y) = f(y|x)f(x)
-  \end{align*}
-\]</span></p>
+<p><span class="math display">\[\begin{align*}
+\text{ \bf{regla de la suma}} \quad\quad &amp;f(x) = \int_y f(x,y)\text{d}y \\
+\text{ \bf{regla del producto}}\quad\quad &amp;f(x, y) = f(y|x)f(x)
+\end{align*}\]</span></p>
 <p>En donde <span class="math inline">\(f(x)\)</span> es la función de probabilidad marginal, y se integra <em>con respecto a</em> <span class="math inline">\(y\)</span>. Lo mismo si queremos encontrar la marginal de <span class="math inline">\(y\)</span> tenemos que integrar <span class="math inline">\(f(x,y)\)</span> <em>con respecto a</em> <span class="math inline">\(x\)</span>.</p>
-</section>
 </section>
 </section>
 <section id="función-acumulada-de-probabilidad-conjunta" class="level2">
@@ -719,13 +779,13 @@ Dividido entre $1/(n-1)$ es $\frac{1}{5-1}0.4=0.1$ -->
 \]</span></p>
 <p>Si existe una función no negativa <span class="math inline">\(f(x_1, x_2)\)</span>, se obtiene</p>
 <p><span class="math display">\[\begin{align*}
-  F(x_1, x_2) = \int_{-\infty}^{x_2} \int_{-\infty}^{x_1} f(t_1, t_2)\text{d}t_1\text{d}t_2
+F(x_1, x_2) = \int*{-\infty}^{x_2} \int_{-\infty}^{x_1} f(t_1, t_2)\text{d}t_1\text{d}t_2
 \end{align*}\]</span></p>
 <p>Para toda <span class="math inline">\(-\infty &lt; x_1&lt;\infty, -\infty &lt; x_2&lt;\infty\)</span>. En donde <span class="math inline">\(t_1, t_2\)</span> son solo variables de integración.</p>
 <p>Satisfacen</p>
 <p><span class="math display">\[\begin{align*}
-  1. &amp;f(x_1, x_2)\geq 0\quad \text{para toda }x_1, x_2\\
-  2. &amp;\int_{-\infty}^\infty f(x_1, x_2) \text{d}x_1\text{d}x_2= 1
+1. &amp;f(x_1, x_2)\geq 0\quad \text{para toda }x_1, x_2\\
+2. &amp;\int_{-\infty}^\infty f(x_1, x_2) \text{d}x_1\text{d}x_2= 1
 \end{align*}\]</span></p>
 <p><strong>Ejemplos</strong></p>
 <ol type="1">
@@ -741,7 +801,8 @@ Dividido entre $1/(n-1)$ es $\frac{1}{5-1}0.4=0.1$ -->
 <p><span class="math display">\[
 F(y) = \int_{-\infty}^\infty f(y)\text{d}y = 1
 \]</span></p>
-<p>Lo que nos da <span class="math display">\[
+<p>Lo que nos da</p>
+<p><span class="math display">\[
 F(y) = \int_0^2 cy^2\text{d}y=\frac{cy^3}{3} \Bigg|_0^2=\frac{8}{3}c
 \]</span></p>
 <p>Sustituyendo <span class="math inline">\(\frac{8}{3}c=1\)</span> nos da que <span class="math inline">\(c=3/8\)</span>.</p>
@@ -775,8 +836,8 @@ P(1\leq Y \leq 2) = \int_1^2 f(y)\text{d}y= \frac{3}{8}\int_1^2 y^2\text{d}y=7/8
 <p>Dado que <span class="math inline">\(b\)</span> es un tiempo, no puede ser negativo. Además, <span class="math inline">\(f(y)\)</span> tiene el término cuadrático <span class="math inline">\(y^2\)</span>, que tampoco puede ser negativo, por lo que <span class="math inline">\(f(y) \geq 0\)</span>.</p>
 <p>El mínimo valor que puede tener <span class="math inline">\(y\)</span> es <span class="math inline">\(b\)</span>. Por lo tanto</p>
 <p><span class="math display">\[\begin{align*}
-F(y) &amp;= \int_{b}^\infty \frac{b}{y^2}\text{d}y= 1\\  
-    &amp;= \frac{by^{-2+1}}{-2+1}\Bigg|_b^\infty=-\frac{b}{y}\Bigg|_b^\infty=0-\left(-\frac{b}{b}\right)=1
+F(y) &amp;= \int\_{b}^\infty \frac{b}{y^2}\text{d}y= 1\\  
+&amp;= \frac{by^{-2+1}}{-2+1}\Bigg|\_b^\infty=-\frac{b}{y}\Bigg|\_b^\infty=0-\left(-\frac{b}{b}\right)=1
 \end{align*}\]</span></p>
 </blockquote>
 <ol start="4" type="1">
@@ -789,7 +850,7 @@ F(y) &amp;= \int_{b}^\infty \frac{b}{y^2}\text{d}y= 1\\
 <p><span class="math display">\[\begin{align*}
 \mathbf{E}[Y] &amp;= \int_{-\infty}^\infty yf(y)\text{d}y= \int_{-\infty}^\infty y\frac{3y^2}{8}\text{d}y = \frac{3}{8}\cdot\frac{1}{4}y^4 \Bigg|_0^2=1.5\\
 \text{para } &amp;\mathbf{E}[Y^2]\quad \text{se obtiene}\\
-\mathbf{E}[Y^2] &amp;= \int_{-\infty}^\infty y^2f(y)\text{d}y= \int_{-\infty}^\infty y^2\frac{3y^2}{8}\text{d}y = \frac{3}{8}\cdot\frac{1}{5}y^5 \Bigg|_0^2=2.4\\
+\mathbf{E}[Y^2] &amp;= \int_{-\infty}^\infty y^2f(y)\text{d}y= \int\_{-\infty}^\infty y^2\frac{3y^2}{8}\text{d}y = \frac{3}{8}\cdot\frac{1}{5}y^5 \Bigg|\_0^2=2.4\\
 \text{por }&amp;\text{lo que}\\
 \text{var}[x]&amp;=\mathbf{E}[x^2]-(\mathbf{E}[x])^2 = 2.4 - 1.5^2 = 0.15
 \end{align*}\]</span></p>
@@ -809,12 +870,12 @@ F(y) &amp;= \int_{b}^\infty \frac{b}{y^2}\text{d}y= 1\\
 </blockquote>
 <blockquote class="blockquote">
 <p><span class="math display">\[\begin{align}
-F(y_1=0.2, y_2=0.4)%
-     &amp;= \int_{-\infty}^{0.4} \int_{-\infty}^{0.2} f(y_1, y_2)\text{d}y_1\text{d}y_2 \\
-     &amp;= \int_{-\infty}^{0.4} \int_{-\infty}^{0.2} (1)\text{d}y_1\text{d}y_2 \\
-     &amp;= \int_{-\infty}^{0.4} \left(\int_{-\infty}^{0.2} \text{d}y_1\right)\text{d}y_2\\
-     &amp;= \int_{-\infty}^{0.4} \Bigg( y_1\Big|_0^{0.2} \Bigg)\text{d}y_2\\
-     &amp;= \int_{-\infty}^{0.4} 0.2 \text{d}y_2 = 0.2y_2\Big|_0^{0.4} = 0.08
+F(y*1=0.2, y_2=0.4)%
+&amp;= \int_{-\infty}^{0.4} \int_{-\infty}^{0.2} f(y_1, y_2)\text{d}y_1\text{d}y_2 \\
+&amp;= \int_{-\infty}^{0.4} \int_{-\infty}^{0.2} (1)\text{d}y_1\text{d}y_2 \\
+&amp;= \int_{-\infty}^{0.4} \left(\int_{-\infty}^{0.2} \text{d}y_1\right)\text{d}y_2\\
+&amp;= \int_{-\infty}^{0.4} \Bigg( y_1\Big|\_0^{0.2} \Bigg)\text{d}y_2\\
+&amp;= \int_{-\infty}^{0.4} 0.2 \text{d}y_2 = 0.2y_2\Big|\_0^{0.4} = 0.08
 \end{align}\]</span></p>
 </blockquote>
 <ol start="6" type="1">
@@ -837,24 +898,36 @@ F(y_1=0.2, y_2=0.4)%
 </blockquote>
 <blockquote class="blockquote">
 <ol type="a">
-<li>La marginal de <span class="math inline">\(f(y_1)\)</span> se obtiene aplicando la regla <span class="math display">\[
-f(x) = \int_{-\infty}^\infty f(x, y)\text{d}y
-\]</span> Notar que para obtener la marginal de la variable <span class="math inline">\(x\)</span> se integra la función conjunta con respecto a <span class="math inline">\(y\)</span>. Esto significa que trataremos a <span class="math inline">\(x\)</span> como <em>constante</em>. En este caso, como tenemos <span class="math inline">\(y_1, y_2\)</span> en vez de <span class="math inline">\(x, y\)</span>, la marginal sería <span class="math display">\[
-f(y_1)= \int_{-\infty}^\infty f(y_1, y_2)\text{d}y_2=\int_{0}^12y_1\text{d}y_2
-\]</span> Y trataremos a <span class="math inline">\(y_1\)</span> como constante, y usamos la regla <span class="math inline">\(\int \text{d}x=x\)</span> <span class="math display">\[
-f(y_1)=\int_{0}^12y_1\text{d}y_2=2y_1\int_{0}^1\text{d}y_2=2y_1\left(y_2\Big|_0^1\right)=2y_1
-\]</span> Para <span class="math inline">\(f(y_2)\)</span> seguimos un razonamiento similar. <span class="math display">\[
-f(y_2)= \int_{-\infty}^\infty f(y_1, y_2)\text{d}y_1=\int_{0}^12y_1\text{d}y_1
-\]</span> Pero ahora integramos con respecto a <span class="math inline">\(y_1\)</span>. Aplicamos la regla <span class="math inline">\(\int x^n \text{d}x=\frac{x^{n+1}}{n+1}\)</span> <span class="math display">\[
-f(y_2)=\int_{0}^12y_1\text{d}y_1=2\frac{y_1^2}{2}\Big|_0^1=y_1^2\Big|_0^1=1
-\]</span> La marginal de <span class="math inline">\(y_2\)</span> es una constante.</li>
-<li>La función condicional se puede obtener con la siguiente regla <span class="math display">\[
-f(x|y) = \frac{f(x, y)}{f(x)}
-\]</span> Por lo que para obtener <span class="math inline">\(f(y_1|y_2)\)</span> necesitamos la densidad conjunta (que ya tenemos), y la marginal de <span class="math inline">\(f(y_2)\)</span>, que ya tenemos también. <span class="math display">\[
-f(y_1|y_2) = \frac{f(y_1, y_2)}{f(y_2)} = \frac{2y_1}{1}=2y_1
-\]</span> La condicional sigue siendo la conjunta porque la marginal es una constante.</li>
-<li>La demostración de que las variables son independientes es trivial siguiendo la regla: <span class="math inline">\(x,y\)</span> son independientes <em>si y solo si</em> <span class="math inline">\(f(x,y)=f(x)f(y)\)</span></li>
+<li>La marginal de <span class="math inline">\(f(y_1)\)</span> se obtiene aplicando la regla</li>
 </ol>
+<p><span class="math display">\[
+f(x) = \int_{-\infty}^\infty f(x, y)\text{d}y
+\]</span></p>
+<p>Notar que para obtener la marginal de la variable <span class="math inline">\(x\)</span> se integra la función conjunta con respecto a <span class="math inline">\(y\)</span>. Esto significa que trataremos a <span class="math inline">\(x\)</span> como <em>constante</em>. En este caso, como tenemos <span class="math inline">\(y_1, y_2\)</span> en vez de <span class="math inline">\(x, y\)</span>, la marginal sería</p>
+<p><span class="math display">\[
+f(y_1)= \int_{-\infty}^\infty f(y_1, y_2)\text{d}y_2=\int_{0}^12y_1\text{d}y_2
+\]</span></p>
+<p>Y trataremos a <span class="math inline">\(y_1\)</span> como constante, y usamos la regla <span class="math inline">\(\int \text{d}x=x\)</span></p>
+<p><span class="math display">\[
+f(y_1)=\int_{0}^12y_1\text{d}y_2=2y_1\int_{0}^1\text{d}y_2=2y_1\left(y_2\Big|_0^1\right)=2y_1
+\]</span></p>
+<p>Para <span class="math inline">\(f(y_2)\)</span> seguimos un razonamiento similar.</p>
+<p><span class="math display">\[
+f(y_2)= \int_{-\infty}^\infty f(y_1, y_2)\text{d}y_1=\int_{0}^12y_1\text{d}y_1
+\]</span></p>
+<p>Pero ahora integramos con respecto a <span class="math inline">\(y_1\)</span>. Aplicamos la regla <span class="math inline">\(\int x^n \text{d}x=\frac{x^{n+1}}{n+1}\)</span></p>
+<p><span class="math display">\[
+f(y_2)=\int_{0}^12y_1\text{d}y_1=2\frac{y_1^2}{2}\Big|_0^1=y_1^2\Big|_0^1=1
+\]</span></p>
+<p>La marginal de <span class="math inline">\(y_2\)</span> es una constante. b) La función condicional se puede obtener con la siguiente regla</p>
+<p><span class="math display">\[
+f(x|y) = \frac{f(x, y)}{f(x)}
+\]</span></p>
+<p>Por lo que para obtener <span class="math inline">\(f(y_1|y_2)\)</span> necesitamos la densidad conjunta (que ya tenemos), y la marginal de <span class="math inline">\(f(y_2)\)</span>, que ya tenemos también.</p>
+<p><span class="math display">\[
+f(y_1|y_2) = \frac{f(y_1, y_2)}{f(y_2)} = \frac{2y_1}{1}=2y_1
+\]</span></p>
+<p>La condicional sigue siendo la conjunta porque la marginal es una constante. c) La demostración de que las variables son independientes es trivial siguiendo la regla: <span class="math inline">\(x,y\)</span> son independientes <em>si y solo si</em> <span class="math inline">\(f(x,y)=f(x)f(y)\)</span></p>
 </blockquote>
 <ol start="7" type="1">
 <li>Sea la función de densidad conjunta</li>
@@ -880,15 +953,20 @@ f(y_1|y_2) = \frac{f(y_1, y_2)}{f(y_2)} = \frac{2y_1}{1}=2y_1
 </ol>
 <p><span class="math display">\[
 f(y_1)=\lim_{t\rightarrow \infty}\int_{-\infty}^{\infty}f(y_1,y_2)\text{d}y_2
-\]</span> Sin embargo, <em>informalmente</em> sabemos que <span class="math inline">\(e^{-\infty}=0\)</span>. Aplicamos la regla de los exponentes <span class="math inline">\(a^na^m=a^{n+m}\)</span> a <span class="math inline">\(e^{-(y_1+y_2)}=e^{-y_1}e^{-y_2}\)</span></p>
+\]</span></p>
+<p>Sin embargo, <em>informalmente</em> sabemos que <span class="math inline">\(e^{-\infty}=0\)</span>. Aplicamos la regla de los exponentes <span class="math inline">\(a^na^m=a^{n+m}\)</span> a <span class="math inline">\(e^{-(y_1+y_2)}=e^{-y_1}e^{-y_2}\)</span></p>
 <p><span class="math display">\[
 f(y_1)=\int_{-\infty}^{\infty}f(y_1,y_2)\text{d}y_2=\int_0^{\infty}e^{-y_1}e^{-y_2}\text{d}y_2=e^{-y_1}\int_0^{\infty}e^{-y_2}\text{d}y_2
-\]</span> Para integrar lo anterior, consideramos la siguiente regla <span class="math inline">\(\int e^{-u}du=-e^{-u}\)</span> <span class="math display">\[
-f(y_1) = e^{-y_1}\int_0^{\infty}e^{-y_2}\text{d}y_2=e^{-y_1}\left(-e^{-y_2}\Big|_0^\infty\right)=e^{-y_1}\left(-(e^\infty-e^0)\right)=\cdots=e^{-y_1}
-\]</span> El mismo razonamiento para <span class="math inline">\(f(y_2)\)</span> nos da un resultado similar <span class="math display">\[
-f(y_2)=\int_{-0}^{\infty}e^{-(y_1+y_2)}\text{d}y_1=\cdots=e^{-y_2}
 \]</span></p>
+<p>Para integrar lo anterior, consideramos la siguiente regla <span class="math inline">\(\int e^{-u}du=-e^{-u}\)</span></p>
+<p><span class="math display">\[
+f(y_1) = e^{-y_1}\int_0^{\infty}e^{-y_2}\text{d}y_2=e^{-y_1}\left(-e^{-y_2}\Big|_0^\infty\right)=e^{-y_1}\left(-(e^\infty-e^0)\right)=\cdots=e^{-y_1}
+\]</span></p>
+<p>El mismo razonamiento para <span class="math inline">\(f(y_2)\)</span> nos da un resultado similar</p>
 </blockquote>
+<p><span class="math display">\[
+  f(y_2)=\int_{-0}^{\infty}e^{-(y_1+y_2)}\text{d}y_1=\cdots=e^{-y_2}
+\]</span></p>
 <blockquote class="blockquote">
 <ol start="2" type="a">
 <li>Para obtener esta probabilidad (acumulada) necesitamos la regla</li>
@@ -897,9 +975,12 @@ f(y_2)=\int_{-0}^{\infty}e^{-(y_1+y_2)}\text{d}y_1=\cdots=e^{-y_2}
 <blockquote class="blockquote">
 <p><span class="math display">\[
 P(a &lt; X &lt; b)=\int_a^b f(x)\text{d}x
-\]</span> En donde <span class="math inline">\(f(x)\)</span> en nuestro caso corresponde a las marginales <span class="math inline">\(f(y_1)=e^{-y_1}, f(y_2)=e^{-y_2}\)</span> <span class="math display">\[
+\]</span></p>
+<p>En donde <span class="math inline">\(f(x)\)</span> en nuestro caso corresponde a las marginales <span class="math inline">\(f(y_1)=e^{-y_1}, f(y_2)=e^{-y_2}\)</span></p>
+<p><span class="math display">\[
 P(1&lt;Y_1&lt;2.5)=\int_1^{2.5}e^{-y_1}\text{d}y_1=-e^{-y_1}\Big|_1^{2-5}=-\left(e^{-2.5}-e^{-1}\right)=\cdots=0.285
-\]</span> Un razonamiento similar aplica para la segunda parte del ejercicio.</p>
+\]</span></p>
+<p>Un razonamiento similar aplica para la segunda parte del ejercicio.</p>
 </blockquote>
 <blockquote class="blockquote">
 <ol start="3" type="a">
@@ -907,7 +988,8 @@ P(1&lt;Y_1&lt;2.5)=\int_1^{2.5}e^{-y_1}\text{d}y_1=-e^{-y_1}\Big|_1^{2-5}=-\left
 </ol>
 <p><span class="math display">\[
 f(y_1|y_2)=\frac{e^{-y_1}e^{-y_2}}{e^{-y_2}}=e^{-y_1},\quad \text{para todo } y_2&gt;0
-\]</span> Un razonamiento similar aplica a <span class="math inline">\(f(y_2|y_2)\)</span>.</p>
+\]</span></p>
+<p>Un razonamiento similar aplica a <span class="math inline">\(f(y_2|y_2)\)</span>.</p>
 </blockquote>
 <ol start="8" type="1">
 <li>Ejemplo de una normal</li>
@@ -922,63 +1004,63 @@ f(y_1|y_2)=\frac{e^{-y_1}e^{-y_2}}{e^{-y_2}}=e^{-y_1},\quad \text{para todo } y_
 P(X&lt;35)=\int_{0}^{35}\frac{1}{1.5 \sqrt{2\pi}} e\left\{\frac{-(x-37)^2}{2(1.5)^2}\right\}\text{d}x
 \]</span></p>
 </blockquote>
-<div class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting up plot dimensions</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">4</span>))</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PDF</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">30</span>, <span class="dv">45</span>, <span class="dv">101</span>)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> norm.pdf(x, <span class="dv">37</span>, <span class="fl">1.5</span>)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(x, y, color<span class="op">=</span><span class="st">'blue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'pdf'</span>)</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'p(x)'</span>)</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>from_x, to_x <span class="op">=</span> <span class="dv">30</span>, <span class="dv">35</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>sx <span class="op">=</span> np.concatenate([[from_x], np.arange(from_x, to_x, <span class="fl">0.01</span>), [to_x]])</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>sy <span class="op">=</span> np.concatenate([[<span class="dv">0</span>], norm.pdf(np.arange(from_x, to_x, <span class="fl">0.01</span>), <span class="dv">37</span>, <span class="fl">1.5</span>), [<span class="dv">0</span>]])</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].fill(sx, sy, color<span class="op">=</span><span class="st">'#B3B3FF'</span>)</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].text(<span class="dv">35</span> <span class="op">+</span> <span class="dv">1</span>, norm.pdf(<span class="dv">35</span>, <span class="dv">37</span>, <span class="fl">1.5</span>), <span class="st">'x=35'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co"># CDF</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>y_cdf <span class="op">=</span> norm.cdf(x, <span class="dv">37</span>, <span class="fl">1.5</span>)</span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(x, y_cdf, color<span class="op">=</span><span class="st">'blue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'cdf'</span>)</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'X'</span>)</span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="vs">r"$Pr(X \leq x)$"</span>)</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>sy_cdf <span class="op">=</span> np.concatenate([[<span class="dv">0</span>], norm.cdf(np.arange(from_x, to_x, <span class="fl">0.01</span>), <span class="dv">37</span>, <span class="fl">1.5</span>), [<span class="dv">0</span>]])</span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].fill_between(sx, sy_cdf, color<span class="op">=</span><span class="st">'#B3B3FF'</span>)</span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].text(<span class="dv">35</span> <span class="op">+</span> <span class="dv">1</span>, norm.cdf(<span class="dv">35</span>, <span class="dv">37</span>, <span class="fl">1.5</span>), <span class="st">'x=35'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting up plot dimensions</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">4</span>))</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PDF</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">30</span>, <span class="dv">45</span>, <span class="dv">101</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> norm.pdf(x, <span class="dv">37</span>, <span class="fl">1.5</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(x, y, color<span class="op">=</span><span class="st">'blue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'pdf'</span>)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'p(x)'</span>)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>from_x, to_x <span class="op">=</span> <span class="dv">30</span>, <span class="dv">35</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>sx <span class="op">=</span> np.concatenate([[from_x], np.arange(from_x, to_x, <span class="fl">0.01</span>), [to_x]])</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>sy <span class="op">=</span> np.concatenate([[<span class="dv">0</span>], norm.pdf(np.arange(from_x, to_x, <span class="fl">0.01</span>), <span class="dv">37</span>, <span class="fl">1.5</span>), [<span class="dv">0</span>]])</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].fill(sx, sy, color<span class="op">=</span><span class="st">'#B3B3FF'</span>)</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].text(<span class="dv">35</span> <span class="op">+</span> <span class="dv">1</span>, norm.pdf(<span class="dv">35</span>, <span class="dv">37</span>, <span class="fl">1.5</span>), <span class="st">'x=35'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="co"># CDF</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>y_cdf <span class="op">=</span> norm.cdf(x, <span class="dv">37</span>, <span class="fl">1.5</span>)</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(x, y_cdf, color<span class="op">=</span><span class="st">'blue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'cdf'</span>)</span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'X'</span>)</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="vs">r"$Pr(X \leq x)$"</span>)</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>sy_cdf <span class="op">=</span> np.concatenate([[<span class="dv">0</span>], norm.cdf(np.arange(from_x, to_x, <span class="fl">0.01</span>), <span class="dv">37</span>, <span class="fl">1.5</span>), [<span class="dv">0</span>]])</span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].fill_between(sx, sy_cdf, color<span class="op">=</span><span class="st">'#B3B3FF'</span>)</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].text(<span class="dv">35</span> <span class="op">+</span> <span class="dv">1</span>, norm.cdf(<span class="dv">35</span>, <span class="dv">37</span>, <span class="fl">1.5</span>), <span class="st">'x=35'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2.1_funciones_distribucion_densidad_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+<p><img src="2.1_funciones_distribucion_densidad_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>El área se obtiene en Python con el siguiente código, que usa la cdf normal, <code>pnorm</code>. El primer argumento es el <em>cuantil</em> <code>q</code>, el valor en el eje <em>x</em> del cual queremos saber el área bajo la curva.</p>
-<div class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>norm.cdf(<span class="dv">35</span>, <span class="dv">37</span>, <span class="fl">1.5</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ¿cuál sería la probabilidad de tener 37 o menos?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="18">
+<div class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>norm.cdf(<span class="dv">35</span>, <span class="dv">37</span>, <span class="fl">1.5</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ¿cuál sería la probabilidad de tener 37 o menos?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="31">
 <pre><code>0.09121121972586788</code></pre>
 </div>
 </div>
 <p>Equivalentemente, en Python se puede integrar la pdf con integración numérica</p>
-<div class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> quad</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the function to integrate</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(x, mean, sd):</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> norm.pdf(x, mean, sd)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform numerical integration</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>result, error <span class="op">=</span> quad(f, <span class="dv">0</span>, <span class="dv">35</span>, args<span class="op">=</span>(<span class="dv">37</span>, <span class="fl">1.5</span>))</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Result of the integration: </span><span class="sc">{</span>result<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Estimated error: </span><span class="sc">{</span>error<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> quad</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the function to integrate</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(x, mean, sd):</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> norm.pdf(x, mean, sd)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform numerical integration</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>result, error <span class="op">=</span> quad(f, <span class="dv">0</span>, <span class="dv">35</span>, args<span class="op">=</span>(<span class="dv">37</span>, <span class="fl">1.5</span>))</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Result of the integration: </span><span class="sc">{</span>result<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Estimated error: </span><span class="sc">{</span>error<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Result of the integration: 0.09121121972586801
 Estimated error: 6.708159657636305e-10</code></pre>
