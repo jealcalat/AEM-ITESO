@@ -757,6 +757,104 @@ dtype: int64</code></pre>
 <p><span class="math display">\[
   P(-1.5 &lt; X &lt; 1.5) = \int_{-1.5}^{1.5}\frac{1}{\sigma \sqrt{2\pi}} e\left\{\frac{-(x-\mu)^2}{2\sigma^2}\right\}\text{d}x
 \]</span></p>
+<div class="cell" data-execution_count="55">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.patches <span class="im">import</span> Rectangle</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_normal_distribution(mean<span class="op">=</span><span class="dv">0</span>, std_dev<span class="op">=</span><span class="dv">1</span>, lower_limit<span class="op">=-</span><span class="dv">1</span>, upper_limit<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Setting up plot dimensions</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">4</span>))</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># PDF of Gaussian (Normal)</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.linspace(mean <span class="op">-</span> <span class="dv">4</span><span class="op">*</span>std_dev, mean <span class="op">+</span> <span class="dv">4</span><span class="op">*</span>std_dev, <span class="dv">101</span>)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> norm.pdf(x, mean, std_dev)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].plot(x, y, color<span class="op">=</span><span class="st">'blue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].set_title(<span class="st">'PDF of Gaussian (Normal)'</span>)</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].set_ylabel(<span class="st">'p(x)'</span>)</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    sx <span class="op">=</span> np.concatenate([[lower_limit], np.arange(lower_limit, upper_limit, <span class="fl">0.01</span>), [upper_limit]])</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    sy <span class="op">=</span> np.concatenate([[<span class="dv">0</span>], norm.pdf(np.arange(lower_limit, upper_limit, <span class="fl">0.01</span>), mean, std_dev), [<span class="dv">0</span>]])</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].fill(sx, sy, color<span class="op">=</span><span class="st">'#B3B3FF'</span>)</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>    percentage <span class="op">=</span> (norm.cdf(upper_limit, mean, std_dev) <span class="op">-</span> norm.cdf(lower_limit, mean, std_dev)) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].text((lower_limit <span class="op">+</span> upper_limit) <span class="op">/</span> <span class="dv">2</span>, norm.pdf(mean, mean, std_dev) <span class="op">/</span> <span class="dv">2</span>, <span class="ss">f"</span><span class="sc">{</span>percentage<span class="sc">:.2f}</span><span class="ss">%"</span>, fontsize<span class="op">=</span><span class="dv">12</span>, ha<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    annotation_points <span class="op">=</span> [mean, mean<span class="op">-</span>std_dev, mean<span class="op">-</span><span class="dv">2</span><span class="op">*</span>std_dev, mean<span class="op">+</span>std_dev, mean<span class="op">+</span><span class="dv">2</span><span class="op">*</span>std_dev]</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>    annotation_labels <span class="op">=</span> [<span class="vs">r'$\mu$'</span>, <span class="vs">r'$\mu-\sigma$'</span>, <span class="vs">r'$\mu-2\sigma$'</span>, <span class="vs">r'$\mu+\sigma$'</span>, <span class="vs">r'$\mu+2\sigma$'</span>]</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>    annotation_y_offset_points <span class="op">=</span> <span class="op">-</span><span class="dv">7</span>  <span class="co"># The y-offset for the annotation in points</span></span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>    annotation_y_offset_data_coords <span class="op">=</span> annotation_y_offset_points <span class="op">/</span> axes[<span class="dv">0</span>].figure.bbox.height <span class="op">*</span> (axes[<span class="dv">0</span>].get_ylim()[<span class="dv">1</span>] <span class="op">-</span> axes[<span class="dv">0</span>].get_ylim()[<span class="dv">0</span>])</span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>    annotation_y_data_coords <span class="op">=</span> y.<span class="bu">min</span>() <span class="op">+</span> annotation_y_offset_data_coords</span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a single gray rectangle at the y-coordinate of the annotation</span></span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>    rect_height <span class="op">=</span> <span class="fl">0.013</span>  <span class="co"># Height of the rectangle</span></span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>    rect <span class="op">=</span> Rectangle((x.<span class="bu">min</span>(), annotation_y_data_coords <span class="op">-</span> rect_height <span class="op">/</span> <span class="fl">1.4</span>), </span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>                    x.<span class="bu">max</span>() <span class="op">-</span> x.<span class="bu">min</span>(), rect_height, </span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>                    linewidth<span class="op">=</span><span class="dv">1</span>, edgecolor<span class="op">=</span><span class="st">'none'</span>,</span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>                    facecolor<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.9</span>)</span>
+<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].add_patch(rect)</span>
+<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Annotate points on top of the gray rectangle</span></span>
+<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> point, label <span class="kw">in</span> <span class="bu">zip</span>(annotation_points, annotation_labels):</span>
+<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a>        axes[<span class="dv">0</span>].annotate(label, xy<span class="op">=</span>(point, annotation_y_data_coords), </span>
+<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a>                        xycoords<span class="op">=</span><span class="st">'data'</span>, </span>
+<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a>                        color<span class="op">=</span><span class="st">'#FF8080'</span>,</span>
+<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a>                        textcoords<span class="op">=</span><span class="st">'offset points'</span>, </span>
+<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a>                        xytext<span class="op">=</span>(<span class="dv">0</span>, annotation_y_offset_points<span class="op">+</span><span class="dv">3</span>), ha<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a>    <span class="co"># CDF of Gaussian</span></span>
+<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a>    y_cdf <span class="op">=</span> norm.cdf(x, mean, std_dev)</span>
+<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].plot(x, y_cdf, color<span class="op">=</span><span class="st">'blue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb17-51"><a href="#cb17-51" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].set_title(<span class="st">'CDF of Gaussian'</span>)</span>
+<span id="cb17-52"><a href="#cb17-52" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].set_xlabel(<span class="st">'X'</span>)</span>
+<span id="cb17-53"><a href="#cb17-53" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].set_ylabel(<span class="vs">r"$Pr(X \leq x)$"</span>)</span>
+<span id="cb17-54"><a href="#cb17-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-55"><a href="#cb17-55" aria-hidden="true" tabindex="-1"></a>    sy_cdf <span class="op">=</span> np.concatenate([[<span class="dv">0</span>], norm.cdf(np.arange(lower_limit, upper_limit, <span class="fl">0.01</span>), mean, std_dev), [<span class="dv">0</span>]])</span>
+<span id="cb17-56"><a href="#cb17-56" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].fill_between(sx, sy_cdf, color<span class="op">=</span><span class="st">'#B3B3FF'</span>)</span>
+<span id="cb17-57"><a href="#cb17-57" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].text((lower_limit <span class="op">+</span> upper_limit) <span class="op">/</span> <span class="dv">2</span>, </span>
+<span id="cb17-58"><a href="#cb17-58" aria-hidden="true" tabindex="-1"></a>                 (norm.cdf(lower_limit, mean, std_dev) <span class="op">+</span> norm.cdf(upper_limit, mean, std_dev)) <span class="op">/</span> <span class="dv">4</span>, </span>
+<span id="cb17-59"><a href="#cb17-59" aria-hidden="true" tabindex="-1"></a>                 <span class="ss">f"</span><span class="sc">{</span>percentage<span class="sc">:.2f}</span><span class="ss">%"</span>, fontsize<span class="op">=</span><span class="dv">12</span>, ha<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb17-60"><a href="#cb17-60" aria-hidden="true" tabindex="-1"></a>    annotation_y_offset_data_coords <span class="op">=</span> annotation_y_offset_points <span class="op">/</span> axes[<span class="dv">1</span>].figure.bbox.height <span class="op">*</span> (axes[<span class="dv">1</span>].get_ylim()[<span class="dv">1</span>] <span class="op">-</span> axes[<span class="dv">1</span>].get_ylim()[<span class="dv">0</span>])</span>
+<span id="cb17-61"><a href="#cb17-61" aria-hidden="true" tabindex="-1"></a>    annotation_y_data_coords <span class="op">=</span> y_cdf.<span class="bu">min</span>() <span class="op">+</span> annotation_y_offset_data_coords</span>
+<span id="cb17-62"><a href="#cb17-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-63"><a href="#cb17-63" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a single gray rectangle at the y-coordinate of the annotation</span></span>
+<span id="cb17-64"><a href="#cb17-64" aria-hidden="true" tabindex="-1"></a>    rect_height <span class="op">=</span> <span class="fl">0.05</span>  <span class="co"># Height of the rectangle</span></span>
+<span id="cb17-65"><a href="#cb17-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-66"><a href="#cb17-66" aria-hidden="true" tabindex="-1"></a>    rect <span class="op">=</span> Rectangle((x.<span class="bu">min</span>(), annotation_y_data_coords <span class="op">-</span> rect_height <span class="op">/</span> <span class="fl">1.4</span>), </span>
+<span id="cb17-67"><a href="#cb17-67" aria-hidden="true" tabindex="-1"></a>                    x.<span class="bu">max</span>() <span class="op">-</span> x.<span class="bu">min</span>(), rect_height, </span>
+<span id="cb17-68"><a href="#cb17-68" aria-hidden="true" tabindex="-1"></a>                    linewidth<span class="op">=</span><span class="dv">1</span>, edgecolor<span class="op">=</span><span class="st">'none'</span>,</span>
+<span id="cb17-69"><a href="#cb17-69" aria-hidden="true" tabindex="-1"></a>                    facecolor<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.9</span>)</span>
+<span id="cb17-70"><a href="#cb17-70" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].add_patch(rect)</span>
+<span id="cb17-71"><a href="#cb17-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-72"><a href="#cb17-72" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Annotate points on top of the gray rectangle</span></span>
+<span id="cb17-73"><a href="#cb17-73" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> point, label <span class="kw">in</span> <span class="bu">zip</span>(annotation_points, annotation_labels):</span>
+<span id="cb17-74"><a href="#cb17-74" aria-hidden="true" tabindex="-1"></a>        axes[<span class="dv">1</span>].annotate(label, xy<span class="op">=</span>(point, annotation_y_data_coords), </span>
+<span id="cb17-75"><a href="#cb17-75" aria-hidden="true" tabindex="-1"></a>                        xycoords<span class="op">=</span><span class="st">'data'</span>, </span>
+<span id="cb17-76"><a href="#cb17-76" aria-hidden="true" tabindex="-1"></a>                        color<span class="op">=</span><span class="st">'#FF8080'</span>,</span>
+<span id="cb17-77"><a href="#cb17-77" aria-hidden="true" tabindex="-1"></a>                        textcoords<span class="op">=</span><span class="st">'offset points'</span>, </span>
+<span id="cb17-78"><a href="#cb17-78" aria-hidden="true" tabindex="-1"></a>                        xytext<span class="op">=</span>(<span class="dv">0</span>, annotation_y_offset_points<span class="op">+</span><span class="dv">3</span>), ha<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb17-79"><a href="#cb17-79" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb17-80"><a href="#cb17-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-81"><a href="#cb17-81" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage</span></span>
+<span id="cb17-82"><a href="#cb17-82" aria-hidden="true" tabindex="-1"></a>mu <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb17-83"><a href="#cb17-83" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb17-84"><a href="#cb17-84" aria-hidden="true" tabindex="-1"></a>const <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb17-85"><a href="#cb17-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-86"><a href="#cb17-86" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> c <span class="kw">in</span> const:</span>
+<span id="cb17-87"><a href="#cb17-87" aria-hidden="true" tabindex="-1"></a>    plot_normal_distribution(mean<span class="op">=</span>mu, std_dev<span class="op">=</span>sigma, lower_limit<span class="op">=</span>mu<span class="op">-</span>c<span class="op">*</span>sigma, upper_limit<span class="op">=</span>mu<span class="op">+</span>c<span class="op">*</span>sigma)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2.1_funciones_distribucion_densidad_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="2.1_funciones_distribucion_densidad_files/figure-html/cell-15-output-2.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="2.1_funciones_distribucion_densidad_files/figure-html/cell-15-output-3.png" class="img-fluid"></p>
+</div>
+</div>
 <p>En contraste con las <strong>VA</strong> discretas, la probabilidad de que una variable continua <span class="math inline">\(X\in \mathbb{R}\)</span> tome un valor particular, <span class="math inline">\(p(X = x)\)</span>, es 0. Es como integrar la función de densidad de la siguiente manera:</p>
 <p><span class="math display">\[
   Pr(a \leq X \leq a) = \int_a^b f(x)dx = P(a) - P(a)
@@ -1005,62 +1103,62 @@ P(X&lt;35)=\int_{0}^{35}\frac{1}{1.5 \sqrt{2\pi}} e\left\{\frac{-(x-37)^2}{2(1.5
 \]</span></p>
 </blockquote>
 <div class="cell" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting up plot dimensions</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">4</span>))</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PDF</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">30</span>, <span class="dv">45</span>, <span class="dv">101</span>)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> norm.pdf(x, <span class="dv">37</span>, <span class="fl">1.5</span>)</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(x, y, color<span class="op">=</span><span class="st">'blue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'pdf'</span>)</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'p(x)'</span>)</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>from_x, to_x <span class="op">=</span> <span class="dv">30</span>, <span class="dv">35</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>sx <span class="op">=</span> np.concatenate([[from_x], np.arange(from_x, to_x, <span class="fl">0.01</span>), [to_x]])</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>sy <span class="op">=</span> np.concatenate([[<span class="dv">0</span>], norm.pdf(np.arange(from_x, to_x, <span class="fl">0.01</span>), <span class="dv">37</span>, <span class="fl">1.5</span>), [<span class="dv">0</span>]])</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].fill(sx, sy, color<span class="op">=</span><span class="st">'#B3B3FF'</span>)</span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].text(<span class="dv">35</span> <span class="op">+</span> <span class="dv">1</span>, norm.pdf(<span class="dv">35</span>, <span class="dv">37</span>, <span class="fl">1.5</span>), <span class="st">'x=35'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="co"># CDF</span></span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>y_cdf <span class="op">=</span> norm.cdf(x, <span class="dv">37</span>, <span class="fl">1.5</span>)</span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(x, y_cdf, color<span class="op">=</span><span class="st">'blue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'cdf'</span>)</span>
-<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'X'</span>)</span>
-<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="vs">r"$Pr(X \leq x)$"</span>)</span>
-<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>sy_cdf <span class="op">=</span> np.concatenate([[<span class="dv">0</span>], norm.cdf(np.arange(from_x, to_x, <span class="fl">0.01</span>), <span class="dv">37</span>, <span class="fl">1.5</span>), [<span class="dv">0</span>]])</span>
-<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].fill_between(sx, sy_cdf, color<span class="op">=</span><span class="st">'#B3B3FF'</span>)</span>
-<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].text(<span class="dv">35</span> <span class="op">+</span> <span class="dv">1</span>, norm.cdf(<span class="dv">35</span>, <span class="dv">37</span>, <span class="fl">1.5</span>), <span class="st">'x=35'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting up plot dimensions</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">4</span>))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PDF</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">30</span>, <span class="dv">45</span>, <span class="dv">101</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> norm.pdf(x, <span class="dv">37</span>, <span class="fl">1.5</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(x, y, color<span class="op">=</span><span class="st">'blue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'pdf'</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'p(x)'</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>from_x, to_x <span class="op">=</span> <span class="dv">30</span>, <span class="dv">35</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>sx <span class="op">=</span> np.concatenate([[from_x], np.arange(from_x, to_x, <span class="fl">0.01</span>), [to_x]])</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>sy <span class="op">=</span> np.concatenate([[<span class="dv">0</span>], norm.pdf(np.arange(from_x, to_x, <span class="fl">0.01</span>), <span class="dv">37</span>, <span class="fl">1.5</span>), [<span class="dv">0</span>]])</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].fill(sx, sy, color<span class="op">=</span><span class="st">'#B3B3FF'</span>)</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].text(<span class="dv">35</span> <span class="op">+</span> <span class="dv">1</span>, norm.pdf(<span class="dv">35</span>, <span class="dv">37</span>, <span class="fl">1.5</span>), <span class="st">'x=35'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="co"># CDF</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>y_cdf <span class="op">=</span> norm.cdf(x, <span class="dv">37</span>, <span class="fl">1.5</span>)</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(x, y_cdf, color<span class="op">=</span><span class="st">'blue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'cdf'</span>)</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'X'</span>)</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="vs">r"$Pr(X \leq x)$"</span>)</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>sy_cdf <span class="op">=</span> np.concatenate([[<span class="dv">0</span>], norm.cdf(np.arange(from_x, to_x, <span class="fl">0.01</span>), <span class="dv">37</span>, <span class="fl">1.5</span>), [<span class="dv">0</span>]])</span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].fill_between(sx, sy_cdf, color<span class="op">=</span><span class="st">'#B3B3FF'</span>)</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].text(<span class="dv">35</span> <span class="op">+</span> <span class="dv">1</span>, norm.cdf(<span class="dv">35</span>, <span class="dv">37</span>, <span class="fl">1.5</span>), <span class="st">'x=35'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2.1_funciones_distribucion_densidad_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
+<p><img src="2.1_funciones_distribucion_densidad_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>El área se obtiene en Python con el siguiente código, que usa la cdf normal, <code>pnorm</code>. El primer argumento es el <em>cuantil</em> <code>q</code>, el valor en el eje <em>x</em> del cual queremos saber el área bajo la curva.</p>
 <div class="cell" data-execution_count="31">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>norm.cdf(<span class="dv">35</span>, <span class="dv">37</span>, <span class="fl">1.5</span>)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ¿cuál sería la probabilidad de tener 37 o menos?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>norm.cdf(<span class="dv">35</span>, <span class="dv">37</span>, <span class="fl">1.5</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ¿cuál sería la probabilidad de tener 37 o menos?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="31">
 <pre><code>0.09121121972586788</code></pre>
 </div>
 </div>
 <p>Equivalentemente, en Python se puede integrar la pdf con integración numérica</p>
 <div class="cell" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> quad</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the function to integrate</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(x, mean, sd):</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> norm.pdf(x, mean, sd)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform numerical integration</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>result, error <span class="op">=</span> quad(f, <span class="dv">0</span>, <span class="dv">35</span>, args<span class="op">=</span>(<span class="dv">37</span>, <span class="fl">1.5</span>))</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Result of the integration: </span><span class="sc">{</span>result<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Estimated error: </span><span class="sc">{</span>error<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> quad</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the function to integrate</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(x, mean, sd):</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> norm.pdf(x, mean, sd)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform numerical integration</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>result, error <span class="op">=</span> quad(f, <span class="dv">0</span>, <span class="dv">35</span>, args<span class="op">=</span>(<span class="dv">37</span>, <span class="fl">1.5</span>))</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Result of the integration: </span><span class="sc">{</span>result<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Estimated error: </span><span class="sc">{</span>error<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Result of the integration: 0.09121121972586801
 Estimated error: 6.708159657636305e-10</code></pre>
