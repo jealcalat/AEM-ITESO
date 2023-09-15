@@ -67,9 +67,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="2.2_distribucion_multinormal_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="2.2_distribucion_multinormal_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="2.2_distribucion_multinormal_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -106,10 +103,6 @@ Autor: Emmanuel Alcalá <br> <a href="https://scholar.google.com.mx/citations?hl
 <br> <a href="https://jealcalat.github.io/Analisis_multivariado/">Regresar a la página del curso</a>
 </p>
 <hr>
-<div class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cargar algunas funciones que se utilizarán para simular y graficar</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>source(<span class="st">"../r_scripts/utilities.r"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <section id="distribución-multinormal" class="level2">
 <h2 class="anchored" data-anchor-id="distribución-multinormal">2.2. Distribución multinormal</h2>
 <p>Ya vimos que para la distribución normal univariada, la función de densidad está dada por</p>
@@ -122,100 +115,128 @@ Autor: Emmanuel Alcalá <br> <a href="https://scholar.google.com.mx/citations?hl
 <li>En el intervalo <span class="math inline">\(\left[\mu - 2\sigma, \mu + 2\sigma \right]\)</span> se cubre el .954 del área total.</li>
 <li>El área en <span class="math inline">\(X \leq \mu - \sigma\)</span> es <span class="math inline">\(1 - p(X &gt; \mu - \sigma)\)</span></li>
 </ol>
-<div class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dado que la distribución es simétrica, p(mu - sigma &lt;= X &lt;= mu+sigma)</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># la región mu-sigma es igual que mu+sigma, por lo tanto, es suficiente</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># con restarle a 1 la probabilidad p(mu-sigma &lt;= X) * 2</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span> <span class="op">-</span> (pnorm(<span class="op">-</span><span class="dv">1</span>, mean <span class="op">=</span> <span class="dv">0</span>, sd <span class="op">=</span> <span class="dv">1</span>)) <span class="op">*</span> <span class="dv">2</span>) <span class="op">|&gt;</span> <span class="bu">round</span>(<span class="dv">3</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span> <span class="op">-</span> (pnorm(<span class="op">-</span><span class="dv">2</span>, mean <span class="op">=</span> <span class="dv">0</span>, sd <span class="op">=</span> <span class="dv">1</span>)) <span class="op">*</span> <span class="dv">2</span>) <span class="op">|&gt;</span> <span class="bu">round</span>(<span class="dv">3</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># con 3 sigma cubre el 99 % del espacio</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span> <span class="op">-</span> (pnorm(<span class="op">-</span><span class="dv">3</span>, mean <span class="op">=</span> <span class="dv">0</span>, sd <span class="op">=</span> <span class="dv">1</span>)) <span class="op">*</span> <span class="dv">2</span>) <span class="op">|&gt;</span> <span class="bu">round</span>(<span class="dv">3</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># la probabilidad de x &lt;= mu-sigma es</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">-</span> (pnorm(<span class="dv">1</span>, mean <span class="op">=</span> <span class="dv">0</span>, sd <span class="op">=</span> <span class="dv">1</span>)) <span class="op">|&gt;</span> <span class="bu">round</span>(<span class="dv">3</span>)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># o equivalentemente</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>(pnorm(<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)) <span class="op">|&gt;</span> <span class="bu">round</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-0.683
-</div>
-<div class="cell-output cell-output-display">
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.patches <span class="im">import</span> Rectangle</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Given that the distribution is symmetric, p(mu - sigma &lt;= X &lt;= mu + sigma)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># The region mu-sigma is the same as mu+sigma, therefore, it's sufficient</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># to subtract from 1 the probability p(mu-sigma &lt;= X) * 2</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">round</span>(<span class="dv">1</span> <span class="op">-</span> (norm.cdf(<span class="op">-</span><span class="dv">1</span>, loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span>) <span class="op">*</span> <span class="dv">2</span>), <span class="dv">3</span>))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">round</span>(<span class="dv">1</span> <span class="op">-</span> (norm.cdf(<span class="op">-</span><span class="dv">2</span>, loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span>) <span class="op">*</span> <span class="dv">2</span>), <span class="dv">3</span>))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># With 3 sigma it covers 99% of the space</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">round</span>(<span class="dv">1</span> <span class="op">-</span> (norm.cdf(<span class="op">-</span><span class="dv">3</span>, loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span>) <span class="op">*</span> <span class="dv">2</span>), <span class="dv">3</span>))</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># The probability of x &lt;= mu-sigma is</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">round</span>(<span class="dv">1</span> <span class="op">-</span> norm.cdf(<span class="dv">1</span>, loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span>), <span class="dv">3</span>))</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Or equivalently</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">round</span>(norm.cdf(<span class="op">-</span><span class="dv">1</span>, loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span>), <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.683
 0.954
-</div>
-<div class="cell-output cell-output-display">
 0.997
-</div>
-<div class="cell-output cell-output-display">
 0.159
+0.159</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Here is a function that plots the PDF and CDF of a normal distribution for </span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># a given mean and standard deviation. It also plots the area under the curve</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_normal_distribution(mean<span class="op">=</span><span class="dv">0</span>, std_dev<span class="op">=</span><span class="dv">1</span>, lower_limit<span class="op">=-</span><span class="dv">1</span>, upper_limit<span class="op">=</span><span class="dv">1</span>, c<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Setting up plot dimensions</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">4</span>))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># PDF of Gaussian (Normal)</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.linspace(mean <span class="op">-</span> <span class="dv">4</span><span class="op">*</span>std_dev, mean <span class="op">+</span> <span class="dv">4</span><span class="op">*</span>std_dev, <span class="dv">101</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> norm.pdf(x, mean, std_dev)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].plot(x, y, color<span class="op">=</span><span class="st">'blue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].set_title(<span class="st">'PDF'</span> <span class="op">+</span> <span class="ss">f'$ \mu \pm </span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">\sigma $'</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].set_ylabel(<span class="st">'p(x)'</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    sx <span class="op">=</span> np.concatenate([[lower_limit], np.arange(lower_limit, upper_limit, <span class="fl">0.01</span>), [upper_limit]])</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    sy <span class="op">=</span> np.concatenate([[<span class="dv">0</span>], norm.pdf(np.arange(lower_limit, upper_limit, <span class="fl">0.01</span>), mean, std_dev), [<span class="dv">0</span>]])</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].fill(sx, sy, color<span class="op">=</span><span class="st">'#B3B3FF'</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    percentage <span class="op">=</span> (norm.cdf(upper_limit, mean, std_dev) <span class="op">-</span> norm.cdf(lower_limit, mean, std_dev)) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].text((lower_limit <span class="op">+</span> upper_limit) <span class="op">/</span> <span class="dv">2</span>, norm.pdf(mean, mean, std_dev) <span class="op">/</span> <span class="dv">2</span>, <span class="ss">f"</span><span class="sc">{</span>percentage<span class="sc">:.2f}</span><span class="ss">%"</span>, fontsize<span class="op">=</span><span class="dv">12</span>, ha<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    annotation_points <span class="op">=</span> [mean, mean<span class="op">-</span>std_dev, mean<span class="op">-</span><span class="dv">2</span><span class="op">*</span>std_dev, mean<span class="op">+</span>std_dev, mean<span class="op">+</span><span class="dv">2</span><span class="op">*</span>std_dev]</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    annotation_labels <span class="op">=</span> [<span class="vs">r'$\mu$'</span>, <span class="vs">r'$\mu-\sigma$'</span>, <span class="vs">r'$\mu-2\sigma$'</span>, <span class="vs">r'$\mu+\sigma$'</span>, <span class="vs">r'$\mu+2\sigma$'</span>]</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    annotation_y_offset_points <span class="op">=</span> <span class="op">-</span><span class="dv">7</span>  <span class="co"># The y-offset for the annotation in points</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    annotation_y_offset_data_coords <span class="op">=</span> annotation_y_offset_points <span class="op">/</span> axes[<span class="dv">0</span>].figure.bbox.height <span class="op">*</span> (axes[<span class="dv">0</span>].get_ylim()[<span class="dv">1</span>] <span class="op">-</span> axes[<span class="dv">0</span>].get_ylim()[<span class="dv">0</span>])</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    annotation_y_data_coords <span class="op">=</span> y.<span class="bu">min</span>() <span class="op">+</span> annotation_y_offset_data_coords</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a single gray rectangle at the y-coordinate of the annotation</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    rect_height <span class="op">=</span> <span class="fl">0.013</span>  <span class="co"># Height of the rectangle</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    rect <span class="op">=</span> Rectangle((x.<span class="bu">min</span>(), annotation_y_data_coords <span class="op">-</span> rect_height <span class="op">/</span> <span class="fl">1.4</span>), </span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>                    x.<span class="bu">max</span>() <span class="op">-</span> x.<span class="bu">min</span>(), rect_height, </span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                    linewidth<span class="op">=</span><span class="dv">1</span>, edgecolor<span class="op">=</span><span class="st">'none'</span>,</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>                    facecolor<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.9</span>)</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].add_patch(rect)</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Annotate points on top of the gray rectangle</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> point, label <span class="kw">in</span> <span class="bu">zip</span>(annotation_points, annotation_labels):</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>        axes[<span class="dv">0</span>].annotate(label, xy<span class="op">=</span>(point, annotation_y_data_coords), </span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>                        xycoords<span class="op">=</span><span class="st">'data'</span>, </span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>                        color<span class="op">=</span><span class="st">'#FF8080'</span>,</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>                        textcoords<span class="op">=</span><span class="st">'offset points'</span>, </span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>                        xytext<span class="op">=</span>(<span class="dv">0</span>, annotation_y_offset_points<span class="op">+</span><span class="dv">3</span>), ha<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    <span class="co"># CDF of Gaussian</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>    y_cdf <span class="op">=</span> norm.cdf(x, mean, std_dev)</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].plot(x, y_cdf, color<span class="op">=</span><span class="st">'blue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].set_title(<span class="st">'CDF,'</span> <span class="op">+</span> <span class="ss">f'$ \mu \pm </span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">\sigma $'</span>)</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].set_xlabel(<span class="st">'X'</span>)</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].set_ylabel(<span class="vs">r"$Pr(X \leq x)$"</span>)</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>    sy_cdf <span class="op">=</span> np.concatenate([[<span class="dv">0</span>], norm.cdf(np.arange(lower_limit, upper_limit, <span class="fl">0.01</span>), mean, std_dev), [<span class="dv">0</span>]])</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].fill_between(sx, sy_cdf, color<span class="op">=</span><span class="st">'#B3B3FF'</span>)</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].text((lower_limit <span class="op">+</span> upper_limit) <span class="op">/</span> <span class="dv">2</span>, </span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>                 (norm.cdf(lower_limit, mean, std_dev) <span class="op">+</span> norm.cdf(upper_limit, mean, std_dev)) <span class="op">/</span> <span class="dv">4</span>, </span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>                 <span class="ss">f"</span><span class="sc">{</span>percentage<span class="sc">:.2f}</span><span class="ss">%"</span>, fontsize<span class="op">=</span><span class="dv">12</span>, ha<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>    annotation_y_offset_data_coords <span class="op">=</span> annotation_y_offset_points <span class="op">/</span> axes[<span class="dv">1</span>].figure.bbox.height <span class="op">*</span> (axes[<span class="dv">1</span>].get_ylim()[<span class="dv">1</span>] <span class="op">-</span> axes[<span class="dv">1</span>].get_ylim()[<span class="dv">0</span>])</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>    annotation_y_data_coords <span class="op">=</span> y_cdf.<span class="bu">min</span>() <span class="op">+</span> annotation_y_offset_data_coords</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a single gray rectangle at the y-coordinate of the annotation</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>    rect_height <span class="op">=</span> <span class="fl">0.05</span>  <span class="co"># Height of the rectangle</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>    rect <span class="op">=</span> Rectangle((x.<span class="bu">min</span>(), annotation_y_data_coords <span class="op">-</span> rect_height <span class="op">/</span> <span class="fl">1.4</span>), </span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>                    x.<span class="bu">max</span>() <span class="op">-</span> x.<span class="bu">min</span>(), rect_height, </span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>                    linewidth<span class="op">=</span><span class="dv">1</span>, edgecolor<span class="op">=</span><span class="st">'none'</span>,</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>                    facecolor<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.9</span>)</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].add_patch(rect)</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Annotate points on top of the gray rectangle</span></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> point, label <span class="kw">in</span> <span class="bu">zip</span>(annotation_points, annotation_labels):</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>        axes[<span class="dv">1</span>].annotate(label, xy<span class="op">=</span>(point, annotation_y_data_coords), </span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>                        xycoords<span class="op">=</span><span class="st">'data'</span>, </span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>                        color<span class="op">=</span><span class="st">'#FF8080'</span>,</span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>                        textcoords<span class="op">=</span><span class="st">'offset points'</span>, </span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>                        xytext<span class="op">=</span>(<span class="dv">0</span>, annotation_y_offset_points<span class="op">+</span><span class="dv">3</span>), ha<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage</span></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>mu <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>const <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> c <span class="kw">in</span> const:</span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>    plot_normal_distribution(mean<span class="op">=</span>mu, std_dev<span class="op">=</span>sigma, lower_limit<span class="op">=</span>mu<span class="op">-</span>c<span class="op">*</span>sigma, upper_limit<span class="op">=</span>mu<span class="op">+</span>c<span class="op">*</span>sigma, c<span class="op">=</span>c)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2.2_distribucion_multinormal_files/figure-html/cell-3-output-1.png" class="img-fluid"></p>
 </div>
 <div class="cell-output cell-output-display">
-0.159
+<p><img src="2.2_distribucion_multinormal_files/figure-html/cell-3-output-2.png" class="img-fluid"></p>
 </div>
-</div>
-<div class="cell" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fijar tamaño de gráficos</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>options(<span class="bu">repr</span>.plot.width <span class="op">=</span> <span class="dv">10</span>, <span class="bu">repr</span>.plot.height <span class="op">=</span> <span class="dv">4</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># graficar normal estándar</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># colores</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>red_light <span class="op">&lt;-</span> <span class="st">"#be1b1b75"</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>blue_light <span class="op">&lt;-</span> <span class="st">"#B3B3FF"</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>green_light <span class="op">&lt;-</span> <span class="st">"#77f475"</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>curve(dnorm(x, <span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> <span class="op">=</span> <span class="op">-</span><span class="dv">3</span>, to <span class="op">=</span> <span class="dv">3</span>,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  axes <span class="op">=</span> FALSE,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  ylab <span class="op">=</span> <span class="st">""</span>,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  main <span class="op">=</span> <span class="st">"p(x)"</span>,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  panel.first <span class="op">=</span> {</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    axis(<span class="dv">1</span>,</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>      at <span class="op">=</span> c(<span class="op">-</span><span class="dv">2</span>:<span class="dv">2</span>),</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>      labels <span class="op">=</span> parse(text <span class="op">=</span> c(<span class="st">"mu-2*sigma"</span>, <span class="st">"mu-sigma"</span>, <span class="st">"mu"</span>, <span class="st">"mu+sigma"</span>, <span class="st">"mu+2*sigma"</span>))</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co"># función cargada en utilities.R</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># graficar area de x entre [mu-sigma, mu+sigma]</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>plot_area_normal(</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  from_x <span class="op">=</span> <span class="op">-</span><span class="dv">1</span>,</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  to_x <span class="op">=</span> <span class="dv">1</span>,</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  fill <span class="op">=</span> blue_light</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co"># graficar área de mu-2sigma &lt;= x &lt;= mu-sigma</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>plot_area_normal(</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  from_x <span class="op">=</span> <span class="op">-</span><span class="dv">2</span>,</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  to_x <span class="op">=</span> <span class="op">-</span><span class="dv">1</span>,</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  fill <span class="op">=</span> red_light</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>plot_area_normal(</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  from_x <span class="op">=</span> <span class="dv">1</span>,</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>  to_x <span class="op">=</span> <span class="dv">2</span>,</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  fill <span class="op">=</span> green_light</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="co"># anotación de proporción de la curva</span></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>x_lab_pos <span class="op">&lt;-</span> c(<span class="op">-</span><span class="dv">3</span> <span class="op">/</span> <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">3</span> <span class="op">/</span> <span class="dv">2</span>) <span class="co"># posición en x</span></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>y_lab_pos <span class="op">&lt;-</span> dnorm(x_lab_pos, <span class="dv">0</span>, <span class="dv">1</span>) <span class="op">/</span> <span class="dv">2</span> <span class="co"># posición en y</span></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>text(</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> x_lab_pos,</span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>  y <span class="op">=</span> y_lab_pos,</span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>  <span class="co"># a la izquierda de la zona azul es</span></span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>  labels <span class="op">=</span> c(</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    (pnorm(<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)) <span class="op">|&gt;</span> <span class="bu">round</span>(<span class="dv">3</span>),</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span> <span class="op">-</span> (pnorm(<span class="op">-</span><span class="dv">1</span>, mean <span class="op">=</span> <span class="dv">0</span>, sd <span class="op">=</span> <span class="dv">1</span>)) <span class="op">*</span> <span class="dv">2</span>) <span class="op">|&gt;</span> <span class="bu">round</span>(<span class="dv">3</span>),</span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>    (pnorm(<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)) <span class="op">|&gt;</span> <span class="bu">round</span>(<span class="dv">3</span>)</span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>arrows(</span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>  x0 <span class="op">=</span> c(x_lab_pos[<span class="dv">1</span>] <span class="op">*</span> <span class="fl">0.8</span>, x_lab_pos[<span class="dv">3</span>] <span class="op">*</span> <span class="fl">0.8</span>),</span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>  y0 <span class="op">=</span> c(y_lab_pos[<span class="dv">1</span>], y_lab_pos[<span class="dv">3</span>]),</span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>  x1 <span class="op">=</span> rep(<span class="fl">1.5</span>, <span class="dv">2</span>),</span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>  y1 <span class="op">=</span> dnorm(rep(<span class="fl">1.5</span>, <span class="dv">2</span>)) <span class="op">*</span> <span class="fl">2.5</span>,</span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>  length <span class="op">=</span> <span class="fl">0.15</span>,</span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>  code <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>text(</span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> <span class="fl">1.5</span>,</span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>  y <span class="op">=</span> dnorm(<span class="fl">1.5</span>) <span class="op">*</span> <span class="fl">2.6</span>,</span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>  label <span class="op">=</span> glue::glue(<span class="st">"sum = {(0.954 - 0.683)} + 0.683 = {0.683 + (0.954 - 0.683)}"</span>)</span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2.2_distribucion_multinormal_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
+<p><img src="2.2_distribucion_multinormal_files/figure-html/cell-3-output-3.png" class="img-fluid"></p>
 </div>
 </div>
 <p>El término en el exponente en la ecuación (8)</p>
@@ -230,7 +251,16 @@ Autor: Emmanuel Alcalá <br> <a href="https://scholar.google.com.mx/citations?hl
 <p><span class="math display">\[
   (\mathbf{x}-\boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu}) \tag{9}
 \]</span></p>
-<p>A la ecuación (9) se le conoce como distancia de Mahalanobis (en realidad, el cuadrado de la distancia de Mahalanobis), que es la distancia entre un punto y su distribución (univariada o multivariada). El significado de los parámetros se describe en la siguiente sección.</p>
+<p>A la ecuación (9) se le conoce como distancia de Mahalanobis (en realidad, el cuadrado de la distancia de Mahalanobis), que es la distancia entre un punto y su distribución (univariada o multivariada).</p>
+<p>La distancia de Mahalanobis es una generalización de la distancia entre un punto en una distribución y su media. La simple medición de la distancia euclidiana entre puntos en un espacio multivariado puede resultar engañosa cuando las variables están correlacionadas. La distancia de Mahalanobis explica esta correlación utilizando la inversa de la matriz de covarianza. Esto garantiza que la medida de distancia no se vea indebidamente influenciada por variables altamente correlacionadas.</p>
+<section id="sobre-las-distancias" class="level3">
+<h3 class="anchored" data-anchor-id="sobre-las-distancias">Sobre las distancias</h3>
+<p>En matemáticas y ciencia de datos, el concepto de “distancia” sirve como una forma de cuantificar qué tan separados están dos puntos en un espacio dado. Las distancias son fundamentales para diversas aplicaciones, desde agrupación y clasificación hasta optimización y detección de anomalías. La distancia euclideana:</p>
+<p><span class="math display">\[
+  d(\mathbf{x}, \mathbf{y}) = \sqrt{\sum_{i=1}^D (x_i - y_i)^2} \tag{10}
+\]</span></p>
+<p>asume que el “espacio dado” es isotrópico, lo que significa que es el mismo en todas las direcciones. La distancia se calcula como si te movieras en línea recta de un punto a otro, sin considerar ninguna posible correlación entre las variables ni sus diferentes escalas. Básicamente, todas las dimensiones se consideran ortogonales (no correlacionadas) y la escala se considera uniforme en todas las dimensiones. La distancia euclideana seguiría siendo válida si la variable estuviera distribuida en una esfera, pero no si estuviera distribuida en un elipsoide, como es el caso cuando las variables están correlacionadas.</p>
+</section>
 <section id="distribución-bivariada" class="level3">
 <h3 class="anchored" data-anchor-id="distribución-bivariada">2.2.1. Distribución bivariada</h3>
 <p>La distribución normal multivariada (MVN) se caracteriza completamente por el vector de medias <span class="math inline">\(\boldsymbol{\mu}\)</span> y la matriz de covarianzas <span class="math inline">\(\boldsymbol{\Sigma}\)</span></p>
@@ -264,72 +294,51 @@ Autor: Emmanuel Alcalá <br> <a href="https://scholar.google.com.mx/citations?hl
 \end{align*}
 \]</span></p>
 <p>Esta forma de representar la distribución bivariada (aplica también para al MVN) enfatiza la influencia de la correlación en la pdf conjunta. En la siguiente sección simulamos dicha influencia.</p>
-<p><strong>Propiedades de la MVN</strong>:</p>
+<section id="distribución-normal-bivariada-una-breve-descripción" class="level4">
+<h4 class="anchored" data-anchor-id="distribución-normal-bivariada-una-breve-descripción">Distribución normal bivariada: una breve descripción</h4>
+<p>La distribución normal bivariada es un tipo de distribución multivariada. Describe el comportamiento de dos variables y captura la relación lineal entre ellas. La distribución está definida por:</p>
 <ol type="1">
-<li>Las combinaciones lineales de los componentes de <span class="math inline">\(\mathbf{x}\sim \mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma})\)</span> también están distribuidas normalmente, <span class="math inline">\(\mathbf{a^\top x} = a_1x_1 + \dots + a_Dx_D \sim \mathcal{N}(\boldsymbol{a^\top\mu}, \boldsymbol{a^\top\Sigma})\)</span></li>
-<li>Covarianza de cero implica que los componentes de <span class="math inline">\(\mathbf{x}\)</span> están distribuidos independientemente.</li>
-<li>Las distribuciones condicionales de los componentes, e.g., <span class="math inline">\(x_1 | x_2\)</span> (<span class="math inline">\(x_1\)</span> dado <span class="math inline">\(x_2\)</span>), también están distribuidas normalmente, con media <span class="math inline">\(\mu_1 + \frac{\sigma_{12}}{\sigma_{22}}(x_2 - \mu_2)\)</span> y desviación estándar <span class="math inline">\(\sigma_{11}(1-\rho_{12}^2)\)</span> (para el caso de la bivariada, <span class="math inline">\(\rho_{12}=\rho\)</span>), es decir, <span class="math display">\[
-x_1|x_2 \sim \mathcal{N}\left(%
-  \mu_1 + \frac{\sigma_{12}}{\sigma_{22}}(x_2 - \mu_2),\sigma_{11}(1-\rho_{12}^2)%
-  \right)
-\]</span></li>
+<li>Medias de las dos variables: $ _1 $ y $ _2 $</li>
+<li>Varianzas de las dos variables: $ _1^2 $ y $ _2^2 $</li>
+<li>El coeficiente de correlación $ $ entre las dos variables.</li>
 </ol>
-<section id="muestras-bivariadas" class="level4">
-<h4 class="anchored" data-anchor-id="muestras-bivariadas">Muestras bivariadas</h4>
-<p>Algoritmo para generar muestras <span class="math inline">\(\mathbf{x} \sim \mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma})\)</span><a name="cite_ref-1" href=""></a><a href="#cite_note-1"><sup>[1]</sup></a> con media aribitraria <span class="math inline">\(\mathbf{x}\)</span> y matriz de covarianza <span class="math inline">\(\boldsymbol{\Sigma}\)</span> con generador gaussiano (i.e., normal):</p>
-<ol type="1">
-<li>Computar la <a href="../Preliminares_AL.ipynb">factorización de Cholesky</a> <span class="math inline">\(L\)</span> de una matriz positiva definida <span class="math inline">\(\boldsymbol{\Sigma}=LL^\top\)</span>, en donde <span class="math inline">\(L\)</span> es la matriz <a href="../Preliminares_AL.ipynb">triangular inferior</a>.</li>
-<li>Generar una muestra <span class="math inline">\(\mathbf{u} \sim \mathcal{N}(\mathbf{0}, I)\)</span> (normal estándar).</li>
-<li>Computar <span class="math inline">\(\mathbf{x} = \boldsymbol{\mu} + L\mathbf{u}\)</span>, que tendrá la distribución deseada.</li>
-</ol>
-<p><a name="cite_note-1" href=""></a>1. [^](#cite_ref-1) C. E. Rasmussen &amp; C. K. I. Williams (2006). <em>Gaussian Processes for Machine Learning</em>. The MIT Press, 2006</p>
-<div class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>options(<span class="bu">repr</span>.plot.width <span class="op">=</span> <span class="dv">7</span>, <span class="bu">repr</span>.plot.height <span class="op">=</span> <span class="dv">6</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>rho <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">0.6</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>N <span class="op">&lt;-</span> <span class="dv">200</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>sigma_1 <span class="op">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>sigma_2 <span class="op">&lt;-</span> <span class="dv">8</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># por ecuación 11</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>Sigma <span class="op">&lt;-</span> matrix( <span class="co"># matriz de covarianza</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  c(</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    sigma_1<span class="op">^</span><span class="dv">2</span>, rho <span class="op">*</span> sigma_1 <span class="op">*</span> sigma_2,</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    rho <span class="op">*</span> sigma_1 <span class="op">*</span> sigma_2, sigma_2<span class="op">^</span><span class="dv">2</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  ncol <span class="op">=</span> <span class="dv">2</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>mu1 <span class="op">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>mu2 <span class="op">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>mu_vec <span class="op">&lt;-</span> c(mu1, mu2)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>L <span class="op">&lt;-</span> t(chol(Sigma))</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>L <span class="co"># matriz triangular</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span>.seed(<span class="dv">123</span>)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>u <span class="op">&lt;-</span> matrix(rnorm(<span class="dv">2</span> <span class="op">*</span> N), <span class="dv">2</span>, N) <span class="co"># 2 filas, N/2 columnas</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># sumar element-wise, mu1 + col_1, mu2 + col_2</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>x <span class="op">&lt;-</span> (mu_vec <span class="op">+</span> t(L <span class="op">%*%</span> u))</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>scatter_plot(</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  x[, <span class="dv">1</span>], x[, <span class="dv">2</span>],</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># dos formas diferentes de anotaciones matemáticas</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  xlab <span class="op">=</span> parse(text <span class="op">=</span> <span class="st">"x[1]"</span>), ylab <span class="op">=</span> expression(x[<span class="dv">2</span>]),</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  color <span class="op">=</span> red_light, fill <span class="op">=</span> blue_light</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>La función de densidad de probabilidad conjunta (pdf) de la distribución normal bivariada es:</p>
+<p><span class="math display">\[
+f(x_1, x_2) = \frac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}} \exp\left(-\frac{1}{2(1-\rho^2)}\left[\frac{(x_1-\mu_1)^2}{\sigma_1^2} - 2\rho\frac{(x_1-\mu_1)(x_2-\mu_2)}{\sigma_1\sigma_2} + \frac{(x_2-\mu_2)^2}{\sigma_2^2}\right]\right)
+\]</span></p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to simulate and plot bivariate normal distribution on a given axis</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simulate_and_plot_bivariate_normal(ax, correlation):</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    mean <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">0</span>]  <span class="co"># Mean vector</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    covariance_matrix <span class="op">=</span> [[<span class="dv">1</span>, correlation], [correlation, <span class="dv">1</span>]]  <span class="co"># Covariance matrix</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generate samples</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    samples <span class="op">=</span> np.random.multivariate_normal(mean, covariance_matrix, <span class="dv">1000</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract X and Y variables</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    x, y <span class="op">=</span> samples[:, <span class="dv">0</span>], samples[:, <span class="dv">1</span>]</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create scatter plot on the given axis</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    ax.scatter(x, y, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f'Correlation = </span><span class="sc">{</span>correlation<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'X'</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">'Y'</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    ax.axis(<span class="st">'equal'</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    ax.grid(<span class="va">True</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Create subplots</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">5</span>, figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">4</span>))</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate and plot for different correlation values</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>correlations <span class="op">=</span> [<span class="op">-</span><span class="fl">0.9</span>, <span class="op">-</span><span class="fl">0.5</span>, <span class="dv">0</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span>]</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, corr <span class="kw">in</span> <span class="bu">zip</span>(axes, correlations):</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    simulate_and_plot_bivariate_normal(ax, corr)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a super title for the entire figure</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'Bivariate Normal Distributions with Different Correlations'</span>)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>A matrix: 2 × 2 of type dbl</caption>
-<tbody>
-<tr class="odd">
-<td>2.0</td>
-<td>0.0</td>
-</tr>
-<tr class="even">
-<td>-4.8</td>
-<td>6.4</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="cell-output cell-output-display">
-<p><img src="2.2_distribucion_multinormal_files/figure-html/cell-5-output-2.png" class="img-fluid"></p>
+<p><img src="2.2_distribucion_multinormal_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>Ahora vamos a evaluar el efecto de <span class="math inline">\(\rho\)</span> sobre la distribución bivariada. Primero, recordar de la ecuación (9)</p>
@@ -347,116 +356,10 @@ x_1|x_2 \sim \mathcal{N}\left(%
 </ol>
 <p>Los puntos 2 y 3 permiten obtener una aplicación interesante: dado que los puntos se alejan del centro de la distribución, un punto que tenga una distancia de Mahalanobis probablemente no pertenece a la distribución, es decir es un outlier.</p>
 <p>Los puntos 4 y 5 permite construir elipses de confianza (análogos a los intervalos de confianza para 2D), lo que facilita la visualización.</p>
-<div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>options(<span class="bu">repr</span>.plot.width<span class="op">=</span><span class="dv">7</span>, <span class="bu">repr</span>.plot.height<span class="op">=</span><span class="dv">5</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>par(</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  mgp <span class="op">=</span> c(<span class="fl">2.5</span>, <span class="fl">0.75</span>, <span class="dv">0</span>),</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  mar <span class="op">=</span> c(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>),</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  las <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>curve(</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  dchisq(x, df <span class="op">=</span> <span class="dv">3</span>),</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> <span class="op">=</span> <span class="dv">0</span>, to <span class="op">=</span> <span class="dv">10</span>,</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  ylab <span class="op">=</span> <span class="st">'density of x'</span>,</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  xlab <span class="op">=</span> <span class="st">'x'</span>,</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  main <span class="op">=</span> expression(chi<span class="op">^</span><span class="dv">2</span><span class="op">~</span>pdf),</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  col <span class="op">=</span> <span class="st">'blue'</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="2.2_distribucion_multinormal_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
-</div>
-</div>
-<div class="cell" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rho_vec <span class="op">&lt;-</span> c(<span class="op">-</span><span class="fl">0.6</span>, <span class="op">-</span><span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.6</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sigma_1 <span class="op">&lt;-</span> <span class="dv">2</span><span class="co">#</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>sigma_2 <span class="op">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>sigma_vec <span class="op">&lt;-</span> c(sigma_1, sigma_2)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>mu_vec <span class="op">&lt;-</span> c(<span class="dv">5</span>, <span class="dv">5</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>par(</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  mfrow <span class="op">=</span> c(<span class="dv">2</span>, <span class="dv">2</span>),</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  mgp <span class="op">=</span> c(<span class="fl">1.5</span>, <span class="fl">0.5</span>, <span class="dv">0</span>),</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  mar <span class="op">=</span> c(<span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (rho <span class="kw">in</span> rho_vec) {</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  x <span class="op">&lt;-</span> sim_bivariate(rho, sigma_vec, mu_vec, N <span class="op">=</span> <span class="dv">200</span>, seed <span class="op">=</span> <span class="dv">145</span>)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  scatter_plot(</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    x[, <span class="dv">1</span>], x[, <span class="dv">2</span>],</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    xlab <span class="op">=</span> <span class="st">"x1"</span>,</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    ylab <span class="op">=</span> <span class="st">"x2"</span>,</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    fill <span class="op">=</span> green_light,</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    color <span class="op">=</span> red_light,</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    main <span class="op">=</span> parse(text <span class="op">=</span> sprintf(<span class="st">"rho == </span><span class="sc">%s</span><span class="st">~y~hat(rho)==</span><span class="sc">%s</span><span class="st">"</span>, rho, cor(x[, <span class="dv">1</span>], x[, <span class="dv">2</span>]) <span class="op">|&gt;</span> <span class="bu">round</span>(<span class="dv">2</span>)))</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  rad <span class="op">&lt;-</span> qchisq(p <span class="op">=</span> c(<span class="fl">0.5</span>, <span class="fl">.95</span>), df <span class="op">=</span> ncol(x))</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  rad <span class="op">&lt;-</span> sqrt(rad)</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  plot_ellipse(x, rad, colores <span class="op">=</span> c(<span class="st">"navy"</span>, <span class="st">"red"</span>))</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="2.2_distribucion_multinormal_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
-</div>
-</div>
-<div class="cell" data-execution_count="29">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ahora veremos cómo se relacionan los eigenvectores y eigenvalores</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># con los ejes del elipse</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>options(<span class="bu">repr</span>.plot.width <span class="op">=</span> <span class="dv">7</span>, <span class="bu">repr</span>.plot.height <span class="op">=</span> <span class="dv">7</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>sigma_1 <span class="op">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>sigma_2 <span class="op">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>mu_vec <span class="op">&lt;-</span> c(<span class="dv">5</span>, <span class="dv">5</span>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>x <span class="op">&lt;-</span> sim_bivariate(<span class="fl">0.6</span>, c(sigma_1, sigma_2), mu_vec, <span class="dv">200</span>, seed <span class="op">=</span> <span class="dv">123</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>scatter_plot(</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> x[ ,<span class="dv">1</span>], y <span class="op">=</span> x[ ,<span class="dv">2</span>],</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  color <span class="op">=</span> blue_light, fill <span class="op">=</span> red_light,</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  xlim <span class="op">=</span> <span class="bu">range</span>(x), ylim <span class="op">=</span> <span class="bu">range</span>(x),</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  main <span class="op">=</span> <span class="st">"Bivariate normal &amp; error ellipse"</span>,</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  xlab <span class="op">=</span> expression(x[<span class="dv">1</span>]), ylab <span class="op">=</span> expression(x[<span class="dv">2</span>])</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>rad <span class="op">&lt;-</span> qchisq(p <span class="op">=</span> <span class="fl">.95</span>, df <span class="op">=</span> ncol(x))</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>rad <span class="op">&lt;-</span> sqrt(rad)</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co"># radio a mu + sd, approx </span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>rad2 <span class="op">&lt;-</span> qchisq(<span class="fl">0.6826895</span>, <span class="dv">2</span>) <span class="op">|&gt;</span> sqrt()</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>plot_ellipse(x, rad2, colores <span class="op">=</span> c(<span class="st">'navy'</span>, <span class="st">'red'</span>))</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>covX <span class="op">&lt;-</span> cov(x)</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>eigVal <span class="op">&lt;-</span> eigen(covX)$values</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>eigVec <span class="op">&lt;-</span> eigen(covX)$vectors</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co"># media empírica (vector)</span></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>emp_mean <span class="op">&lt;-</span> colMeans(x)</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="co"># obtener el eigenvector correspondiente al eigenvalor más largo</span></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>max_eigen_val_index <span class="op">&lt;-</span> which.<span class="bu">max</span>(eigVal)</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>max_eigVal <span class="op">&lt;-</span> eigVal[max_eigen_val_index]</span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>max_eigVec <span class="op">&lt;-</span> eigVec[, max_eigen_val_index]</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="co"># correspondiente al eigenvalor más corto</span></span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>min_eigVal <span class="op">&lt;-</span> eigVal[<span class="op">-</span>max_eigen_val_index]</span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>min_eigVec <span class="op">&lt;-</span> eigVec[ ,<span class="op">-</span>max_eigen_val_index]</span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="co"># dibujar el eje mayor</span></span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>arrows(</span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x0, y0</span></span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>  emp_mean[<span class="dv">1</span>], emp_mean[<span class="dv">2</span>],</span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x1</span></span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>  emp_mean[<span class="dv">1</span>] <span class="op">+</span> sqrt(max_eigVal) <span class="op">*</span> max_eigVec[<span class="dv">1</span>] <span class="op">*</span> rad2, </span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>  <span class="co"># y1</span></span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>  emp_mean[<span class="dv">2</span>] <span class="op">+</span> sqrt(max_eigVal) <span class="op">*</span> max_eigVec[<span class="dv">2</span>] <span class="op">*</span> rad2,</span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>  col <span class="op">=</span> <span class="st">'navy'</span>,</span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>  lwd <span class="op">=</span> <span class="dv">2</span></span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a><span class="co"># dibujar el eje menor</span></span>
-<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>arrows(</span>
-<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>  emp_mean[<span class="dv">1</span>], emp_mean[<span class="dv">2</span>],</span>
-<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>  emp_mean[<span class="dv">1</span>] <span class="op">+</span> sqrt(min_eigVal) <span class="op">*</span> min_eigVec[<span class="dv">1</span>] <span class="op">*</span> rad2,</span>
-<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>  emp_mean[<span class="dv">2</span>] <span class="op">+</span> sqrt(min_eigVal) <span class="op">*</span> min_eigVec[<span class="dv">2</span>] <span class="op">*</span> rad2,</span>
-<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>  col <span class="op">=</span> <span class="st">"navy"</span>,</span>
-<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>  lwd <span class="op">=</span> <span class="dv">2</span></span>
-<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="2.2_distribucion_multinormal_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
-</div>
-</div>
-<p>Notar que los eigenvectores son ortogonales entre sí (su producto punto es 0, <code>eigVec[,1] %*% eigVec[,2]</code>). Luego en el tema de PCA veremos que el eigenvector correspondiente al eigenvalor más largo corresponde al componente principal 1, que es el componente en una matriz en donde existe mayor variación.</p>
-<p><strong>Ejemplo</strong></p>
+<p>La distribución de Chi-cuadrada es una distribución de probabilidad continua con un parámetro de forma <span class="math inline">\(k\)</span> que especifica el número de grados de libertad (el número de variables aleatorias independientes que se suman), es la distribución de suma de cuadrados de <span class="math inline">\(k\)</span> variables aleatorias estándar normales independientes, es una distribución asimétrica, con un sesgo positivo. Se define como:</p>
+<p><span class="math display">\[
+f(x) = \frac{1}{2^{k/2}\Gamma(k/2)}x^{k/2-1}e^{-x/2}
+\]</span></p>
 <p>Suponer una distribución bivariada normal <span class="math inline">\(X\sim \mathcal{N}(\bm\mu, \Sigma)\)</span> con centroide</p>
 <p><span class="math display">\[
   \boldsymbol{\mu} = \begin{bmatrix}
@@ -482,210 +385,224 @@ x_1|x_2 \sim \mathcal{N}\left(%
 <li>Encontrar <span class="math inline">\(d_M\)</span>, la distancia cuadrática de Malahanobis.</li>
 <li>Verificar si <span class="math inline">\(p_1, p_2\)</span> son outliers de acuerdo a <span class="math inline">\(d_M\)</span> y su distribución, al <span class="math inline">\(\alpha = 0.05\)</span> de confianza.</li>
 </ol>
-<p><em>Solución</em></p>
+<p>Supongamos que estamos analizando el desempeño de una cartera de acciones. Las dos variables en la distribución normal bivariada <span class="math inline">\(X\)</span> podrían representar:</p>
+<ul>
+<li>La primera variable <span class="math inline">\(X_1\)</span> podría representar los rendimientos mensuales de la Acción A.</li>
+<li>La segunda variable <span class="math inline">\(X_2\)</span> podría representar los rendimientos mensuales de la Acción B.</li>
+</ul>
+<p>El centroide <span class="math inline">\(\boldsymbol{\mu}\)</span> representa los rendimientos mensuales promedio de la Acción A (<span class="math inline">\(\mu_1 = 3.1\%\)</span>) y la Acción B (<span class="math inline">\(\mu_2 = 3.0\%\)</span>).</p>
+<p>La matriz de covarianza <span class="math inline">\(\Sigma\)</span> proporciona información sobre las variaciones (volatilidad) de estos rendimientos para cada acción y también cómo se correlacionan. Una covarianza positiva sugiere que cuando la acción A tiene un buen desempeño, la acción B también tiende a tener un buen desempeño y viceversa.</p>
+</section>
+</section>
+<section id="interpretación-de-los-puntos-p_1-y-p_2" class="level3">
+<h3 class="anchored" data-anchor-id="interpretación-de-los-puntos-p_1-y-p_2">Interpretación de los puntos <span class="math inline">\(p_1\)</span> y <span class="math inline">\(p_2\)</span></h3>
+<ul>
+<li><p><strong>Punto <span class="math inline">\(p_1 = (5, 5)\)</span></strong>: Esto representa un mes en el que tanto la Acción A como la Acción B dieron un rendimiento del 5%, que está por encima del rendimiento promedio de ambas acciones.</p></li>
+<li><p><strong>Punto <span class="math inline">\(p_2 = (5, 2)\)</span></strong>: Esto representa un mes en el que la Acción A dio un rendimiento del 5%, pero la Acción B solo dio un rendimiento del 2%. La acción A tuvo un desempeño superior al promedio, pero la acción B no.</p></li>
+</ul>
+<div class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> multivariate_normal</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the parameters</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>mu <span class="op">=</span> np.array([<span class="fl">3.1</span>, <span class="fl">3.0</span>])</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>Sigma <span class="op">=</span> np.array([[<span class="fl">0.7163324</span>, <span class="fl">0.6876791</span>],</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                  [<span class="fl">0.6876791</span>, <span class="fl">1.0601719</span>]])</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate 10,000 samples from the bivariate normal distribution</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: You can replace this array with the one obtained from Wolfram if you prefer</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>samples <span class="op">=</span> np.random.multivariate_normal(mu, Sigma, <span class="dv">10000</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the points p1 and p2</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">=</span> np.array([<span class="dv">5</span>, <span class="dv">5</span>])</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>p2 <span class="op">=</span> np.array([<span class="dv">5</span>, <span class="dv">2</span>])</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the scatter plot</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>plt.scatter(samples[:, <span class="dv">0</span>], samples[:, <span class="dv">1</span>], alpha<span class="op">=</span><span class="fl">0.2</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>plt.scatter(mu[<span class="dv">0</span>], mu[<span class="dv">1</span>], color<span class="op">=</span><span class="st">'black'</span>, label<span class="op">=</span><span class="st">'Mean'</span>, zorder<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>plt.scatter(p1[<span class="dv">0</span>], p1[<span class="dv">1</span>], color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'p1'</span>, zorder<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>plt.scatter(p2[<span class="dv">0</span>], p2[<span class="dv">1</span>], color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'p2'</span>, zorder<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co"># add two lines from p1 and p2 to the mean</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>plt.plot([mu[<span class="dv">0</span>], p1[<span class="dv">0</span>]], [mu[<span class="dv">1</span>], p1[<span class="dv">1</span>]], color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>plt.plot([mu[<span class="dv">0</span>], p2[<span class="dv">0</span>]], [mu[<span class="dv">1</span>], p2[<span class="dv">1</span>]], color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Add labels and title</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Bivariate Normal Distribution with p1 and p2'</span>)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'X1'</span>)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'X2'</span>)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plot</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2.2_distribucion_multinormal_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.spatial <span class="im">import</span> distance</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpy.linalg <span class="im">import</span> inv</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the centroid (mu)</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>mu <span class="op">=</span> np.array([<span class="fl">3.1</span>, <span class="fl">3.0</span>])</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the covariance matrix (Sigma) and its inverse</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>Sigma <span class="op">=</span> np.array([[<span class="fl">0.7163324</span>, <span class="fl">0.6876791</span>],</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                  [<span class="fl">0.6876791</span>, <span class="fl">1.0601719</span>]])</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>Sigma_inv <span class="op">=</span> inv(Sigma)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>Sigma_inv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>array([[ 3.70000012, -2.40000018],
+       [-2.40000018,  2.5000002 ]])</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Mahalanobis distance for p1 and p2</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mahalanobis(x, mu, Sigma_inv):</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    delta <span class="op">=</span> x <span class="op">-</span> mu <span class="co"># Difference between the point and the mean</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.sqrt(np.dot(np.dot(delta, Sigma_inv), delta.T))</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>dM_p1 <span class="op">=</span> mahalanobis(p1, mu, Sigma_inv)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>dM_p2 <span class="op">=</span> mahalanobis(p2, mu, Sigma_inv)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mahalanobis distance for p1: </span><span class="sc">{</span>dM_p1<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mahalanobis distance for p2: </span><span class="sc">{</span>dM_p2<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Mahalanobis distance for p1: 2.2621
+Mahalanobis distance for p2: 4.9977</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Mahalanobis distance for p1 and p2 using scipy.spatial</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>dM_p1_scipy <span class="op">=</span> distance.mahalanobis(p1, mu, Sigma_inv)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>dM_p2_scipy <span class="op">=</span> distance.mahalanobis(p2, mu, Sigma_inv)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mahalanobis distance for p1 using scipy: </span><span class="sc">{</span>dM_p1_scipy<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mahalanobis distance for p2 using scipy: </span><span class="sc">{</span>dM_p2_scipy<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Mahalanobis distance for p1 using scipy: 2.2621
+Mahalanobis distance for p2 using scipy: 4.9977</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the points p1 and p2</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">=</span> np.array([<span class="dv">5</span>, <span class="dv">5</span>])</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>p2 <span class="op">=</span> np.array([<span class="dv">5</span>, <span class="dv">2</span>])</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Euclidean distance for p1 and p2</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>dE_p1 <span class="op">=</span> distance.euclidean(mu, p1)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>dE_p2 <span class="op">=</span> distance.euclidean(mu, p2)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Euclidean distance for p1: </span><span class="sc">{</span>dE_p1<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Euclidean distance for p2: </span><span class="sc">{</span>dE_p2<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Euclidean distance for p1: 2.7586
+Euclidean distance for p2: 2.1471</code></pre>
+</div>
+</div>
+</section>
+<section id="lo-que-nos-dicen-las-distancias" class="level3">
+<h3 class="anchored" data-anchor-id="lo-que-nos-dicen-las-distancias">Lo que nos dicen las distancias</h3>
 <ol type="1">
-<li>Con respecto a <span class="math inline">\(\bm\mu\)</span>, tenemos para <span class="math inline">\(p_1\)</span></li>
+<li><p><strong>Distancia euclidiana</strong>: Tanto <span class="math inline">\(p_1\)</span> como <span class="math inline">\(p_2\)</span> están relativamente cerca de los rendimientos promedio, lo que sugiere que no son valores atípicos basados únicamente en la distancia euclidiana.</p></li>
+<li><p><strong>Distancia de Mahalanobis</strong>:</p>
+<ul>
+<li>Para <span class="math inline">\(p_1\)</span>, la distancia de Mahalanobis es <span class="math inline">\(2.26\)</span>, lo que sugiere que este punto no está muy alejado de la tendencia general de la cartera.</li>
+<li>Para <span class="math inline">\(p_2\)</span>, la distancia de Mahalanobis es <span class="math inline">\(4.9976\)</span>, que es significativamente mayor. Esto sugiere que los rendimientos de este mes en particular son inusuales en comparación con la tendencia general.</li>
+</ul></li>
 </ol>
-<p><span class="math display">\[
-  d_E = \sqrt{(5-3.1)^2 + (5-3)^2} = 2.7586
-\]</span></p>
-<p>y para <span class="math inline">\(p_2\)</span></p>
-<p><span class="math display">\[
-  d_E = \sqrt{(5-3.1)^2 + (2-3)^2} = 2.147
-\]</span></p>
-<p>Ambos puntos están muy próximos al centroide.</p>
-<ol start="2" type="1">
-<li>Para la distancia de Malahanobis, usamos su definición (9)</li>
-</ol>
-<p><span class="math display">\[
-  d_M = \sqrt{(\mathbf{x}-\boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu})}
-\]</span></p>
-<p>Para <span class="math inline">\(p_1\)</span> da</p>
-<p><span class="math display">\[
-  d_M = \sqrt{
-    \begin{bmatrix}
-    5-3.1\\
-    5-3
-    \end{bmatrix}^\top
-    \begin{bmatrix}
-    3.7 &amp; -2.4\\
-   -2.4 &amp; 2.5
-    \end{bmatrix}
-    \begin{bmatrix}
-    5-3.1\\
-    5-3
-    \end{bmatrix}
-  } = \sqrt{
-    \begin{bmatrix}
-    1.9 &amp; 2
-    \end{bmatrix}
-    \begin{bmatrix}
-    3.7 &amp; -2.4\\
-   -2.4 &amp; 2.5
-    \end{bmatrix}
-    \begin{bmatrix}
-    1.9 \\ 2
-    \end{bmatrix}
-  } = \sqrt{5.117} = 2.26
-\]</span></p>
-<p>Para <span class="math inline">\(p_2\)</span></p>
-<p><span class="math display">\[
-  d_M = \sqrt{
-    \begin{bmatrix}
-    5-3.1\\
-    2-3
-    \end{bmatrix}^\top
-    \begin{bmatrix}
-    3.7 &amp; -2.4\\
-   -2.4 &amp; 2.5
-    \end{bmatrix}
-    \begin{bmatrix}
-    5-3.1\\
-    2-3
-    \end{bmatrix}
-  } = \sqrt{
-    \begin{bmatrix}
-    1.9 &amp; -1
-    \end{bmatrix}
-    \begin{bmatrix}
-    3.7 &amp; -2.4\\
-   -2.4 &amp; 2.5
-    \end{bmatrix}
-    \begin{bmatrix}
-    1.9 \\ -1
-    \end{bmatrix}
-  } = \sqrt{24.977} = 4.9976
-\]</span></p>
-<div class="cell" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># En R lo anterior sería</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># matriz inversa</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>Sinv <span class="op">&lt;-</span> matrix(c(<span class="fl">3.7</span>, <span class="op">-</span><span class="fl">2.4</span>, <span class="op">-</span><span class="fl">2.4</span>, <span class="fl">2.5</span>), ncol <span class="op">=</span> <span class="dv">2</span>, byrow <span class="op">=</span> TRUE)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># vector centroide</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>mu <span class="op">&lt;-</span> c(<span class="fl">3.1</span>, <span class="dv">3</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># distancia euclideana p1</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">&lt;-</span> <span class="im">as</span>.matrix(c(<span class="dv">5</span>, <span class="dv">5</span>))</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>norm(p1<span class="op">-</span>mu, <span class="bu">type</span> <span class="op">=</span> <span class="st">'2'</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>p2 <span class="op">&lt;-</span> <span class="im">as</span>.matrix(c(<span class="dv">5</span>, <span class="dv">2</span>))</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>norm(p2 <span class="op">-</span> mu, <span class="bu">type</span> <span class="op">=</span> <span class="st">"2"</span>)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># d de Malahanobis de p1; %*% es el producto punto, t(x) es la traspuesta de x</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>sqrt(t(p1<span class="op">-</span>mu) <span class="op">%*%</span> Sinv <span class="op">%*%</span> (p1<span class="op">-</span>mu))</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># d de Malahanobis de p2</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>sqrt(t(p2<span class="op">-</span>mu) <span class="op">%*%</span> Sinv <span class="op">%*%</span> (p2<span class="op">-</span>mu))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-2.75862284482674
-</div>
-<div class="cell-output cell-output-display">
-2.14709105535839
-</div>
-<div class="cell-output cell-output-display">
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>A matrix: 1 × 1 of type dbl</caption>
-<tbody>
-<tr class="odd">
-<td>2.262079</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="cell-output cell-output-display">
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>A matrix: 1 × 1 of type dbl</caption>
-<tbody>
-<tr class="odd">
-<td>4.997699</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>Verificamos ahora si <span class="math inline">\(p_1, p_2\)</span> son outliers considerando que la distancia de Mahalanobis al cuadrado tiene distribución <span class="math inline">\(\chi^2\)</span> con <span class="math inline">\(1-\alpha\)</span> nivel de significancia y <span class="math inline">\(\dim(X)=2\)</span> grados de libertad. En R <code>qchisq(1-alfa, 2)</code> nos da el valor de <span class="math inline">\(d_M^2\)</span> al <span class="math inline">\(1-\alpha\)</span> de confianza, por lo que si le sacamos la raíz cuadrada obtendríamos el valor <span class="math inline">\(d_M\)</span> <em>teórico</em> con el que sería igual, o por encima del cual, nuestro punto <span class="math inline">\(p_i\)</span> podría ser un outlier.</p>
-<div class="cell" data-execution_count="31">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>d_teorico_cuadratico <span class="op">&lt;-</span> qchisq(<span class="dv">1</span> <span class="op">-</span> <span class="fl">0.05</span>, <span class="dv">2</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sqrt(d_teorico_cuadratico)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-2.44774683068082
+</section>
+<section id="detección-de-valores-atípicos" class="level3">
+<h3 class="anchored" data-anchor-id="detección-de-valores-atípicos">Detección de valores atípicos</h3>
+<p>Usando una prueba de chi-cuadrado para la detección de valores atípicos en <span class="math inline">\(\alpha = 0.05\)</span>, encontraríamos que es más probable que <span class="math inline">\(p_2\)</span> sea considerado un valor atípico según su distancia de Mahalanobis. Esto podría ser un indicio de un evento que afectó significativamente a la Acción B pero no a la Acción A, lo que justifica una mayor investigación.</p>
+<p>El nivel de significancia, a menudo indicado por $ $, es la probabilidad de rechazar la hipótesis nula cuando en realidad es cierta. En términos más simples, es la probabilidad de cometer un “error de tipo I” o identificar falsamente un efecto o diferencia que en realidad no existe. Los niveles de significancia comúnmente utilizados incluyen 0,05, 0,01 y 0,10, que corresponden a probabilidades del 5%, 1% y 10% de cometer un error de tipo I, respectivamente.</p>
+<p>En el contexto de la detección de valores atípicos, un nivel de significancia de $ = 0.05 $ significa que hay un 5 % de posibilidades de clasificar incorrectamente un punto como un valor atípico cuando no lo es.</p>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chi2</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the Mahalanobis distance squared for p1 and p2</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>dM_p1_squared <span class="op">=</span> dM_p1 <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>dM_p2_squared <span class="op">=</span> dM_p2 <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the critical value for alpha = 0.05 and k = 2</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>critical_value <span class="op">=</span> chi2.ppf(<span class="dv">1</span> <span class="op">-</span> alpha, k)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Determine if p1 and p2 are outliers</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>is_outlier_p1 <span class="op">=</span> dM_p1_squared <span class="op">&gt;</span> critical_value</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>is_outlier_p2 <span class="op">=</span> dM_p2_squared <span class="op">&gt;</span> critical_value</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Critical value for chi-squared distribution: </span><span class="sc">{</span>critical_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mahalanobis distance squared for p1: </span><span class="sc">{</span>dM_p1_squared<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mahalanobis distance squared for p2: </span><span class="sc">{</span>dM_p2_squared<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Is p1 an outlier? </span><span class="sc">{</span>is_outlier_p1<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Is p2 an outlier? </span><span class="sc">{</span>is_outlier_p2<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Critical value for chi-squared distribution: 5.9915
+Mahalanobis distance squared for p1: 5.1170
+Mahalanobis distance squared for p2: 24.9770
+Is p1 an outlier? False
+Is p2 an outlier? True</code></pre>
 </div>
 </div>
 <p>Vemos que <span class="math inline">\(d_M\)</span> de <span class="math inline">\(p_1\)</span> es menor a este valor, pero <span class="math inline">\(d_M\)</span> de <span class="math inline">\(p_2\)</span> (4.99) no lo es. Por lo tanto, al <span class="math inline">\(1-\alpha\)</span> de confianza, concluimos que <span class="math inline">\(p_2\)</span> es un outlier.</p>
-</section>
-<section id="gráficos-marginales-usando" class="level4">
-<h4 class="anchored" data-anchor-id="gráficos-marginales-usando">Gráficos marginales usando</h4>
-<p>Los gráficos de histogramas marginales al gráfico de dispersión pueden aportar información adicional que no es del todo visible con el mero gráfico de dispersión. Por ejemplo, la existencia de outliers, la normalidad de las distribuciones marginales, etc.</p>
-<ol type="1">
-<li>Opción <code>{ggplot}</code> y <code>{ggExtra}</code>.</li>
-<li>Opción <code>{base}</code> usando la función <code>scatter_marginal()</code> personalizada del script <code>utilities</code>.</li>
-</ol>
-<section id="opción-1" class="level5">
-<h5 class="anchored" data-anchor-id="opción-1">Opción 1</h5>
-<div class="cell" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>library(tidyverse)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>library(ggExtra)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>colnames(x) <span class="op">&lt;-</span> c(<span class="st">"X1"</span>, <span class="st">"X2"</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>p_scatter <span class="op">&lt;-</span> ggplot(</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  x <span class="op">|&gt;</span> <span class="im">as</span>.data.frame(),</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  aes(x <span class="op">=</span> X1, y <span class="op">=</span> X2)</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>) <span class="op">+</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  geom_point() <span class="op">+</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  geom_smooth(method <span class="op">=</span> <span class="st">"lm"</span>)</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>ggMarginal(p_scatter, <span class="bu">type</span> <span class="op">=</span> <span class="st">"densigram"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'
-`geom_smooth()` using formula = 'y ~ x'
-Warning message:
-“The dot-dot notation (`..density..`) was deprecated in ggplot2 3.4.0.
-ℹ Please use `after_stat(density)` instead.
-ℹ The deprecated feature was likely used in the ggExtra package.
-  Please report the issue at &lt;https://github.com/daattali/ggExtra/issues&gt;.”</code></pre>
-</div>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chi2</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate 10,000 samples from a chi-squared distribution with 2 degrees of freedom</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: You can replace this array with the one obtained from Wolfram if you prefer</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>samples <span class="op">=</span> np.random.chisquare(<span class="dv">2</span>, <span class="dv">10000</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the critical value for alpha = 0.05 and k = 2</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>critical_value <span class="op">=</span> chi2.ppf(<span class="dv">1</span> <span class="op">-</span> alpha, k)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the histogram</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>plt.hist(samples, bins<span class="op">=</span><span class="dv">50</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, color<span class="op">=</span><span class="st">'g'</span>, label<span class="op">=</span><span class="st">'Chi-squared distribution'</span>)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the critical value</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>plt.axvline(critical_value, color<span class="op">=</span><span class="st">'r'</span>, linestyle<span class="op">=</span><span class="st">'dashed'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f'Critical value (alpha=</span><span class="sc">{</span>alpha<span class="sc">}</span><span class="ss">)'</span>)</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Add labels and title</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Chi-squared distribution with critical value'</span>)</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Value'</span>)</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Frequency'</span>)</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plot</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2.2_distribucion_multinormal_files/figure-html/cell-11-output-2.png" class="img-fluid"></p>
-</div>
-</div>
-</section>
-<section id="opción-2" class="level5">
-<h5 class="anchored" data-anchor-id="opción-2">Opción 2</h5>
-<div class="cell" data-execution_count="34">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># revisar el código del script utilities.r</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>scatter_marginal(</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> x[, <span class="dv">1</span>], y <span class="op">=</span> x[, <span class="dv">2</span>],</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  fill <span class="op">=</span> blue_light, color <span class="op">=</span> <span class="dv">1</span>,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  xlab <span class="op">=</span> expression(x[<span class="dv">1</span>]), </span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  ylab <span class="op">=</span> expression(x[<span class="dv">2</span>]),</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  cex.lab <span class="op">=</span> <span class="fl">1.4</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="2.2_distribucion_multinormal_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+<p><img src="2.2_distribucion_multinormal_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>Ejemplo: Supongamos que tenemos un conjunto de datos de alturas y pesos de personas. Podemos modelar estas dos variables como una distribución multinormal, con una media de 170 cm y 70 kg, y una desviación estándar de 10 cm y 15 kg, respectivamente.</p>
 <p>Una vez que tenemos un modelo para las alturas y pesos, podemos usar Python para calcular la probabilidad de que una persona aleatoria tenga una altura entre 160 y 180 cm y un peso entre 60 y 80 kg. Para hacer esto, podemos usar la función <code>numpy.random.multivariate_normal()</code> para generar un número aleatorio de puntos a partir de la distribución multinormal. Luego, podemos usar la función numpy.where() para identificar los puntos que se encuentran dentro del rango deseado de alturas y pesos. Finalmente, podemos usar la función numpy.count_nonzero() para contar el número de puntos que se encuentran dentro del rango deseado.</p>
 <p>El siguiente código muestra cómo implementar este algoritmo en Python:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the mean and standard deviation of the multivariate normal distribution</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>mean <span class="op">=</span> (<span class="dv">170</span>, <span class="dv">70</span>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>std <span class="op">=</span> (<span class="dv">10</span>, <span class="dv">15</span>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a random sample from the multivariate normal distribution</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>samples <span class="op">=</span> np.random.multivariate_normal(mean, std, <span class="dv">10000</span>)</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the points that are within the desired range of heights and weights</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>in_range <span class="op">=</span> np.where((samples[:, <span class="dv">0</span>] <span class="op">&gt;</span> <span class="dv">160</span>) <span class="op">&amp;</span> (samples[:, <span class="dv">0</span>] <span class="op">&lt;</span> <span class="dv">180</span>) <span class="op">&amp;</span> (samples[:, <span class="dv">1</span>] <span class="op">&gt;</span> <span class="dv">60</span>) <span class="op">&amp;</span> (samples[:, <span class="dv">1</span>] <span class="op">&lt;</span> <span class="dv">80</span>))</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of points that are within the range</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> np.count_nonzero(in_range)</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the probability of a person having a height between 160 and 180 cm and a weight between 60 and 80 kg</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>probability <span class="op">=</span> count <span class="op">/</span> <span class="bu">len</span>(samples)</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(probability)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the mean and standard deviation of the multivariate normal distribution</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>mean <span class="op">=</span> (<span class="dv">170</span>, <span class="dv">70</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>std <span class="op">=</span> (<span class="dv">10</span>, <span class="dv">15</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a random sample from the multivariate normal distribution</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>samples <span class="op">=</span> np.random.multivariate_normal(mean, std, <span class="dv">10000</span>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the points that are within the desired range of heights and weights</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>in_range <span class="op">=</span> np.where((samples[:, <span class="dv">0</span>] <span class="op">&gt;</span> <span class="dv">160</span>) <span class="op">&amp;</span> (samples[:, <span class="dv">0</span>] <span class="op">&lt;</span> <span class="dv">180</span>) <span class="op">&amp;</span> (samples[:, <span class="dv">1</span>] <span class="op">&gt;</span> <span class="dv">60</span>) <span class="op">&amp;</span> (samples[:, <span class="dv">1</span>] <span class="op">&lt;</span> <span class="dv">80</span>))</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of points that are within the range</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> np.count_nonzero(in_range)</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the probability of a person having a height between 160 and 180 cm and a weight between 60 and 80 kg</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>probability <span class="op">=</span> count <span class="op">/</span> <span class="bu">len</span>(samples)</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(probability)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>ValueError: cov must be 2 dimensional and square</code></pre>
 </div>
-</section>
-</section>
+</div>
 </section>
 </section>
 
