@@ -116,7 +116,6 @@ ay = 0
 by = 1
 nquad(f, [[ax, bx], [ay, by]])
 ```
-
 Un resultado similar debería obtenerse con `dblquad`.
 
 La integración simbólica se distingue de la numérica en que la simbólica encuentra la solución analítica de la integral, mientras que la numérica encuentra una aproximación. La integración simbólica es posible con la librería `sympy`. Por ejemplo, para resolver:
@@ -182,3 +181,59 @@ from sympy import integrate, symbols, exp, oo
 
 ```
 
+En funciones de densidad predefinidas (como la normal, uniforme, exponencial, etc.) se puede usar la función `pdf` de `scipy.stats`. Por ejemplo, para obtener la probabilidad de que una variable aleatoria normal con media $\mu$ y desviación estándar $\sigma$ esté en el intervalo $[a, b]$, se puede usar la función `norm.pdf` de la siguiente manera
+
+```python
+from scipy.stats import norm
+from scipy.integrate import quad
+
+mu = 0
+sigma = 1
+a = -1
+b = 1
+
+# probabilidad de que la variable aleatoria esté en el intervalo [a, b]
+prob = quad(norm.pdf, a, b, args=(mu, sigma))
+#  (0.682689492137086, 7.579375928402476e-15)
+```
+
+Como vimos en clase, la cdf (función de distribución acumulada) de una variable aleatoria $X$ se define como el área bajo la curva de la función de densidad de probabilidad $f(x)$ hasta un valor $x$:
+
+$$
+  F(x) = P(X \leq x) = \int_{-\infty}^x f(x) \text{d}x
+$$
+
+Por lo que podemos usar la función `cdf` de `scipy.stats` para obtener la probabilidad de que una variable aleatoria esté en el intervalo $[a, b]$ de la siguiente manera
+
+```python
+from scipy.stats import norm
+
+mu = 0
+sigma = 1
+a = -1
+b = 1
+
+# probabilidad de que la variable aleatoria esté en el intervalo [a, b]
+prob = norm.cdf(b, mu, sigma) - norm.cdf(a, mu, sigma)
+# 0.6826894921370859
+```
+
+El área que estaríamos encontrando es
+
+<figure>
+<p align="center">
+  <img src="image/tarea_2/1695070045733.png" width='50%' />
+      <figcaption><p align="center">
+</p>
+</figure>
+
+Resolver:
+
+8. La pdf de la distribución normal con media $\mu$ y desviación estándar $\sigma$ (o varianza $\sigma^2$) es caracterizada por
+
+$$
+  f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{\frac{-(x-\mu)^2}{2\sigma^2}}
+$$
+
+  * 8.1. Suponer que un manufacturador de un tipo de botana sabe que el peso total del paquete de botana está distribuido normalmente con una media de 80.2 gramos y una desviación estándar de 1.1 gramos. ¿Cuál es la probabilidad de que un paquete de botana pese *menos* de 78 gramos? *Tip:* puedes hacer tu propia función de python, o usar la función `norm.pdf` de `scipy.stats` e integrarla con `quad`; o usar la función `norm.cdf` de `scipy.stats`.
+  * 8.2. Bajo las mismas asunciones anteriores, ¿cuál es la probabilidad de que un paquete dado tenga un peso que esté entre 2 desviaciones estándar de la media? Es decir,  $P(x \in [\mu - \sigma, \mu + \sigma])$.
