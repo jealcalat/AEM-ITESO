@@ -154,7 +154,7 @@ fx
 # x/2 + 3/4
 ```
 
-Si quisiéramos obtener la probabilidad de que $0<x<0.7$, integramos la marginal de $x$ en ese intervalo:
+Si quisiéramos obtener la probabilidad de que x se encuentre en el intervalo entre 0 y 0.7 ($0 < x < 0.7$), integramos la marginal de $x$ en ese intervalo:
 
 ```python
 # probabilidad de que x>2
