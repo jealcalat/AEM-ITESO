@@ -15,8 +15,8 @@ import subprocess
 #         nbformat.write(nb, f)
 
 
-# home = '/home/mrrobot/Documents/GitHub/AEM-ITESO'
-home = '/home/mrrobot/GitHub/AEM-ITESO/'
+home = '/home/mrrobot/Documents/GitHub/AEM-ITESO'
+# home = '/home/mrrobot/GitHub/AEM-ITESO/'
 jupyter_list = glob.glob(home + '/*/*.ipynb')
 for item in jupyter_list:
     command = 'quarto render ' + item
