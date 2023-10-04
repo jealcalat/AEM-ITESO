@@ -98,7 +98,7 @@ Algunos recursos que he ido recopilando, como una recomendación que han hecho l
 
 - [Tarea 1](tareas/tarea_1.md)
 - [Tarea 2](tareas/tarea_2.md)
-- [Tarea 3](tareas/tarea_3.md)
+- [Tarea 3](tareas/tarea_3_pt1.md)
 - [Tarea 4](tareas/tarea_4.md)
 - [Tarea 5](tareas/tarea_5.md)
 
