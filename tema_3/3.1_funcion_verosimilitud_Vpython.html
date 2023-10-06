@@ -96,6 +96,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="3.1_funcion_verosimilitud_Vpython_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="3.1_funcion_verosimilitud_Vpython_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="3.1_funcion_verosimilitud_Vpython_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
@@ -554,7 +557,10 @@ L(θ=0.9) = -0.95</code></pre>
 <span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
 <span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f'argmax = </span><span class="sc">{</span>res<span class="sc">.</span>x<span class="sc">.</span><span class="bu">round</span>(<span class="dv">3</span>)[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span></span>
-<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a><span class="co"># minimize with bounds using L-</span></span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>res </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>/tmp/ipykernel_346954/3986847583.py:3: RuntimeWarning: divide by zero encountered in log
   ll = k * np.log(p) + (n - k) * np.log(1 - p) + np.log(m.comb(n, k))</code></pre>
@@ -802,6 +808,708 @@ Estimated weight1: 0.396</code></pre>
 </div>
 <p>Podemos ver que la mezcla de dos gaussianas es una buena aproximación a los datos, dado que la función con los parámetros estimados casi se sobrepone a la función de los parámetros verdaderos.</p>
 <p>Este mismo método se puede usar para estimar los parámetros de un problema de clustering, que veremos más tarde. Un cluster es un conjunto de puntos de datos que son similares entre sí. El problema de clustering es encontrar grupos de puntos de datos que son similares entre sí, es decir, en un cluster podemos asumir que los datos provienen de la misma distribución bivariada. El problema de clustering se puede resolver usando un modelo de mezcla gaussiana, donde cada componente gaussiana representa un cluster. El número de componentes gaussianas en el modelo de mezcla gaussiana es igual al número de clusters. El problema de clustering se puede resolver usando el método de máxima verosimilitud (MLE) para estimar los parámetros del modelo de mezcla gaussiana. El método MLE implica encontrar los valores de los parámetros que maximizan la función de probabilidad de los datos.</p>
+</section>
+</section>
+<section id="ejemplo-de-mezcla-de-exponencial-y-normal" class="level1">
+<h1>Ejemplo de mezcla de exponencial y normal</h1>
+<p>Supongamos que tengo el siguiente problema: tengo un hotel y tengo dos tipos de huéspedes probables: huéspedes ejecutivos (CEOs, abogados de una firma, políticos) vs.&nbsp;huéspedes de vacaciones (mochileros o familias). El primer tipo de huéspedes es más probable que paguen más dinero porque necesitan el servicio con más urgencia y suelen reservar con poco tiempo, mientras que el segundo tipo es mucho más anticipado y los periodos entre la reserva y la llegada al hotel son mayores.</p>
+<p>El problema es implementar un procedimiento para decidir de manera óptima qué precio fijar a los huéspedes. Imaginar que puedo dividir la distribución de los días de reserva en dos, donde los períodos más pequeños pueden clasificarse como “ejecutivos” y los períodos más largos como “turistas”, y esta distribución de probabilidad se puede utilizar junto con el precio de la reserva. Este precio se puede modelar como un modelo de caída exponencial en función de los días de reserva. Ahora bien, ¿cómo puedo proceder para encontrar el precio óptimo?</p>
+<p>Podemos ajustar un modelo de mezclas de dos distribuciones, pero antes necesitamos saber qué distribuciones son. Luego de ajustar el modelo de distribuciones, podemos usar la probabilidad de que se trate de un tipo de huésped u otro para calcular el precio esperado de la reserva. Finalmente, podemos usar técnicas de optimización para encontrar el precio que maximice el ingreso esperado.</p>
+<ol type="1">
+<li><p>Recopilar datos: recopilar datos sobre los días de reserva y los precios para los dos tipos diferentes de huéspedes. Con base en los histogramas, escoger dos distribuciones que se ajusten a los datos.</p></li>
+<li><p>Ajustar las distribuciones: estimar los parámetros de las distribuciones para ambos tipos de invitados utilizando MLE. Tendrás dos parámetros de tarifas, uno para ejecutivos y otro para vacacionistas.</p></li>
+<li><p>Función de ingresos del modelo: escribir una función de ingresos basada en el modelo de precios y los parámetros de distribución exponencial estimados. Deberá considerar la probabilidad de cada tipo de huésped y cómo cambia el precio con los días de reserva.</p></li>
+<li><p>Optimizar precio: utilice técnicas de optimización para encontrar el precio que maximice la función de ingresos.</p></li>
+</ol>
+<p>El modelo de precio que usaremos es exponencial con dos parámetros: precio de base y tasa de decaimiento. El precio de base es el precio que se cobra por una reserva de un día y la tasa de decaimiento es la tasa a la que disminuye el precio por día de reserva. El precio de una reserva de <span class="math inline">\(n\)</span> días se puede calcular como</p>
+<p><span class="math display">\[
+  P(n) = P_0 \exp(-\lambda n)
+\]</span></p>
+<p>donde <span class="math inline">\(P_0\)</span> es el precio base y <span class="math inline">\(\lambda\)</span> es la tasa de decaimiento. El precio de una reserva de un día es <span class="math inline">\(P_0\)</span>, el precio de una reserva de dos días es <span class="math inline">\(P_0 \exp(-\lambda)\)</span>, el precio de una reserva de tres días es <span class="math inline">\(P_0 \exp(-2\lambda)\)</span>, y así sucesivamente. La tasa de decaimiento <span class="math inline">\(\lambda\)</span> nos dice cuánto disminuye el precio por día de reserva. Por ejemplo, si <span class="math inline">\(\lambda=0.1\)</span>, el precio de una reserva de dos días es <span class="math inline">\(P_0 \exp(-0.1) = 0.9 P_0\)</span>, el precio de una reserva de tres días es <span class="math inline">\(P_0 \exp(-0.2) = 0.81 P_0\)</span>, y así sucesivamente.</p>
+<p>El precio base óptimo y la tasa de caída óptima brindan información sobre cómo debe fijar el precio de sus habitaciones para maximizar los ingresos, teniendo en cuenta la distribución de probabilidad de los diferentes tipos de huéspedes (ejecutivos y turistas).</p>
+<section id="precio-base-óptimo" class="level3">
+<h3 class="anchored" data-anchor-id="precio-base-óptimo">Precio base óptimo</h3>
+<p>El “precio base óptimo” es el precio que cobraría por una habitación si un huésped la reserva el mismo día que desea quedarse (el día de reserva es 0). Sirve como punto de referencia para fijar precios de habitaciones para fechas futuras. Por ejemplo, si el precio base óptimo es $250, entonces este es el precio que idealmente le cobraría a un huésped que necesita una habitación de inmediato.</p>
+</section>
+<section id="tasa-de-decadencia-óptima" class="level3">
+<h3 class="anchored" data-anchor-id="tasa-de-decadencia-óptima">Tasa de decadencia óptima</h3>
+<p>La “tasa de caída óptima” describe cómo el precio de la habitación debería disminuir a medida que aumenta el tiempo entre la reserva y la estancia real. En este contexto, la tasa de caída se aplica exponencialmente al precio base.</p>
+<p>El modelo de precios utilizado aquí es: <span class="math display">\[ \text{Precio} = \text{Precio base} \times e^{-\text{Tasa de caída} \times \text{Días de reserva}} \]</span></p>
+<ul>
+<li><p>Una tasa de caída más alta significa que el precio baja más rápidamente a medida que aumenta el tiempo entre la reserva y la estancia. Esto podría fomentar más reservas anticipadas por parte de los turistas.</p></li>
+<li><p>Una tasa de caída más baja significa que el precio disminuye lentamente, lo que podría fomentar más reservas de última hora, normalmente por parte de ejecutivos.</p></li>
+</ul>
+<p>Así es como se interpretan los parámetros en un contexto empresarial:</p>
+<ul>
+<li><p><strong>Precio base óptimo</strong>: Este es el precio más alto que puedes cobrar, generalmente dirigido a huéspedes que reservan en el último minuto. Los ejecutivos que tienen necesidades urgentes tienen más probabilidades de pagar este precio.</p></li>
+<li><p><strong>Tasa de caída óptima</strong>: esto indica qué tan rápido debes bajar el precio a medida que la fecha de la reserva se aleja del día de la estadía. Una tasa de caída bien ajustada garantiza que se puedan capturar los mayores ingresos posibles de los vacacionistas que son sensibles a los precios y reservan con mucha antelación, sin perder a los ejecutivos dispuestos a pagar más por reservas de último momento.</p></li>
+</ul>
+<p>Al optimizar estos dos parámetros, maximiza los ingresos esperados al equilibrar las necesidades y comportamientos de ambos tipos de huéspedes. Estos conocimientos deberían ser valiosos para ilustrar a sus estudiantes cómo se pueden aplicar conceptos estadísticos y de optimización abstractos en escenarios de toma de decisiones basados en datos del mundo real.</p>
+<p>Podemos formular la función de ingresos esperados como un problema de optimización matemática. El objetivo es maximizar los ingresos esperados ajustando el precio base y la tasa de caída. Así es como se traduce:</p>
+</section>
+<section id="parámetros" class="level3">
+<h3 class="anchored" data-anchor-id="parámetros">Parámetros</h3>
+<ul>
+<li><span class="math inline">\(P\)</span>: Precio base</li>
+<li><span class="math inline">\(D\)</span>: Tasa de decadencia.</li>
+<li><span class="math inline">\(w\)</span>: Coeficiente de mezcla para invitados ejecutivos</li>
+<li><span class="math inline">\(\lambda\)</span>: Parámetro de tarifa para la distribución exponencial (huéspedes ejecutivos)</li>
+<li><span class="math inline">\(\mu\)</span>: Media para la distribución normal (huéspedes vacacionistas)</li>
+<li><span class="math inline">\(\sigma\)</span>: Desviación estándar para la distribución normal (huéspedes vacacionistas)</li>
+<li><span class="math inline">\(t\)</span>: Día de la reserva</li>
+</ul>
+</section>
+<section id="probabilidades" class="level3">
+<h3 class="anchored" data-anchor-id="probabilidades">Probabilidades</h3>
+<ol type="1">
+<li><p>Función de densidad de probabilidad (PDF) conjunta para reservas de huéspedes ejecutivos el día <span class="math inline">\(t\)</span>: <span class="math display">\[ p(t, {\text{ejec}}) = w \times \frac{1}{\lambda} e^{-\frac{t}{\lambda}} \]</span></p></li>
+<li><p>PDF para la reserva de huéspedes vacacionistas el día <span class="math inline">\(t\)</span>: <span class="math display">\[ p(t,{\text{vaca}}) = (1 - w) \times \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(t - \ mu)^2}{2\sigma^2}} \]</span></p></li>
+<li><p>Probabilidad posterior de que un día de reserva pertenezca a un ejecutivo. Está dado por el teorema de Bayes:</p></li>
+</ol>
+<p><span class="math display">\[
+p(\text{ejec}\mid t) = \frac{p(t,\text{ejec})}{p(t,\text{ejec}) + p(t,\text{vaca})} = \frac{p(t,\text{ejec})}{p(t)}
+\]</span></p>
+<p>Recordar que <span class="math inline">\(p(t,\text{ejec})\)</span> es <code>w * expon.pdf(booking_day, scale=1/opt_params['executive_rate'])</code>, en donde <code>w</code> es <span class="math inline">\(p(\text{ejec})\)</span> y <code>expon.pdf</code> es la condicional <span class="math inline">\(p(t\mid \text{ejec})\)</span>.</p>
+<p><span class="math inline">\(p(t)\)</span> por otro lado es la probabilidad marginal de <span class="math inline">\(t\)</span>, que se obtiene sumando las probabilidades de que <span class="math inline">\(t\)</span> sea ejecutivo y vacacionista:</p>
+<p><span class="math display">\[
+p(t) = p(t,\text{ejec}) + p(t,\text{vaca})
+\]</span></p>
+<p>En donde <span class="math inline">\(p(t,\text{vaca})\)</span> es <code>(1 - w) * norm.pdf(booking_day, loc=mu, scale=sigma)</code>, en donde <code>(1 - w)</code> es <span class="math inline">\(p(\text{vaca})\)</span> y <code>norm.pdf</code> es la condicional <span class="math inline">\(p(t\mid \text{vaca})\)</span>.</p>
+</section>
+<section id="los-ingresos-esperados" class="level3">
+<h3 class="anchored" data-anchor-id="los-ingresos-esperados">Los ingresos esperados</h3>
+<p>En teoría de decisión bajo incertidumbre, una utilidad esperada es una utilidad multiplicada por la probabilidad de que ocurra un evento. La utilidad esperada de una reserva de un día es la suma de los ingresos esperados de un huésped ejecutivo y un huésped de vacaciones:</p>
+<p><span class="math display">\[
+R_{\text{total}}(t) = R_{\text{ejec}}(t) + R_{\text{vaca}}(t) = P \times e^{-D \times t} \times p(\text{ejec}\mid t) + P \times e^{-D \times t} \times [1 - p(\text{ejec}\mid t)]
+\]</span></p>
+<p>¿Por qué multiplicamos por una probabilidad? Dado que es un resultado incierto, asumimos que de repetir el experimento muchas veces, la utilidad esperada es el promedio de los resultados. Por poner un ejemplo, supongamos que si lanzamos una moneda y cae H ganamos 10, y si cae T, ganamos 2. La utilidad esperada de lanzar la moneda es $ 0.5 + 0.5 = 6 $. En un escenario en donde para entrar a esa lotería tenemos que pagar 5 podríamos decidir, dadas nuestras preferencias, si entrar (y tener una ganancia de 1 en promedio) o no entrar (ganancia de 0).</p>
+<ol type="1">
+<li><p>Ingresos esperados de un huésped ejecutivo para un día de reserva determinado <span class="math inline">\(t\)</span>: <span class="math display">\[ R_{\text{ejec}}(t) = P \times e^{-D \times t} \times p(\text{ejec}\mid t) \]</span></p></li>
+<li><p>Ingresos esperados de un huésped de vacaciones para un día de reserva determinado <span class="math inline">\(t\)</span>: <span class="math display">\[ R_{\text{vaca}}(t) = P \times e^{-D \times t} \times [1 - p(\text{ejec}\mid t)] \]</span></p></li>
+</ol>
+</section>
+<section id="función-objetiva" class="level3">
+<h3 class="anchored" data-anchor-id="función-objetiva">Función objetiva</h3>
+<p>La función objetivo a maximizar es la suma de los ingresos esperados: <span class="math display">\[ \text{Maximizar } \Big\{ R_{\text{total}}(t)  \Big\} \rightarrow \text{Minimizar} \Big\{-\left[R_{\text{ejec}}(t) + R_{\text{vaca}}(t)\right]\Big\} \]</span></p>
+<p>Tenga en cuenta que la función devuelve el negativo del ingreso esperado porque las rutinas de optimización a menudo minimizan las funciones, por lo que lo negamos para convertir nuestro problema de maximización en un problema de minimización.</p>
+<p>Al optimizar esta función objetivo con respecto a <span class="math inline">\(P\)</span> y <span class="math inline">\(D\)</span>, puede encontrar los valores que maximizan sus ingresos esperados para un día de reserva determinado <span class="math inline">\(t\)</span>, teniendo en cuenta las distribuciones de probabilidad de sus diferentes tipos de invitados.</p>
+</section>
+<section id="optimización-de-la-función-objetivo" class="level3">
+<h3 class="anchored" data-anchor-id="optimización-de-la-función-objetivo">Optimización de la función objetivo</h3>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate data</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">0</span>)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>executive_days <span class="op">=</span> np.random.exponential(<span class="dv">10</span>, <span class="dv">1000</span>)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>vacationer_days <span class="op">=</span> np.random.normal(<span class="dv">120</span>,<span class="dv">30</span>, <span class="dv">1000</span>)</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>all_days <span class="op">=</span> np.concatenate([executive_days, vacationer_days])</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="co"># save data to a dataframe</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({<span class="st">'days'</span>: all_days, <span class="st">'group'</span>: [<span class="st">'executive'</span>] <span class="op">*</span> <span class="dv">1000</span> <span class="op">+</span> [<span class="st">'vacationer'</span>] <span class="op">*</span> <span class="dv">1000</span>})</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="co"># save in csv</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>data_path <span class="op">=</span> <span class="st">'/home/mrrobot/Documents/GitHub/AEM-ITESO/datasets/'</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>df.to_csv(data_path <span class="op">+</span> <span class="st">'booking_days.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm, expon</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/jealcalat/AEM-ITESO/main/datasets/booking_days.csv"</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(url)[<span class="st">'days'</span>]</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>all_days <span class="op">=</span> data.values</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>plt.hist(all_days, bins<span class="op">=</span><span class="dv">90</span>, density<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span><span class="st">'#B3B3FF'</span>, label<span class="op">=</span><span class="st">'data'</span>)<span class="op">;</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'days'</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'density'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>Text(0, 0.5, 'frequency')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="3.1_funcion_verosimilitud_Vpython_files/figure-html/cell-20-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># MLE for mixture model</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> neg_log_likelihood(params):</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    rate, mean, std, w <span class="op">=</span> params</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    ll_exec <span class="op">=</span> np.log(expon.pdf(all_days, scale<span class="op">=</span><span class="dv">1</span><span class="op">/</span>rate))</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    ll_vacation <span class="op">=</span> np.log(norm.pdf(all_days, mean, std))</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    total_ll <span class="op">=</span> np.log(np.exp(ll_exec) <span class="op">*</span> w <span class="op">+</span> np.exp(ll_vacation) <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span>w))</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>total_ll.<span class="bu">sum</span>()</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Optimize to find parameters</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> minimize(neg_log_likelihood, [<span class="fl">0.1</span>, <span class="dv">100</span>, <span class="dv">10</span>, <span class="fl">0.5</span>], bounds<span class="op">=</span>[(<span class="fl">0.001</span>, <span class="dv">2</span>), (<span class="dv">30</span>, <span class="dv">180</span>), (<span class="dv">1</span>, <span class="dv">30</span>), (<span class="dv">0</span>, <span class="dv">1</span>)])</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>opt_params <span class="op">=</span> {<span class="st">'executive_rate'</span>: result.x[<span class="dv">0</span>], <span class="st">'vacationer_mean'</span>: result.x[<span class="dv">1</span>], <span class="st">'vacationer_std'</span>: result.x[<span class="dv">2</span>], <span class="st">'w'</span>: result.x[<span class="dv">3</span>]}</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Estimated executive rate: </span><span class="sc">{</span>opt_params[<span class="st">"executive_rate"</span>]<span class="sc">.</span><span class="bu">round</span>(<span class="dv">3</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Estimated vacationer mean: </span><span class="sc">{</span>opt_params[<span class="st">"vacationer_mean"</span>]<span class="sc">.</span><span class="bu">round</span>(<span class="dv">3</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Estimated vacationer std: </span><span class="sc">{</span>opt_params[<span class="st">"vacationer_std"</span>]<span class="sc">.</span><span class="bu">round</span>(<span class="dv">3</span>)<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the estimated pdf and the histogram of the data</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>plt.hist(all_days, bins<span class="op">=</span><span class="dv">90</span>, density<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span><span class="st">'#B3B3FF'</span>, label<span class="op">=</span><span class="st">'data'</span>)<span class="op">;</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">200</span>, <span class="dv">1000</span>)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>rate <span class="op">=</span> opt_params[<span class="st">'executive_rate'</span>]</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>mean <span class="op">=</span> opt_params[<span class="st">'vacationer_mean'</span>]</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>std <span class="op">=</span> opt_params[<span class="st">'vacationer_std'</span>]</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>est_pdf <span class="op">=</span> opt_params[<span class="st">'w'</span>] <span class="op">*</span> expon.pdf(x, scale<span class="op">=</span><span class="dv">1</span><span class="op">/</span>rate) <span class="op">+</span> (<span class="dv">1</span> <span class="op">-</span> opt_params[<span class="st">'w'</span>]) <span class="op">*</span> norm.pdf(x, mean, std)</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>plt.plot(x, est_pdf, <span class="st">'g-'</span>, label<span class="op">=</span><span class="st">'total estimated pdf'</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="co"># plot estimated exponential pdf</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>plt.plot(x, expon.pdf(x, scale<span class="op">=</span><span class="dv">1</span><span class="op">/</span>rate), <span class="st">'b-'</span>, label<span class="op">=</span><span class="st">'exponential pdf'</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="co"># plot estimated normal pdf</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>plt.plot(x, norm.pdf(x, mean, std),<span class="st">'r-'</span>, label<span class="op">=</span><span class="st">'normal pdf'</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="dv">0</span>, <span class="fl">0.06</span>])</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'days'</span>)</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'density'</span>)</span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>plt.legend() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>&lt;matplotlib.legend.Legend at 0x7fb3c4d50400&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="3.1_funcion_verosimilitud_Vpython_files/figure-html/cell-22-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Expected revenue function</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> expected_revenue(price_params, booking_day, opt_params):</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    base_price, decay_rate <span class="op">=</span> price_params</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> opt_params[<span class="st">'w'</span>]</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    prob_exec <span class="op">=</span> w <span class="op">*</span> expon.pdf(booking_day, scale<span class="op">=</span><span class="dv">1</span><span class="op">/</span>opt_params[<span class="st">'executive_rate'</span>])</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    prob_vacation <span class="op">=</span> (<span class="dv">1</span><span class="op">-</span>w) <span class="op">*</span> norm.pdf(booking_day, opt_params[<span class="st">'vacationer_mean'</span>], opt_params[<span class="st">'vacationer_std'</span>])</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>    posterior_prob_exec <span class="op">=</span> prob_exec <span class="op">/</span> (prob_exec <span class="op">+</span> prob_vacation)</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    revenue_exec <span class="op">=</span> base_price <span class="op">*</span> np.exp(<span class="op">-</span>decay_rate <span class="op">*</span> booking_day) <span class="op">*</span> posterior_prob_exec</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>    revenue_vacation <span class="op">=</span> base_price <span class="op">*</span> np.exp(<span class="op">-</span>decay_rate <span class="op">*</span> booking_day) <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> posterior_prob_exec)</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>(revenue_exec <span class="op">+</span> revenue_vacation)  <span class="co"># Negative for minimization</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Optimize price for a new booking day (e.g., 50 days)</span></span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> minimize(expected_revenue, [<span class="dv">200</span>, <span class="fl">0.1</span>], args<span class="op">=</span>(<span class="dv">50</span>, opt_params), bounds<span class="op">=</span>[(<span class="dv">100</span>, <span class="dv">300</span>), (<span class="fl">0.01</span>, <span class="fl">0.5</span>)])</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>optimal_price_params <span class="op">=</span> result.x</span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Optimal base price:"</span>, optimal_price_params[<span class="dv">0</span>])</span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Optimal decay rate:"</span>, optimal_price_params[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_breast_cancer</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the breast cancer dataset</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> load_breast_cancer(as_frame<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> data.data</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> data.target</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding a constant term for the intercept</span></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> sm.add_constant(X)</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Logistic likelihood function</span></span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> neg_log_likelihood(beta, X, y):</span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>np.dot(X, beta)))</span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>np.<span class="bu">sum</span>(y <span class="op">*</span> np.log(p) <span class="op">+</span> (<span class="dv">1</span> <span class="op">-</span> y) <span class="op">*</span> np.log(<span class="dv">1</span> <span class="op">-</span> p))</span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial guess</span></span>
+<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a>beta_init <span class="op">=</span> np.zeros(X.shape[<span class="dv">1</span>])</span>
+<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform optimization to find the beta that minimizes the negative log likelihood</span></span>
+<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> minimize(neg_log_likelihood, beta_init, args<span class="op">=</span>(X, y), method<span class="op">=</span><span class="st">"BFGS"</span>)</span>
+<span id="cb42-25"><a href="#cb42-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-26"><a href="#cb42-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Estimated parameters:"</span>, result.x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/tmp/ipykernel_227844/1704471081.py:16: RuntimeWarning: overflow encountered in exp
+  p = 1 / (1 + np.exp(-np.dot(X, beta)))
+/tmp/ipykernel_227844/1704471081.py:17: RuntimeWarning: divide by zero encountered in log
+  return -np.sum(y * np.log(p) + (1 - y) * np.log(1 - p))
+/home/mrrobot/anaconda3/lib/python3.10/site-packages/scipy/optimize/_numdiff.py:576: RuntimeWarning: invalid value encountered in subtract
+  df = fun(x) - f0
+/tmp/ipykernel_227844/1704471081.py:16: RuntimeWarning: overflow encountered in exp
+  p = 1 / (1 + np.exp(-np.dot(X, beta)))
+/tmp/ipykernel_227844/1704471081.py:17: RuntimeWarning: divide by zero encountered in log
+  return -np.sum(y * np.log(p) + (1 - y) * np.log(1 - p))
+/tmp/ipykernel_227844/1704471081.py:17: RuntimeWarning: divide by zero encountered in log
+  return -np.sum(y * np.log(p) + (1 - y) * np.log(1 - p))
+/tmp/ipykernel_227844/1704471081.py:16: RuntimeWarning: overflow encountered in exp
+  p = 1 / (1 + np.exp(-np.dot(X, beta)))
+/tmp/ipykernel_227844/1704471081.py:16: RuntimeWarning: overflow encountered in exp
+  p = 1 / (1 + np.exp(-np.dot(X, beta)))
+/tmp/ipykernel_227844/1704471081.py:17: RuntimeWarning: divide by zero encountered in log
+  return -np.sum(y * np.log(p) + (1 - y) * np.log(1 - p))
+/tmp/ipykernel_227844/1704471081.py:16: RuntimeWarning: overflow encountered in exp
+  p = 1 / (1 + np.exp(-np.dot(X, beta)))
+/tmp/ipykernel_227844/1704471081.py:17: RuntimeWarning: divide by zero encountered in log
+  return -np.sum(y * np.log(p) + (1 - y) * np.log(1 - p))</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Estimated parameters: [ 3.87013335e+02  1.08325707e+03 -8.51450530e+00 -5.73940790e+00
+ -8.45421387e+00 -9.44359352e+03  1.60067237e+04 -8.78512170e+03
+ -1.19300742e+04  5.47921894e+03 -1.52400308e+04 -3.37062142e+03
+  2.83808486e+02  4.86917999e+02 -1.87404443e+01  4.17544633e+04
+ -1.43630072e+04  2.23386449e+04 -1.11594068e+05  2.55442087e+04
+  1.16966900e+05 -1.97476934e+01 -5.12892389e+01 -4.12466320e+01
+ -2.61454505e-01 -4.18239915e+02  7.56635436e+02 -1.52831492e+03
+ -6.39005734e+02 -5.82409061e+03 -1.15527945e+04]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/tmp/ipykernel_227844/1704471081.py:16: RuntimeWarning: overflow encountered in exp
+  p = 1 / (1 + np.exp(-np.dot(X, beta)))
+/tmp/ipykernel_227844/1704471081.py:17: RuntimeWarning: divide by zero encountered in log
+  return -np.sum(y * np.log(p) + (1 - y) * np.log(1 - p))</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the breast cancer data</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>plt.scatter(X[:, <span class="dv">1</span>], X[:, <span class="dv">2</span>], c<span class="op">=</span>y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>&lt;matplotlib.collections.PathCollection at 0x7fa193acd3c0&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="3.1_funcion_verosimilitud_Vpython_files/figure-html/cell-25-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot histogram of first feature</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_breast_cancer</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> multivariate_normal</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> load_breast_cancer()</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> data.data[:, :<span class="dv">2</span>]  <span class="co"># Using only the first two features</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Negative Log-Likelihood Function for 2-component GMM</span></span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gmm_neg_log_likelihood(params):</span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>    mu1, mu2, sigma1, sigma2, pi_1 <span class="op">=</span> params</span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>    pi_2 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> pi_1</span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute the PDF of each component</span></span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>    rv1 <span class="op">=</span> multivariate_normal([mu1, mu1], [[sigma1, <span class="dv">0</span>], [<span class="dv">0</span>, sigma1]])</span>
+<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a>    rv2 <span class="op">=</span> multivariate_normal([mu2, mu2], [[sigma2, <span class="dv">0</span>], [<span class="dv">0</span>, sigma2]])</span>
+<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Overall PDF (mixture of the two components)</span></span>
+<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a>    mixed_rv <span class="op">=</span> pi_1 <span class="op">*</span> rv1.pdf(X) <span class="op">+</span> pi_2 <span class="op">*</span> rv2.pdf(X)</span>
+<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the negative log-likelihood</span></span>
+<span id="cb48-24"><a href="#cb48-24" aria-hidden="true" tabindex="-1"></a>    neg_log_likelihood <span class="op">=</span> <span class="op">-</span>np.<span class="bu">sum</span>(np.log(mixed_rv))</span>
+<span id="cb48-25"><a href="#cb48-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb48-26"><a href="#cb48-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> neg_log_likelihood</span>
+<span id="cb48-27"><a href="#cb48-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-28"><a href="#cb48-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial parameter guess [mu1, mu2, sigma1, sigma2, pi_1]</span></span>
+<span id="cb48-29"><a href="#cb48-29" aria-hidden="true" tabindex="-1"></a>initial_params <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="fl">0.5</span>]</span>
+<span id="cb48-30"><a href="#cb48-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-31"><a href="#cb48-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform MLE optimization</span></span>
+<span id="cb48-32"><a href="#cb48-32" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> minimize(gmm_neg_log_likelihood, initial_params, bounds<span class="op">=</span>[(<span class="va">None</span>, <span class="va">None</span>), (<span class="va">None</span>, <span class="va">None</span>), (<span class="fl">0.1</span>, <span class="va">None</span>), (<span class="fl">0.1</span>, <span class="va">None</span>), (<span class="fl">0.01</span>, <span class="fl">0.99</span>)])</span>
+<span id="cb48-33"><a href="#cb48-33" aria-hidden="true" tabindex="-1"></a>estimated_params <span class="op">=</span> result.x</span>
+<span id="cb48-34"><a href="#cb48-34" aria-hidden="true" tabindex="-1"></a>estimated_params <span class="op">=</span> result.x</span>
+<span id="cb48-35"><a href="#cb48-35" aria-hidden="true" tabindex="-1"></a>mu1, mu2, sigma1, sigma2, pi_1 <span class="op">=</span> estimated_params</span>
+<span id="cb48-36"><a href="#cb48-36" aria-hidden="true" tabindex="-1"></a>pi_2 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> pi_1</span>
+<span id="cb48-37"><a href="#cb48-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate grid for contour plot</span></span>
+<span id="cb48-38"><a href="#cb48-38" aria-hidden="true" tabindex="-1"></a>x, y <span class="op">=</span> np.mgrid[np.<span class="bu">min</span>(X[:, <span class="dv">0</span>]):np.<span class="bu">max</span>(X[:, <span class="dv">0</span>]):<span class="fl">.1</span>, np.<span class="bu">min</span>(X[:, <span class="dv">1</span>]):np.<span class="bu">max</span>(X[:, <span class="dv">1</span>]):<span class="fl">.1</span>]</span>
+<span id="cb48-39"><a href="#cb48-39" aria-hidden="true" tabindex="-1"></a>pos <span class="op">=</span> np.empty(x.shape <span class="op">+</span> (<span class="dv">2</span>,))</span>
+<span id="cb48-40"><a href="#cb48-40" aria-hidden="true" tabindex="-1"></a>pos[:, :, <span class="dv">0</span>] <span class="op">=</span> x</span>
+<span id="cb48-41"><a href="#cb48-41" aria-hidden="true" tabindex="-1"></a>pos[:, :, <span class="dv">1</span>] <span class="op">=</span> y</span>
+<span id="cb48-42"><a href="#cb48-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-43"><a href="#cb48-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the Gaussian components and mixture model</span></span>
+<span id="cb48-44"><a href="#cb48-44" aria-hidden="true" tabindex="-1"></a>rv1 <span class="op">=</span> multivariate_normal([mu1, mu1], [[sigma1, <span class="dv">0</span>], [<span class="dv">0</span>, sigma1]])</span>
+<span id="cb48-45"><a href="#cb48-45" aria-hidden="true" tabindex="-1"></a>rv2 <span class="op">=</span> multivariate_normal([mu2, mu2], [[sigma2, <span class="dv">0</span>], [<span class="dv">0</span>, sigma2]])</span>
+<span id="cb48-46"><a href="#cb48-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-47"><a href="#cb48-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting</span></span>
+<span id="cb48-48"><a href="#cb48-48" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb48-49"><a href="#cb48-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-50"><a href="#cb48-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot scatter plot of original data</span></span>
+<span id="cb48-51"><a href="#cb48-51" aria-hidden="true" tabindex="-1"></a>ax.scatter(X[:, <span class="dv">0</span>], X[:, <span class="dv">1</span>], c<span class="op">=</span><span class="st">'grey'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Data'</span>)</span>
+<span id="cb48-52"><a href="#cb48-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-53"><a href="#cb48-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot contour of the first Gaussian component</span></span>
+<span id="cb48-54"><a href="#cb48-54" aria-hidden="true" tabindex="-1"></a>ax.contour(x, y, rv1.pdf(pos), colors<span class="op">=</span><span class="st">'blue'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Gaussian 1'</span>)</span>
+<span id="cb48-55"><a href="#cb48-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-56"><a href="#cb48-56" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot contour of the second Gaussian component</span></span>
+<span id="cb48-57"><a href="#cb48-57" aria-hidden="true" tabindex="-1"></a>ax.contour(x, y, rv2.pdf(pos), colors<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Gaussian 2'</span>)</span>
+<span id="cb48-58"><a href="#cb48-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-59"><a href="#cb48-59" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot contour of the Gaussian mixture model</span></span>
+<span id="cb48-60"><a href="#cb48-60" aria-hidden="true" tabindex="-1"></a>ax.contour(x, y, pi_1 <span class="op">*</span> rv1.pdf(pos) <span class="op">+</span> pi_2 <span class="op">*</span> rv2.pdf(pos), colors<span class="op">=</span><span class="st">'green'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'GMM'</span>)</span>
+<span id="cb48-61"><a href="#cb48-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-62"><a href="#cb48-62" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb48-63"><a href="#cb48-63" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Feature 1'</span>)</span>
+<span id="cb48-64"><a href="#cb48-64" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Feature 2'</span>)</span>
+<span id="cb48-65"><a href="#cb48-65" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'GMM Fit to Breast Cancer Data'</span>)</span>
+<span id="cb48-66"><a href="#cb48-66" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb48-67"><a href="#cb48-67" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Estimated parameters: </span><span class="sc">{</span>estimated_params<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/tmp/ipykernel_227844/2057842480.py:54: UserWarning: The following kwargs were not used by contour: 'label'
+  ax.contour(x, y, rv1.pdf(pos), colors='blue', alpha=0.5, label='Gaussian 1')
+/tmp/ipykernel_227844/2057842480.py:57: UserWarning: The following kwargs were not used by contour: 'label'
+  ax.contour(x, y, rv2.pdf(pos), colors='red', alpha=0.5, label='Gaussian 2')
+/tmp/ipykernel_227844/2057842480.py:60: UserWarning: The following kwargs were not used by contour: 'label'
+  ax.contour(x, y, pi_1 * rv1.pdf(pos) + pi_2 * rv2.pdf(pos), colors='green', alpha=0.5, label='GMM')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="3.1_funcion_verosimilitud_Vpython_files/figure-html/cell-26-output-2.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Estimated parameters: [14.68838424 17.9032383   9.55241986 25.67125647  0.3716392 ]</code></pre>
+</div>
+</div>
+</section>
+<section id="gaussian-mixture-model-gmm" class="level3">
+<h3 class="anchored" data-anchor-id="gaussian-mixture-model-gmm">1. Gaussian Mixture Model (GMM)</h3>
+<p>A Gaussian Mixture Model (GMM) is a probabilistic model that assumes the data is generated from a mixture of several Gaussian distributions. Mathematically, the probability density function <span class="math inline">\(f(x)\)</span> of a GMM with <span class="math inline">\(K\)</span> components in <span class="math inline">\(D\)</span>-dimensional space is defined as:</p>
+<p><span class="math display">\[
+f(x) = \sum_{k=1}^{K} \pi_k \mathcal{N}(x | \mu_k, \Sigma_k)
+\]</span></p>
+<p>Here:</p>
+<ul>
+<li><span class="math inline">\(x\)</span> is a <span class="math inline">\(D\)</span>-dimensional data point.</li>
+<li><span class="math inline">\(\pi_k\)</span> is the mixing coefficient for the <span class="math inline">\(k^{th}\)</span> Gaussian component, with <span class="math inline">\(0 \leq \pi_k \leq 1\)</span> and <span class="math inline">\(\sum_{k=1}^{K} \pi_k = 1\)</span>.</li>
+<li><span class="math inline">\(\mathcal{N}(x | \mu_k, \Sigma_k)\)</span> is the <span class="math inline">\(D\)</span>-dimensional Gaussian distribution with mean vector <span class="math inline">\(\mu_k\)</span> and covariance matrix <span class="math inline">\(\Sigma_k\)</span>.</li>
+</ul>
+</section>
+<section id="method-of-maximum-likelihood-estimation-mle-for-gmm" class="level3">
+<h3 class="anchored" data-anchor-id="method-of-maximum-likelihood-estimation-mle-for-gmm">2. Method of Maximum Likelihood Estimation (MLE) for GMM</h3>
+<p>To fit a GMM to data, we often use the method of Maximum Likelihood Estimation (MLE) to estimate the model parameters <span class="math inline">\(\theta = \{\pi_1, \pi_2, \ldots, \pi_K, \mu_1, \mu_2, \ldots, \mu_K, \Sigma_1, \Sigma_2, \ldots, \Sigma_K\}\)</span>.</p>
+<section id="objective-function" class="level4">
+<h4 class="anchored" data-anchor-id="objective-function">Objective Function</h4>
+<p>The objective is to maximize the log-likelihood function <span class="math inline">\(\mathcal{L}(\theta)\)</span>, given as:</p>
+<p><span class="math display">\[
+\mathcal{L}(\theta) = \sum_{n=1}^{N} \log \left( \sum_{k=1}^{K} \pi_k \mathcal{N}(x_n | \mu_k, \Sigma_k) \right)
+\]</span></p>
+<p>Here <span class="math inline">\(N\)</span> is the number of data points <span class="math inline">\(x_n\)</span>.</p>
+</section>
+<section id="optimization" class="level4">
+<h4 class="anchored" data-anchor-id="optimization">Optimization</h4>
+<p>We usually use iterative optimization algorithms to maximize <span class="math inline">\(\mathcal{L}(\theta)\)</span>, like the Expectation-Maximization (EM) algorithm, which alternates between:</p>
+<ul>
+<li><strong>E-step</strong>: Computing the posterior probabilities of the components given the data.</li>
+</ul>
+<p><span class="math display">\[
+w_{nk} = \frac{\pi_k \mathcal{N}(x_n | \mu_k, \Sigma_k)}{\sum_{j=1}^{K} \pi_j \mathcal{N}(x_n | \mu_j, \Sigma_j)}
+\]</span></p>
+<ul>
+<li><strong>M-step</strong>: Updating the parameters to maximize the expected log-likelihood computed in the E-step.</li>
+</ul>
+<p><span class="math display">\[
+\mu_k = \frac{\sum_{n=1}^{N} w_{nk} x_n}{\sum_{n=1}^{N} w_{nk}}, \quad \Sigma_k = \frac{\sum_{n=1}^{N} w_{nk} (x_n - \mu_k)(x_n - \mu_k)^T}{\sum_{n=1}^{N} w_{nk}}, \quad \pi_k = \frac{\sum_{n=1}^{N} w_{nk}}{N}
+\]</span></p>
+<p>By iterating between these two steps, the EM algorithm converges to a local maximum of the log-likelihood function.</p>
+<p>Note that you can also use numerical optimization techniques, such as gradient ascent or quasi-Newton methods, to directly maximize the log-likelihood function, especially when the EM algorithm is difficult to apply due to constraints on the parameters or other complexities.</p>
+<div class="cell" data-execution_count="55">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_breast_cancer</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data</span></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> load_breast_cancer(as_frame<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> data.target</span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> data.data</span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>data.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="55">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>mean radius</th>
+      <th>mean texture</th>
+      <th>mean perimeter</th>
+      <th>mean area</th>
+      <th>mean smoothness</th>
+      <th>mean compactness</th>
+      <th>mean concavity</th>
+      <th>mean concave points</th>
+      <th>mean symmetry</th>
+      <th>mean fractal dimension</th>
+      <th>...</th>
+      <th>worst radius</th>
+      <th>worst texture</th>
+      <th>worst perimeter</th>
+      <th>worst area</th>
+      <th>worst smoothness</th>
+      <th>worst compactness</th>
+      <th>worst concavity</th>
+      <th>worst concave points</th>
+      <th>worst symmetry</th>
+      <th>worst fractal dimension</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>569.000000</td>
+      <td>569.000000</td>
+      <td>569.000000</td>
+      <td>569.000000</td>
+      <td>569.000000</td>
+      <td>569.000000</td>
+      <td>569.000000</td>
+      <td>569.000000</td>
+      <td>569.000000</td>
+      <td>569.000000</td>
+      <td>...</td>
+      <td>569.000000</td>
+      <td>569.000000</td>
+      <td>569.000000</td>
+      <td>569.000000</td>
+      <td>569.000000</td>
+      <td>569.000000</td>
+      <td>569.000000</td>
+      <td>569.000000</td>
+      <td>569.000000</td>
+      <td>569.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>14.127292</td>
+      <td>19.289649</td>
+      <td>91.969033</td>
+      <td>654.889104</td>
+      <td>0.096360</td>
+      <td>0.104341</td>
+      <td>0.088799</td>
+      <td>0.048919</td>
+      <td>0.181162</td>
+      <td>0.062798</td>
+      <td>...</td>
+      <td>16.269190</td>
+      <td>25.677223</td>
+      <td>107.261213</td>
+      <td>880.583128</td>
+      <td>0.132369</td>
+      <td>0.254265</td>
+      <td>0.272188</td>
+      <td>0.114606</td>
+      <td>0.290076</td>
+      <td>0.083946</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>3.524049</td>
+      <td>4.301036</td>
+      <td>24.298981</td>
+      <td>351.914129</td>
+      <td>0.014064</td>
+      <td>0.052813</td>
+      <td>0.079720</td>
+      <td>0.038803</td>
+      <td>0.027414</td>
+      <td>0.007060</td>
+      <td>...</td>
+      <td>4.833242</td>
+      <td>6.146258</td>
+      <td>33.602542</td>
+      <td>569.356993</td>
+      <td>0.022832</td>
+      <td>0.157336</td>
+      <td>0.208624</td>
+      <td>0.065732</td>
+      <td>0.061867</td>
+      <td>0.018061</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>6.981000</td>
+      <td>9.710000</td>
+      <td>43.790000</td>
+      <td>143.500000</td>
+      <td>0.052630</td>
+      <td>0.019380</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.106000</td>
+      <td>0.049960</td>
+      <td>...</td>
+      <td>7.930000</td>
+      <td>12.020000</td>
+      <td>50.410000</td>
+      <td>185.200000</td>
+      <td>0.071170</td>
+      <td>0.027290</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.156500</td>
+      <td>0.055040</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>11.700000</td>
+      <td>16.170000</td>
+      <td>75.170000</td>
+      <td>420.300000</td>
+      <td>0.086370</td>
+      <td>0.064920</td>
+      <td>0.029560</td>
+      <td>0.020310</td>
+      <td>0.161900</td>
+      <td>0.057700</td>
+      <td>...</td>
+      <td>13.010000</td>
+      <td>21.080000</td>
+      <td>84.110000</td>
+      <td>515.300000</td>
+      <td>0.116600</td>
+      <td>0.147200</td>
+      <td>0.114500</td>
+      <td>0.064930</td>
+      <td>0.250400</td>
+      <td>0.071460</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>13.370000</td>
+      <td>18.840000</td>
+      <td>86.240000</td>
+      <td>551.100000</td>
+      <td>0.095870</td>
+      <td>0.092630</td>
+      <td>0.061540</td>
+      <td>0.033500</td>
+      <td>0.179200</td>
+      <td>0.061540</td>
+      <td>...</td>
+      <td>14.970000</td>
+      <td>25.410000</td>
+      <td>97.660000</td>
+      <td>686.500000</td>
+      <td>0.131300</td>
+      <td>0.211900</td>
+      <td>0.226700</td>
+      <td>0.099930</td>
+      <td>0.282200</td>
+      <td>0.080040</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>15.780000</td>
+      <td>21.800000</td>
+      <td>104.100000</td>
+      <td>782.700000</td>
+      <td>0.105300</td>
+      <td>0.130400</td>
+      <td>0.130700</td>
+      <td>0.074000</td>
+      <td>0.195700</td>
+      <td>0.066120</td>
+      <td>...</td>
+      <td>18.790000</td>
+      <td>29.720000</td>
+      <td>125.400000</td>
+      <td>1084.000000</td>
+      <td>0.146000</td>
+      <td>0.339100</td>
+      <td>0.382900</td>
+      <td>0.161400</td>
+      <td>0.317900</td>
+      <td>0.092080</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>28.110000</td>
+      <td>39.280000</td>
+      <td>188.500000</td>
+      <td>2501.000000</td>
+      <td>0.163400</td>
+      <td>0.345400</td>
+      <td>0.426800</td>
+      <td>0.201200</td>
+      <td>0.304000</td>
+      <td>0.097440</td>
+      <td>...</td>
+      <td>36.040000</td>
+      <td>49.540000</td>
+      <td>251.200000</td>
+      <td>4254.000000</td>
+      <td>0.222600</td>
+      <td>1.058000</td>
+      <td>1.252000</td>
+      <td>0.291000</td>
+      <td>0.663800</td>
+      <td>0.207500</td>
+    </tr>
+  </tbody>
+</table>
+<p>8 rows × 30 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="57">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use only the first feature</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> data.iloc[:, <span class="dv">0</span>]</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Negative Log-Likelihood Function for 2-component GMM</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gmm_neg_log_likelihood(params):</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>    mu1, mu2, sigma1, sigma2, pi_1 <span class="op">=</span> params</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>    pi_2 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> pi_1</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>    rv1 <span class="op">=</span> norm(loc<span class="op">=</span>mu1, scale<span class="op">=</span>sigma1)</span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>    rv2 <span class="op">=</span> norm(loc<span class="op">=</span>mu2, scale<span class="op">=</span>sigma2)</span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>    mixed_rv <span class="op">=</span> pi_1 <span class="op">*</span> rv1.pdf(X) <span class="op">+</span> pi_2 <span class="op">*</span> rv2.pdf(X)</span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a>    neg_log_likelihood <span class="op">=</span> <span class="op">-</span>np.<span class="bu">sum</span>(np.log(mixed_rv))</span>
+<span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> neg_log_likelihood</span>
+<span id="cb52-16"><a href="#cb52-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial parameter guess [mu1, mu2, sigma1, sigma2, pi_1]</span></span>
+<span id="cb52-18"><a href="#cb52-18" aria-hidden="true" tabindex="-1"></a>initial_params <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="fl">0.5</span>]</span>
+<span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a><span class="co"># bounds of the parameters</span></span>
+<span id="cb52-20"><a href="#cb52-20" aria-hidden="true" tabindex="-1"></a>bounds <span class="op">=</span> [(<span class="va">None</span>, <span class="va">None</span>), (<span class="va">None</span>, <span class="va">None</span>), (<span class="fl">0.1</span>, <span class="va">None</span>), (<span class="fl">0.1</span>, <span class="va">None</span>), (<span class="fl">0.01</span>, <span class="fl">0.99</span>)]</span>
+<span id="cb52-21"><a href="#cb52-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform MLE optimization</span></span>
+<span id="cb52-22"><a href="#cb52-22" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> minimize(gmm_neg_log_likelihood, initial_params, </span>
+<span id="cb52-23"><a href="#cb52-23" aria-hidden="true" tabindex="-1"></a>                  bounds<span class="op">=</span>bounds)</span>
+<span id="cb52-24"><a href="#cb52-24" aria-hidden="true" tabindex="-1"></a><span class="co"># if bounds are specified, minimizes uses the L-BFGS-B method, which</span></span>
+<span id="cb52-25"><a href="#cb52-25" aria-hidden="true" tabindex="-1"></a><span class="co"># is a bound-constrained method, that is, it solves the problem:</span></span>
+<span id="cb52-26"><a href="#cb52-26" aria-hidden="true" tabindex="-1"></a><span class="co"># min f(x) subject to li ≤ xi ≤ ui</span></span>
+<span id="cb52-27"><a href="#cb52-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-28"><a href="#cb52-28" aria-hidden="true" tabindex="-1"></a>estimated_params <span class="op">=</span> result.x</span>
+<span id="cb52-29"><a href="#cb52-29" aria-hidden="true" tabindex="-1"></a>mu1, mu2, sigma1, sigma2, pi_1 <span class="op">=</span> estimated_params</span>
+<span id="cb52-30"><a href="#cb52-30" aria-hidden="true" tabindex="-1"></a>pi_2 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> pi_1</span>
+<span id="cb52-31"><a href="#cb52-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-32"><a href="#cb52-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate points for plotting</span></span>
+<span id="cb52-33"><a href="#cb52-33" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="bu">min</span>(X), <span class="bu">max</span>(X), <span class="dv">500</span>)</span>
+<span id="cb52-34"><a href="#cb52-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-35"><a href="#cb52-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the Gaussian components</span></span>
+<span id="cb52-36"><a href="#cb52-36" aria-hidden="true" tabindex="-1"></a>rv1 <span class="op">=</span> norm(loc<span class="op">=</span>mu1, scale<span class="op">=</span>sigma1)</span>
+<span id="cb52-37"><a href="#cb52-37" aria-hidden="true" tabindex="-1"></a>rv2 <span class="op">=</span> norm(loc<span class="op">=</span>mu2, scale<span class="op">=</span>sigma2)</span>
+<span id="cb52-38"><a href="#cb52-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-39"><a href="#cb52-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting</span></span>
+<span id="cb52-40"><a href="#cb52-40" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb52-41"><a href="#cb52-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-42"><a href="#cb52-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot histogram of original data</span></span>
+<span id="cb52-43"><a href="#cb52-43" aria-hidden="true" tabindex="-1"></a>plt.hist(X[y<span class="op">==</span><span class="dv">0</span>], bins<span class="op">=</span><span class="dv">20</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Benign'</span>)</span>
+<span id="cb52-44"><a href="#cb52-44" aria-hidden="true" tabindex="-1"></a>plt.hist(X[y<span class="op">==</span><span class="dv">1</span>], bins<span class="op">=</span><span class="dv">20</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Malignant'</span>)</span>
+<span id="cb52-45"><a href="#cb52-45" aria-hidden="true" tabindex="-1"></a>plt.hist(X, bins<span class="op">=</span><span class="dv">20</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'All Data'</span>)</span>
+<span id="cb52-46"><a href="#cb52-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-47"><a href="#cb52-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot PDF of the first Gaussian component</span></span>
+<span id="cb52-48"><a href="#cb52-48" aria-hidden="true" tabindex="-1"></a>plt.plot(x, rv1.pdf(x), <span class="st">'b-'</span>, label<span class="op">=</span><span class="st">'Gaussian 1'</span>)</span>
+<span id="cb52-49"><a href="#cb52-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-50"><a href="#cb52-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot PDF of the second Gaussian component</span></span>
+<span id="cb52-51"><a href="#cb52-51" aria-hidden="true" tabindex="-1"></a>plt.plot(x, rv2.pdf(x), <span class="st">'r-'</span>, label<span class="op">=</span><span class="st">'Gaussian 2'</span>)</span>
+<span id="cb52-52"><a href="#cb52-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-53"><a href="#cb52-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot PDF of the Gaussian mixture model</span></span>
+<span id="cb52-54"><a href="#cb52-54" aria-hidden="true" tabindex="-1"></a>plt.plot(x, pi_1 <span class="op">*</span> rv1.pdf(x) <span class="op">+</span> pi_2 <span class="op">*</span> rv2.pdf(x), <span class="st">'g--'</span>, label<span class="op">=</span><span class="st">'GMM'</span>)</span>
+<span id="cb52-55"><a href="#cb52-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-56"><a href="#cb52-56" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb52-57"><a href="#cb52-57" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Feature 1'</span>)</span>
+<span id="cb52-58"><a href="#cb52-58" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Density'</span>)</span>
+<span id="cb52-59"><a href="#cb52-59" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'GMM Fit to First Feature of Breast Cancer Data'</span>)</span>
+<span id="cb52-60"><a href="#cb52-60" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="3.1_funcion_verosimilitud_Vpython_files/figure-html/cell-28-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
 </section>
 </section>
 
