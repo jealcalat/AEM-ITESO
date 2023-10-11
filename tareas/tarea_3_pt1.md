@@ -6,6 +6,8 @@
 
 $$f(x) = \lambda e^{-\lambda x},\quad \text{para } x \geq 0, \lambda > 0$$
 
+Nota: Recordar que la pdf exponencial puede estar parametrizada de forma diferente a la presentada aquí (con el parámetro de scale como $1/\lambda$). En este caso, la parametrización es la que se usa en Python por defecto (ver [documentación](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.expon.html)).
+
 a. Obtener la función de verosimilitud para $\lambda$.
 
 b. Mostrar que el estimador de máxima verosimilitud de $\lambda$ es $\mathbf{E}[X]$.
