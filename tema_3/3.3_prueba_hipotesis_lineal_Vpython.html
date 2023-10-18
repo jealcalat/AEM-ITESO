@@ -108,6 +108,32 @@ Autor: Emmanuel Alcalá <br> <a href="https://scholar.google.com.mx/citations?hl
 <br> <a href="https://jealcalat.github.io/Analisis_multivariado/">Regresar a la página del curso</a>
 </p>
 <hr>
+</section>
+<section id="preliminares" class="level2">
+<h2 class="anchored" data-anchor-id="preliminares">Preliminares</h2>
+<p><strong>Terminología</strong></p>
+<ul>
+<li><strong>Ejemplos</strong>: Son los datos que se utilizan para entrenar un modelo.</li>
+<li><strong>Atributos/características</strong>: Son las características de los ejemplos, a menudo representadas como variables en vectores <span class="math inline">\(x\)</span>.</li>
+<li><strong>Etiquetas</strong>: Son los valores que se intentan predecir, a menudo representados como variables <span class="math inline">\(y\)</span>. En clasificación, las etiquetas son categorías discretas, mientras que en regresión son valores continuos.</li>
+<li><strong>Modelo</strong>: Es la función que se utiliza para aproximar la relación entre las características y las etiquetas. Por ejemplo, un modelo de regresión lineal asume que la relación es lineal, mientras que un modelo de regresión logística asume que la probabilidad de que una etiqueta sea 1 es una función logística de las características. Todos los modelos son aproximaciones, lo que significa que no son exactos, sino que son mejores o peores aproximaciones de la relación entre las características y las etiquetas.</li>
+<li><strong>Función de pérdida</strong>: Es una medida de qué tan bien se ajusta un modelo a los ejemplos de entrenamiento. La función de pérdida más común para la regresión lineal es el error cuadrático medio</li>
+</ul>
+<p><span class="math display">\[
+\text{MSE} = \frac{1}{m}\sum_{i=1}^{m}(y_i - \hat{y}_i)^2
+\]</span></p>
+<ul>
+<li><strong>Hipótesis nula</strong>: Es una afirmación acerca de la población que se supone verdadera hasta que se demuestre lo contrario. Para la prueba de hipótesis lineal, la hipótesis nula es que no hay relación lineal entre las características y las etiquetas.</li>
+<li><strong>Hipótesis alternativa</strong>: Es una afirmación acerca de la población que se acepta si la hipótesis nula es rechazada. Para la prueba de hipótesis lineal, la hipótesis alternativa es que hay una relación lineal entre las características y las etiquetas.</li>
+</ul>
+<p><strong>Escenarios</strong></p>
+<p>Los siguientes son algunos escenarios de <em>aprendizaje</em> que nos encontraremos en la práctica:</p>
+<ul>
+<li><strong>Aprendizaje supervisado</strong>: Se refiere a los problemas en los que se intenta predecir etiquetas de datos nuevos a partir de datos de entrenamiento previamente etiquetados. El aprendizaje supervisado se divide en dos categorías: clasificación y regresión. Según de qué se trate, tenemos diferentes métricas de evaluación. Para clasificación tenemos, por ejemplo, la precisión, definida como el número de predicciones correctas dividido por el número total de predicciones. Para regresión tenemos, por ejemplo, el error cuadrático medio, definido como el promedio de los cuadrados de las diferencias entre las predicciones y las etiquetas reales.</li>
+<li><strong>Aprendizaje no supervisado</strong>: Se refiere a los problemas en los que se intenta descubrir patrones en los datos sin etiquetar. Por ejemplo, se puede utilizar aprendizaje no supervisado para agrupar juntos ejemplos que tengan características similares (E.g., k-means). Una métrica de evaluación común para el aprendizaje no supervisado es la inercia, que mide la suma de las distancias cuadradas de los ejemplos a su centroide más cercano.</li>
+<li><strong>Aprendizaje por refuerzo</strong>: Se refiere a los problemas en los que un agente aprende a realizar acciones, para recolectar información, en un entorno para maximizar una recompensa. Esta clase de aprendizaje es diferente de las otras dos en que no hay ejemplos de entrenamiento con etiquetas. En cambio, el agente debe aprender de la experiencia en un entorno impredecible. Por ejemplo, se puede utilizar aprendizaje por refuerzo para entrenar a un agente a jugar un videojuego. El agente intenta maximizar su recompensa (puntos) al aprender a realizar acciones (presionar botones) en un entorno (el videojuego).</li>
+</ul>
+<hr>
 <p>La hipótesis lineal es un concepto estadístico que establece que la media (promedio) de una observación aleatoria se puede escribir como una combinación lineal de algunas variables predictoras observadas. Por ejemplo, si tenemos una variable dependiente <span class="math inline">\(y\)</span> y variables predictoras <span class="math inline">\(x_1\)</span>, una hipótesis lineal establecería que para algunos números desconocidos (parámetros) <span class="math inline">\(\beta_0, \beta_1\)</span>:</p>
 <p><span class="math display">\[y = \beta_0 + \beta_1 x + \epsilon\]</span></p>
 <p>donde <span class="math inline">\(y\)</span> es la variable de respuesta (resultado, variable predicha, etc), <span class="math inline">\(x\)</span> es la variable predictora, <span class="math inline">\(\beta_0\)</span> es la intersección, <span class="math inline">\(\beta_1\)</span> es la pendiente y <span class="math inline">\(\epsilon\)</span> es el término de error. La hipótesis lineal prueba si el coeficiente de pendiente <span class="math inline">\(\beta_1\)</span> es significativamente diferente de cero, lo que indica que existe una relación lineal entre el predictor y las variables de resultado.</p>
