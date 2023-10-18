@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>prueba_hipotesis_lineal_vpython</title>
+<title>3 Teoría de la estimación</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -17,9 +17,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -46,43 +47,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -100,6 +71,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
@@ -110,10 +82,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">3 Teoría de la estimación</h1>
+</div>
 
 
-<section id="teoría-de-la-estimación" class="level1">
-<h1>3 Teoría de la estimación</h1>
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
 <section id="prueba-de-hipótesis-lineal-regresión-lineal" class="level2">
 <h2 class="anchored" data-anchor-id="prueba-de-hipótesis-lineal-regresión-lineal">3.3 Prueba de hipótesis lineal (regresión lineal)</h2>
 <p align="right">
@@ -122,6 +107,32 @@ Autor: Emmanuel Alcalá <br> <a href="https://scholar.google.com.mx/citations?hl
 <p align="left">
 <br> <a href="https://jealcalat.github.io/Analisis_multivariado/">Regresar a la página del curso</a>
 </p>
+<hr>
+</section>
+<section id="preliminares" class="level2">
+<h2 class="anchored" data-anchor-id="preliminares">Preliminares</h2>
+<p><strong>Terminología</strong></p>
+<ul>
+<li><strong>Ejemplos</strong>: Son los datos que se utilizan para entrenar un modelo.</li>
+<li><strong>Atributos/características</strong>: Son las características de los ejemplos, a menudo representadas como variables en vectores <span class="math inline">\(x\)</span>.</li>
+<li><strong>Etiquetas</strong>: Son los valores que se intentan predecir, a menudo representados como variables <span class="math inline">\(y\)</span>. En clasificación, las etiquetas son categorías discretas, mientras que en regresión son valores continuos.</li>
+<li><strong>Modelo</strong>: Es la función que se utiliza para aproximar la relación entre las características y las etiquetas. Por ejemplo, un modelo de regresión lineal asume que la relación es lineal, mientras que un modelo de regresión logística asume que la probabilidad de que una etiqueta sea 1 es una función logística de las características. Todos los modelos son aproximaciones, lo que significa que no son exactos, sino que son mejores o peores aproximaciones de la relación entre las características y las etiquetas.</li>
+<li><strong>Función de pérdida</strong>: Es una medida de qué tan bien se ajusta un modelo a los ejemplos de entrenamiento. La función de pérdida más común para la regresión lineal es el error cuadrático medio</li>
+</ul>
+<p><span class="math display">\[
+\text{MSE} = \frac{1}{m}\sum_{i=1}^{m}(y_i - \hat{y}_i)^2
+\]</span></p>
+<ul>
+<li><strong>Hipótesis nula</strong>: Es una afirmación acerca de la población que se supone verdadera hasta que se demuestre lo contrario. Para la prueba de hipótesis lineal, la hipótesis nula es que no hay relación lineal entre las características y las etiquetas.</li>
+<li><strong>Hipótesis alternativa</strong>: Es una afirmación acerca de la población que se acepta si la hipótesis nula es rechazada. Para la prueba de hipótesis lineal, la hipótesis alternativa es que hay una relación lineal entre las características y las etiquetas.</li>
+</ul>
+<p><strong>Escenarios</strong></p>
+<p>Los siguientes son algunos escenarios de <em>aprendizaje</em> que nos encontraremos en la práctica:</p>
+<ul>
+<li><strong>Aprendizaje supervisado</strong>: Se refiere a los problemas en los que se intenta predecir etiquetas de datos nuevos a partir de datos de entrenamiento previamente etiquetados. El aprendizaje supervisado se divide en dos categorías: clasificación y regresión. Según de qué se trate, tenemos diferentes métricas de evaluación. Para clasificación tenemos, por ejemplo, la precisión, definida como el número de predicciones correctas dividido por el número total de predicciones. Para regresión tenemos, por ejemplo, el error cuadrático medio, definido como el promedio de los cuadrados de las diferencias entre las predicciones y las etiquetas reales.</li>
+<li><strong>Aprendizaje no supervisado</strong>: Se refiere a los problemas en los que se intenta descubrir patrones en los datos sin etiquetar. Por ejemplo, se puede utilizar aprendizaje no supervisado para agrupar juntos ejemplos que tengan características similares (E.g., k-means). Una métrica de evaluación común para el aprendizaje no supervisado es la inercia, que mide la suma de las distancias cuadradas de los ejemplos a su centroide más cercano.</li>
+<li><strong>Aprendizaje por refuerzo</strong>: Se refiere a los problemas en los que un agente aprende a realizar acciones, para recolectar información, en un entorno para maximizar una recompensa. Esta clase de aprendizaje es diferente de las otras dos en que no hay ejemplos de entrenamiento con etiquetas. En cambio, el agente debe aprender de la experiencia en un entorno impredecible. Por ejemplo, se puede utilizar aprendizaje por refuerzo para entrenar a un agente a jugar un videojuego. El agente intenta maximizar su recompensa (puntos) al aprender a realizar acciones (presionar botones) en un entorno (el videojuego).</li>
+</ul>
 <hr>
 <p>La hipótesis lineal es un concepto estadístico que establece que la media (promedio) de una observación aleatoria se puede escribir como una combinación lineal de algunas variables predictoras observadas. Por ejemplo, si tenemos una variable dependiente <span class="math inline">\(y\)</span> y variables predictoras <span class="math inline">\(x_1\)</span>, una hipótesis lineal establecería que para algunos números desconocidos (parámetros) <span class="math inline">\(\beta_0, \beta_1\)</span>:</p>
 <p><span class="math display">\[y = \beta_0 + \beta_1 x + \epsilon\]</span></p>
@@ -551,7 +562,7 @@ None</code></pre>
 <span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>display_side_by_side(X.describe(), y.describe(), titles<span class="op">=</span>[<span class="st">'Caracteristicas'</span>, <span class="st">'Target'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 
-<h2 style="text-align: center;" class="anchored">Caracteristicas</h2><table style="display:inline" class="dataframe table table-sm table-striped">
+<h2 style="text-align: center;" class="anchored">Caracteristicas</h2><table style="display:inline" class="dataframe table table-sm table-striped small">
   <thead>
     <tr>
       <th></th>
@@ -655,7 +666,7 @@ None</code></pre>
       <td>-114.310000</td>
     </tr>
   </tbody>
-</table><h2 style="text-align: center;" class="anchored">Target</h2><table style="display:inline" class="dataframe table table-sm table-striped">
+</table><h2 style="text-align: center;" class="anchored">Target</h2><table style="display:inline" class="dataframe table table-sm table-striped small">
   <thead>
     <tr>
       <th></th>
@@ -756,51 +767,52 @@ None</code></pre>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># sort correlations of target with features</span></span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>df[df.columns[<span class="dv">1</span>:]].corr()[<span class="st">'MedHouseVal'</span>][:].sort_values(ascending<span class="op">=</span><span class="va">False</span>).to_frame()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="40">
-
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>MedHouseVal</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>MedHouseVal</th>
-      <td>1.000000</td>
-    </tr>
-    <tr>
-      <th>AveRooms</th>
-      <td>0.151948</td>
-    </tr>
-    <tr>
-      <th>HouseAge</th>
-      <td>0.105623</td>
-    </tr>
-    <tr>
-      <th>AveOccup</th>
-      <td>-0.023737</td>
-    </tr>
-    <tr>
-      <th>Population</th>
-      <td>-0.024650</td>
-    </tr>
-    <tr>
-      <th>Longitude</th>
-      <td>-0.045967</td>
-    </tr>
-    <tr>
-      <th>AveBedrms</th>
-      <td>-0.046701</td>
-    </tr>
-    <tr>
-      <th>Latitude</th>
-      <td>-0.144160</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">MedHouseVal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">MedHouseVal</td>
+<td>1.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">AveRooms</td>
+<td>0.151948</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">HouseAge</td>
+<td>0.105623</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">AveOccup</td>
+<td>-0.023737</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Population</td>
+<td>-0.024650</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Longitude</td>
+<td>-0.045967</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">AveBedrms</td>
+<td>-0.046701</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Latitude</td>
+<td>-0.144160</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
@@ -842,81 +854,82 @@ None</code></pre>
 <div class="cell" data-execution_count="42">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>X.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="42">
-
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>MedInc</th>
-      <th>HouseAge</th>
-      <th>AveRooms</th>
-      <th>AveBedrms</th>
-      <th>Population</th>
-      <th>AveOccup</th>
-      <th>Latitude</th>
-      <th>Longitude</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>8.3252</td>
-      <td>41.0</td>
-      <td>6.984127</td>
-      <td>1.023810</td>
-      <td>322.0</td>
-      <td>2.555556</td>
-      <td>37.88</td>
-      <td>-122.23</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>8.3014</td>
-      <td>21.0</td>
-      <td>6.238137</td>
-      <td>0.971880</td>
-      <td>2401.0</td>
-      <td>2.109842</td>
-      <td>37.86</td>
-      <td>-122.22</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>7.2574</td>
-      <td>52.0</td>
-      <td>8.288136</td>
-      <td>1.073446</td>
-      <td>496.0</td>
-      <td>2.802260</td>
-      <td>37.85</td>
-      <td>-122.24</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>5.6431</td>
-      <td>52.0</td>
-      <td>5.817352</td>
-      <td>1.073059</td>
-      <td>558.0</td>
-      <td>2.547945</td>
-      <td>37.85</td>
-      <td>-122.25</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>3.8462</td>
-      <td>52.0</td>
-      <td>6.281853</td>
-      <td>1.081081</td>
-      <td>565.0</td>
-      <td>2.181467</td>
-      <td>37.85</td>
-      <td>-122.25</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">MedInc</th>
+<th data-quarto-table-cell-role="th">HouseAge</th>
+<th data-quarto-table-cell-role="th">AveRooms</th>
+<th data-quarto-table-cell-role="th">AveBedrms</th>
+<th data-quarto-table-cell-role="th">Population</th>
+<th data-quarto-table-cell-role="th">AveOccup</th>
+<th data-quarto-table-cell-role="th">Latitude</th>
+<th data-quarto-table-cell-role="th">Longitude</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>8.3252</td>
+<td>41.0</td>
+<td>6.984127</td>
+<td>1.023810</td>
+<td>322.0</td>
+<td>2.555556</td>
+<td>37.88</td>
+<td>-122.23</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>8.3014</td>
+<td>21.0</td>
+<td>6.238137</td>
+<td>0.971880</td>
+<td>2401.0</td>
+<td>2.109842</td>
+<td>37.86</td>
+<td>-122.22</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>7.2574</td>
+<td>52.0</td>
+<td>8.288136</td>
+<td>1.073446</td>
+<td>496.0</td>
+<td>2.802260</td>
+<td>37.85</td>
+<td>-122.24</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>5.6431</td>
+<td>52.0</td>
+<td>5.817352</td>
+<td>1.073059</td>
+<td>558.0</td>
+<td>2.547945</td>
+<td>37.85</td>
+<td>-122.25</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>3.8462</td>
+<td>52.0</td>
+<td>6.281853</td>
+<td>1.081081</td>
+<td>565.0</td>
+<td>2.181467</td>
+<td>37.85</td>
+<td>-122.25</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
@@ -989,83 +1002,188 @@ Variables for model with lowest AIC: Index(['MedInc', 'HouseAge', 'AveRooms', 'A
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># print the model summary</span></span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="68">
-
-<table class="simpletable">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>OLS Regression Results</caption>
-<tbody><tr>
-  <th>Dep. Variable:</th>       <td>MedHouseVal</td>   <th>  R-squared:         </th> <td>   0.606</td> 
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>MedHouseVal</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.606</td>
 </tr>
-<tr>
-  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>   0.606</td> 
+<tr class="even">
+<td data-quarto-table-cell-role="th">Model:</td>
+<td>OLS</td>
+<td data-quarto-table-cell-role="th">Adj. R-squared:</td>
+<td>0.606</td>
 </tr>
-<tr>
-  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   3970.</td> 
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Method:</td>
+<td>Least Squares</td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>3970.</td>
 </tr>
-<tr>
-  <th>Date:</th>             <td>Tue, 18 Apr 2023</td> <th>  Prob (F-statistic):</th>  <td>  0.00</td>  
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Tue, 18 Apr 2023</td>
+<td data-quarto-table-cell-role="th">Prob (F-statistic):</td>
+<td>0.00</td>
 </tr>
-<tr>
-  <th>Time:</th>                 <td>21:02:35</td>     <th>  Log-Likelihood:    </th> <td> -22624.</td> 
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>21:02:35</td>
+<td data-quarto-table-cell-role="th">Log-Likelihood:</td>
+<td>-22624.</td>
 </tr>
-<tr>
-  <th>No. Observations:</th>      <td> 20640</td>      <th>  AIC:               </th> <td>4.527e+04</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>20640</td>
+<td data-quarto-table-cell-role="th">AIC:</td>
+<td>4.527e+04</td>
 </tr>
-<tr>
-  <th>Df Residuals:</th>          <td> 20631</td>      <th>  BIC:               </th> <td>4.534e+04</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Df Residuals:</td>
+<td>20631</td>
+<td data-quarto-table-cell-role="th">BIC:</td>
+<td>4.534e+04</td>
 </tr>
-<tr>
-  <th>Df Model:</th>              <td>     8</td>      <th>                     </th>     <td> </td>    
+<tr class="even">
+<td data-quarto-table-cell-role="th">Df Model:</td>
+<td>8</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
 </tr>
-<tr>
-  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>     <td> </td>    
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Covariance Type:</td>
+<td>nonrobust</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
 </tr>
-</tbody></table>
-<table class="simpletable">
-<tbody><tr>
-       <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P&gt;|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">coef</td>
+<td data-quarto-table-cell-role="th">std err</td>
+<td data-quarto-table-cell-role="th">t</td>
+<td data-quarto-table-cell-role="th">P&gt;|t|</td>
+<td data-quarto-table-cell-role="th">[0.025</td>
+<td data-quarto-table-cell-role="th">0.975]</td>
 </tr>
-<tr>
-  <th>const</th>      <td>  -36.9419</td> <td>    0.659</td> <td>  -56.067</td> <td> 0.000</td> <td>  -38.233</td> <td>  -35.650</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">const</td>
+<td>-36.9419</td>
+<td>0.659</td>
+<td>-56.067</td>
+<td>0.000</td>
+<td>-38.233</td>
+<td>-35.650</td>
 </tr>
-<tr>
-  <th>MedInc</th>     <td>    0.4367</td> <td>    0.004</td> <td>  104.054</td> <td> 0.000</td> <td>    0.428</td> <td>    0.445</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">MedInc</td>
+<td>0.4367</td>
+<td>0.004</td>
+<td>104.054</td>
+<td>0.000</td>
+<td>0.428</td>
+<td>0.445</td>
 </tr>
-<tr>
-  <th>HouseAge</th>   <td>    0.0094</td> <td>    0.000</td> <td>   21.143</td> <td> 0.000</td> <td>    0.009</td> <td>    0.010</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">HouseAge</td>
+<td>0.0094</td>
+<td>0.000</td>
+<td>21.143</td>
+<td>0.000</td>
+<td>0.009</td>
+<td>0.010</td>
 </tr>
-<tr>
-  <th>AveRooms</th>   <td>   -0.1073</td> <td>    0.006</td> <td>  -18.235</td> <td> 0.000</td> <td>   -0.119</td> <td>   -0.096</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">AveRooms</td>
+<td>-0.1073</td>
+<td>0.006</td>
+<td>-18.235</td>
+<td>0.000</td>
+<td>-0.119</td>
+<td>-0.096</td>
 </tr>
-<tr>
-  <th>AveBedrms</th>  <td>    0.6451</td> <td>    0.028</td> <td>   22.928</td> <td> 0.000</td> <td>    0.590</td> <td>    0.700</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">AveBedrms</td>
+<td>0.6451</td>
+<td>0.028</td>
+<td>22.928</td>
+<td>0.000</td>
+<td>0.590</td>
+<td>0.700</td>
 </tr>
-<tr>
-  <th>Population</th> <td>-3.976e-06</td> <td> 4.75e-06</td> <td>   -0.837</td> <td> 0.402</td> <td>-1.33e-05</td> <td> 5.33e-06</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Population</td>
+<td>-3.976e-06</td>
+<td>4.75e-06</td>
+<td>-0.837</td>
+<td>0.402</td>
+<td>-1.33e-05</td>
+<td>5.33e-06</td>
 </tr>
-<tr>
-  <th>AveOccup</th>   <td>   -0.0038</td> <td>    0.000</td> <td>   -7.769</td> <td> 0.000</td> <td>   -0.005</td> <td>   -0.003</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">AveOccup</td>
+<td>-0.0038</td>
+<td>0.000</td>
+<td>-7.769</td>
+<td>0.000</td>
+<td>-0.005</td>
+<td>-0.003</td>
 </tr>
-<tr>
-  <th>Latitude</th>   <td>   -0.4213</td> <td>    0.007</td> <td>  -58.541</td> <td> 0.000</td> <td>   -0.435</td> <td>   -0.407</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Latitude</td>
+<td>-0.4213</td>
+<td>0.007</td>
+<td>-58.541</td>
+<td>0.000</td>
+<td>-0.435</td>
+<td>-0.407</td>
 </tr>
-<tr>
-  <th>Longitude</th>  <td>   -0.4345</td> <td>    0.008</td> <td>  -57.682</td> <td> 0.000</td> <td>   -0.449</td> <td>   -0.420</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Longitude</td>
+<td>-0.4345</td>
+<td>0.008</td>
+<td>-57.682</td>
+<td>0.000</td>
+<td>-0.449</td>
+<td>-0.420</td>
 </tr>
-</tbody></table>
-<table class="simpletable">
-<tbody><tr>
-  <th>Omnibus:</th>       <td>4393.650</td> <th>  Durbin-Watson:     </th> <td>   0.885</td> 
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Omnibus:</td>
+<td>4393.650</td>
+<td data-quarto-table-cell-role="th">Durbin-Watson:</td>
+<td>0.885</td>
 </tr>
-<tr>
-  <th>Prob(Omnibus):</th>  <td> 0.000</td>  <th>  Jarque-Bera (JB):  </th> <td>14087.596</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Prob(Omnibus):</td>
+<td>0.000</td>
+<td data-quarto-table-cell-role="th">Jarque-Bera (JB):</td>
+<td>14087.596</td>
 </tr>
-<tr>
-  <th>Skew:</th>           <td> 1.082</td>  <th>  Prob(JB):          </th> <td>    0.00</td> 
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Skew:</td>
+<td>1.082</td>
+<td data-quarto-table-cell-role="th">Prob(JB):</td>
+<td>0.00</td>
 </tr>
-<tr>
-  <th>Kurtosis:</th>       <td> 6.420</td>  <th>  Cond. No.          </th> <td>2.38e+05</td> 
+<tr class="even">
+<td data-quarto-table-cell-role="th">Kurtosis:</td>
+<td>6.420</td>
+<td data-quarto-table-cell-role="th">Cond. No.</td>
+<td>2.38e+05</td>
 </tr>
-</tbody></table><br><br>Notes:<br>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.<br>[2] The condition number is large, 2.38e+05. This might indicate that there are<br>strong multicollinearity or other numerical problems.
+</tbody>
+</table>
+<br><br>Notes:<br>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.<br>[2] The condition number is large, 2.38e+05. This might indicate that there are<br>strong multicollinearity or other numerical problems.
 </div>
 </div>
 <div class="cell" data-execution_count="56">
@@ -1187,83 +1305,181 @@ AIC: 45264.24</code></pre>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS(y, sm.add_constant(pd.DataFrame(X[selected_predictors[<span class="dv">0</span>]]))).fit()</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="69">
-
-<table class="simpletable">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>OLS Regression Results</caption>
-<tbody><tr>
-  <th>Dep. Variable:</th>       <td>MedHouseVal</td>   <th>  R-squared:         </th> <td>   0.606</td> 
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>MedHouseVal</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.606</td>
 </tr>
-<tr>
-  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>   0.606</td> 
+<tr class="even">
+<td data-quarto-table-cell-role="th">Model:</td>
+<td>OLS</td>
+<td data-quarto-table-cell-role="th">Adj. R-squared:</td>
+<td>0.606</td>
 </tr>
-<tr>
-  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   4538.</td> 
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Method:</td>
+<td>Least Squares</td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>4538.</td>
 </tr>
-<tr>
-  <th>Date:</th>             <td>Tue, 18 Apr 2023</td> <th>  Prob (F-statistic):</th>  <td>  0.00</td>  
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Tue, 18 Apr 2023</td>
+<td data-quarto-table-cell-role="th">Prob (F-statistic):</td>
+<td>0.00</td>
 </tr>
-<tr>
-  <th>Time:</th>                 <td>21:12:11</td>     <th>  Log-Likelihood:    </th> <td> -22624.</td> 
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>21:12:11</td>
+<td data-quarto-table-cell-role="th">Log-Likelihood:</td>
+<td>-22624.</td>
 </tr>
-<tr>
-  <th>No. Observations:</th>      <td> 20640</td>      <th>  AIC:               </th> <td>4.526e+04</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>20640</td>
+<td data-quarto-table-cell-role="th">AIC:</td>
+<td>4.526e+04</td>
 </tr>
-<tr>
-  <th>Df Residuals:</th>          <td> 20632</td>      <th>  BIC:               </th> <td>4.533e+04</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Df Residuals:</td>
+<td>20632</td>
+<td data-quarto-table-cell-role="th">BIC:</td>
+<td>4.533e+04</td>
 </tr>
-<tr>
-  <th>Df Model:</th>              <td>     7</td>      <th>                     </th>     <td> </td>    
+<tr class="even">
+<td data-quarto-table-cell-role="th">Df Model:</td>
+<td>7</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
 </tr>
-<tr>
-  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>     <td> </td>    
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Covariance Type:</td>
+<td>nonrobust</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
 </tr>
-</tbody></table>
-<table class="simpletable">
-<tbody><tr>
-      <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P&gt;|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">coef</td>
+<td data-quarto-table-cell-role="th">std err</td>
+<td data-quarto-table-cell-role="th">t</td>
+<td data-quarto-table-cell-role="th">P&gt;|t|</td>
+<td data-quarto-table-cell-role="th">[0.025</td>
+<td data-quarto-table-cell-role="th">0.975]</td>
 </tr>
-<tr>
-  <th>const</th>     <td>  -36.9175</td> <td>    0.658</td> <td>  -56.085</td> <td> 0.000</td> <td>  -38.208</td> <td>  -35.627</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">const</td>
+<td>-36.9175</td>
+<td>0.658</td>
+<td>-56.085</td>
+<td>0.000</td>
+<td>-38.208</td>
+<td>-35.627</td>
 </tr>
-<tr>
-  <th>MedInc</th>    <td>    0.4368</td> <td>    0.004</td> <td>  104.089</td> <td> 0.000</td> <td>    0.429</td> <td>    0.445</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">MedInc</td>
+<td>0.4368</td>
+<td>0.004</td>
+<td>104.089</td>
+<td>0.000</td>
+<td>0.429</td>
+<td>0.445</td>
 </tr>
-<tr>
-  <th>HouseAge</th>  <td>    0.0096</td> <td>    0.000</td> <td>   22.602</td> <td> 0.000</td> <td>    0.009</td> <td>    0.010</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">HouseAge</td>
+<td>0.0096</td>
+<td>0.000</td>
+<td>22.602</td>
+<td>0.000</td>
+<td>0.009</td>
+<td>0.010</td>
 </tr>
-<tr>
-  <th>AveRooms</th>  <td>   -0.1071</td> <td>    0.006</td> <td>  -18.217</td> <td> 0.000</td> <td>   -0.119</td> <td>   -0.096</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">AveRooms</td>
+<td>-0.1071</td>
+<td>0.006</td>
+<td>-18.217</td>
+<td>0.000</td>
+<td>-0.119</td>
+<td>-0.096</td>
 </tr>
-<tr>
-  <th>AveBedrms</th> <td>    0.6449</td> <td>    0.028</td> <td>   22.922</td> <td> 0.000</td> <td>    0.590</td> <td>    0.700</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">AveBedrms</td>
+<td>0.6449</td>
+<td>0.028</td>
+<td>22.922</td>
+<td>0.000</td>
+<td>0.590</td>
+<td>0.700</td>
 </tr>
-<tr>
-  <th>AveOccup</th>  <td>   -0.0038</td> <td>    0.000</td> <td>   -7.861</td> <td> 0.000</td> <td>   -0.005</td> <td>   -0.003</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">AveOccup</td>
+<td>-0.0038</td>
+<td>0.000</td>
+<td>-7.861</td>
+<td>0.000</td>
+<td>-0.005</td>
+<td>-0.003</td>
 </tr>
-<tr>
-  <th>Latitude</th>  <td>   -0.4207</td> <td>    0.007</td> <td>  -58.763</td> <td> 0.000</td> <td>   -0.435</td> <td>   -0.407</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Latitude</td>
+<td>-0.4207</td>
+<td>0.007</td>
+<td>-58.763</td>
+<td>0.000</td>
+<td>-0.435</td>
+<td>-0.407</td>
 </tr>
-<tr>
-  <th>Longitude</th> <td>   -0.4340</td> <td>    0.008</td> <td>  -57.782</td> <td> 0.000</td> <td>   -0.449</td> <td>   -0.419</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Longitude</td>
+<td>-0.4340</td>
+<td>0.008</td>
+<td>-57.782</td>
+<td>0.000</td>
+<td>-0.449</td>
+<td>-0.419</td>
 </tr>
-</tbody></table>
-<table class="simpletable">
-<tbody><tr>
-  <th>Omnibus:</th>       <td>4406.193</td> <th>  Durbin-Watson:     </th> <td>   0.885</td> 
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Omnibus:</td>
+<td>4406.193</td>
+<td data-quarto-table-cell-role="th">Durbin-Watson:</td>
+<td>0.885</td>
 </tr>
-<tr>
-  <th>Prob(Omnibus):</th>  <td> 0.000</td>  <th>  Jarque-Bera (JB):  </th> <td>14155.786</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Prob(Omnibus):</td>
+<td>0.000</td>
+<td data-quarto-table-cell-role="th">Jarque-Bera (JB):</td>
+<td>14155.786</td>
 </tr>
-<tr>
-  <th>Skew:</th>           <td> 1.084</td>  <th>  Prob(JB):          </th> <td>    0.00</td> 
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Skew:</td>
+<td>1.084</td>
+<td data-quarto-table-cell-role="th">Prob(JB):</td>
+<td>0.00</td>
 </tr>
-<tr>
-  <th>Kurtosis:</th>       <td> 6.429</td>  <th>  Cond. No.          </th> <td>1.68e+04</td> 
+<tr class="even">
+<td data-quarto-table-cell-role="th">Kurtosis:</td>
+<td>6.429</td>
+<td data-quarto-table-cell-role="th">Cond. No.</td>
+<td>1.68e+04</td>
 </tr>
-</tbody></table><br><br>Notes:<br>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.<br>[2] The condition number is large, 1.68e+04. This might indicate that there are<br>strong multicollinearity or other numerical problems.
+</tbody>
+</table>
+<br><br>Notes:<br>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.<br>[2] The condition number is large, 1.68e+04. This might indicate that there are<br>strong multicollinearity or other numerical problems.
 </div>
 </div>
-</section>
 </section>
 
 </main>
@@ -1295,9 +1511,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1362,6 +1592,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
