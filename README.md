@@ -57,10 +57,10 @@ Algunos recursos que he ido recopilando, como una recomendación que han hecho l
 
 3. Teoría de la estimación
 
-   1. [Función de verosimilitud](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/3_teoria_de_estimacion/3.1_funcion_verosimilitud.ipynb)
-   2. [Prueba de verosimilitud](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/3_teoria_de_estimacion/3.2_prueba_verosimilitud.ipynb)
-   3. [Prueba de hipótesis lineal (regresión lineal)](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/3_teoria_de_estimacion/3.3_prueba_hipotesis_lineal.ipynb)
-   4. [Regresión logística](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/3_teoria_de_estimacion/3.4_regresion_logistica.ipynb)
+   1. [Función de verosimilitud](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/tema_3/3.1_funcion_verosimilitud_Vpython.ipynb)
+   <!-- 2. [Prueba de verosimilitud](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/3_teoria_de_estimacion/3.2_prueba_verosimilitud.ipynb) -->
+   2. [Prueba de hipótesis lineal (regresión lineal)](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/tema_3/3.3_prueba_hipotesis_lineal_Vpython.ipynb)
+   <!-- 4. [Regresión logística](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/3_teoria_de_estimacion/3.4_regresion_logistica.ipynb) -->
 
 4. Técnicas multivariadas
 
