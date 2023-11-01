@@ -1,0 +1,34 @@
+**Formato de entrega**
+
+# ITESO
+## DEPARTAMENTO DE MATEMÁTICAS Y FÍSICA
+
+### ANÁLISIS ESTADÍSTICO MULTIVARIADO
+#### SOLUCIÓN A UN PROBLEMA DE REGRESIÓN LOGÍSTICA.
+
+El objetivo específico del proyecto es determinar la relación existente entre una variable dependiente y una o más variables independientes utilizando regresión logística múltiple.
+
+Para la realización de este proyecto se contemplan las siguientes actividades:
+
+1. Elegir una base de datos apropiada de Kaggle para el análisis de regresión logística.
+2. Realizar selección de variables con **Método de Regularización L1 (Lasso)** previo a la regresión logística.
+3. Dividir la base de datos en conjuntos de entrenamiento (train) y prueba (test).
+4. Entrenar un modelo de regresión logística múltiple con el conjunto de entrenamiento.
+5. Probar el modelo con el conjunto de prueba y obtener métricas relevantes.
+6. Interpretar los resultados obtenidos (analizar qué significan los estimadores, determinar qué variables tienen un impacto positivo o negativo en la respuesta, etc.).
+7. Realizar conclusiones en base a los resultados.
+
+### Entregables:
+a) Reporte que valide la realización de las actividades.
+
+### Especificaciones generales:
+
+- El reporte de trabajo realizado se entregará en digital (CANVAS) en un documento elaborado en computadora (no fotografías de hojas o cuadernos) e incluirá como mínimo:
+  - Portada.
+  - Introducción.
+  - Descripción de la base de datos.
+  - Objetivo.
+  - Desarrollo.
+  - Resultados.
+  - Conclusiones.
+  - Incluir el link para acceder a la base de datos en Kaggle y el código que generaron para la realización del proyecto.
