@@ -60,13 +60,13 @@ Algunos recursos que he ido recopilando, como una recomendación que han hecho l
    1. [Función de verosimilitud](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/tema_3/3.1_funcion_verosimilitud_Vpython.ipynb)
    <!-- 2. [Prueba de verosimilitud](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/3_teoria_de_estimacion/3.2_prueba_verosimilitud.ipynb) -->
    2. [Prueba de hipótesis lineal (regresión lineal)](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/tema_3/3.3_prueba_hipotesis_lineal_Vpython.ipynb)
+   3. [Modelos log-lineal](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/4_tecnicas_multivariadas/4.2_modelos_log-lineal.ipynb)
    <!-- 4. [Regresión logística](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/3_teoria_de_estimacion/3.4_regresion_logistica.ipynb) -->
 
 4. Técnicas multivariadas
 
    1. [ANOVA, MANOVA, ANCOVA](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/4_tecnicas_multivariadas/4.1_anova_manova_ancova.ipynb)
-   2. [Modelos log-lineal](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/4_tecnicas_multivariadas/4.2_modelos_log-lineal.ipynb)
-   3. [Selección de variables](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/4_tecnicas_multivariadas/4.3_seleccion_de_variables)
+   2. [Selección de variables](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/4_tecnicas_multivariadas/4.3_seleccion_de_variables)
 
 5. Descomposición de datos y técnicas de análisis
 
