@@ -65,7 +65,7 @@ Algunos recursos que he ido recopilando, como una recomendación que han hecho l
 
 4. Técnicas multivariadas
 
-   1. [ANOVA, MANOVA, ANCOVA](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/4_tecnicas_multivariadas/4.1_anova_manova_ancova.ipynb)
+   1. [ANOVA, MANOVA, ANCOVA](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/tema_4/4.1_anova_manova_ancova.ipynb)
    2. [Selección de variables](https://nbviewer.org/github/jealcalat/AEM-ITESO/blob/main/4_tecnicas_multivariadas/4.3_seleccion_de_variables)
 
 5. Descomposición de datos y técnicas de análisis
