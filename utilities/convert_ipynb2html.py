@@ -17,7 +17,7 @@ import subprocess
 
 home = '/home/mrrobot/Documents/GitHub/AEM-ITESO'
 # home = '/home/mrrobot/GitHub/AEM-ITESO/'
-jupyter_list = glob.glob(home + '/*/*.ipynb')
+jupyter_list = glob.glob(home + '/*/reg_lineal*.ipynb')
 for item in jupyter_list:
     command = 'quarto render ' + item
     subprocess.call(command, shell=True)
