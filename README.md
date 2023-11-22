@@ -129,14 +129,7 @@ Organización sugerida de las exposiciones:
 
 ### Proyectos
 
-Contenido:
-
-1. Introducción: describir un problema o una pregunta. 
-2. Datos: describir los datos que se van a usar, sus variables, si se hizo un tratamiento o tranformación (e.g., ingeniería de características).
-3. Presentación del análisis:
-   1. Métodos: el análisis que harás. Debes describir formalmente dicho análisis (aquí me entero de que tienes una comprensión formal de dicho análisis).
-   2. Resultados: gráficos principales y tablas de estadísticos, lo más refinado que puedas.
-4. Conclusión: transmite tus hallazgos a una audiencia más amplia.
+El proyecto final se encuentra en la siguiente liga: [Proyecto final](tareas/proyecto_final.md).
 
 
 ## Tutoriales de MML

@@ -11,7 +11,7 @@ El objetivo específico del proyecto es determinar la relación existente entre 
 Para la realización de este proyecto se contemplan las siguientes actividades:
 
 1. Elegir una base de datos apropiada de Kaggle para el análisis de regresión logística.
-2. Realizar selección de variables con **Método de Regularización L1 (Lasso)** previo a la regresión logística.
+2. Realizar selección de variables con **Método de Regularización L1 (Lasso)** previo a la regresión logística. En esta [notebook explico cómo.](https://github.com/jealcalat/AEM-ITESO/blob/main/tema_3/3.4_regresion_logistica.ipynb)
 3. Dividir la base de datos en conjuntos de entrenamiento (train) y prueba (test).
 4. Entrenar un modelo de regresión logística múltiple con el conjunto de entrenamiento.
 5. Probar el modelo con el conjunto de prueba y obtener métricas relevantes.
