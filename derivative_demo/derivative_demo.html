@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Derivative Demonstrator</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.24.2/plotly.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    input,
+    button {
+      margin: 10px 0;
+    }
+
+    #plot {
+      width: 100%;
+      height: 400px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Derivative Demonstrator</h1>
+  <label for="function">Function g(x) = </label>
+  <input type="text" id="function" value="sin(x)" />
+  <button onclick="updateFunction()">Update Function</button>
+  <br>
+  <label for="aValue">a = </label>
+  <input type="number" id="aValue" value="0" step="0.1" oninput="updateValues()" />
+  <input type="range" id="aSlider" min="-10" max="10" step="0.1" value="0" oninput="updateSlider()" />
+  <br>
+  <p id="results"></p>
+  <div id="plot"></div>
+
+  <script>
+    let g, dg, d2g;
+
+    function updateFunction() {
+      const funcStr = document.getElementById('function').value;
+      g = x => math.evaluate(funcStr, { x: x });
+      dg = math.derivative(funcStr, 'x');
+      d2g = math.derivative(dg.toString(), 'x');
+      updateValues();
+      plotFunction();
+    }
+
+    function updateValues() {
+      const a = parseFloat(document.getElementById('aValue').value);
+      document.getElementById('aSlider').value = a;
+      const results = document.getElementById('results');
+      results.innerHTML = `
+                g(${a.toFixed(2)}) = ${g(a).toFixed(2)}<br>
+                g'(${a.toFixed(2)}) = ${dg.evaluate({ x: a }).toFixed(2)}<br>
+                g''(${a.toFixed(2)}) = ${d2g.evaluate({ x: a }).toFixed(2)}
+            `;
+      plotFunction();
+    }
+
+    function updateSlider() {
+      document.getElementById('aValue').value = document.getElementById('aSlider').value;
+      updateValues();
+    }
+
+    function plotFunction() {
+      const a = parseFloat(document.getElementById('aValue').value);
+      const x = math.range(-10, 10, 0.1).toArray();
+      const y = x.map(g);
+
+      // Calculate tangent line
+      const slope = dg.evaluate({ x: a });
+      const tangentY = x.map(xi => g(a) + slope * (xi - a));
+
+      const data = [
+        { x: x, y: y, name: 'g(x)', line: { color: 'blue' } },
+        { x: x, y: tangentY, name: "Tangent Line (g'(a))", line: { dash: 'dot', color: 'red' } },
+        { x: [a], y: [g(a)], mode: 'markers', name: 'Selected Point', marker: { size: 10, color: 'black' } }
+      ];
+
+      const layout = {
+        title: 'Function and Tangent Line',
+        xaxis: { title: 'x', range: [-10, 10] },
+        yaxis: { title: 'y', range: [-10, 10] },
+        showlegend: true
+      };
+
+      Plotly.newPlot('plot', data, layout);
+    }
+
+    updateFunction();
+  </script>
+</body>
+
+</html>
