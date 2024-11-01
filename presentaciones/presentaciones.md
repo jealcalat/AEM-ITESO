@@ -11,7 +11,7 @@ En todos los casos, pueden buscar bases de datos en el repositorio de [Kaggle](h
 
 Referencias:
 
-- [An Introduction to Statistical Learning](https://hastie.su.domains/ISLP/ISLP_website.pdf) (ver Capítulo 12 y 12.2, y para la implementación, ver sección 12.5).
+- [An Introduction to Statistical Learning]([https://hastie.su.domains/ISLP/ISLP_website.pdf](https://www.statlearning.com)) (ver Capítulo 12 y 12.2, y para la implementación, ver sección 12.5).
 
 # Análisis de clúster: 26 de noviembre
 
@@ -21,7 +21,7 @@ Referencias:
 
 Referencias:
 
-- [An Introduction to Statistical Learning](https://hastie.su.domains/ISLP/ISLP_website.pdf) (ver Capítulo 12 y 12.4, y para la implementación, ver sección 12.5).
+- [An Introduction to Statistical Learning]([https://hastie.su.domains/ISLP/ISLP_website.pdf)](https://www.statlearning.com) (ver Capítulo 12 y 12.4, y para la implementación, ver sección 12.5).
 
 
 --- 
