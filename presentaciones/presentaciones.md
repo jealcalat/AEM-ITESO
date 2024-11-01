@@ -13,7 +13,7 @@ Referencias:
 
 - [An Introduction to Statistical Learning](https://hastie.su.domains/ISLP/ISLP_website.pdf) (ver Capítulo 12 y 12.2, y para la implementación, ver sección 12.5).
 
-# Análisis de clúster: 23 de noviembre
+# Análisis de clúster: 26 de noviembre
 
     1. Estructura matemática (distancia euclidiana, distancia de Mahalanobis, etc).
     2. Métricas (e.g., distancia intra-cluster, distancia inter-cluster, etc) y métodos usados para seleccionar el número óptimo de clusters (e.g., método del codo, método de la silueta, etc).
