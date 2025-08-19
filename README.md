@@ -88,10 +88,11 @@ Algunos recursos que he ido recopilando, como una recomendación que han hecho l
 
 | RUBROS                                            | PORCENTAJE |
 | ------------------------------------------------- | ---------- |
-| 1. [Tareas. Una por tema](#tareas)                | 50%        |
-| 2. [Exposición en grupo](#participación-en-clase) | 15%        |
-| 3. [Proyecto final](#proyectos)                   | 25%        |
-| 4. [Quizzes. Al final de cada tema.](#exámenes)   | 10%        |
+| 1. [Tareas. Una por tema](#tareas)                | 40%        |
+| 2. [Exposición en grupo](#participación-en-clase) | 10%        |
+| 3. [Proyecto final](#proyectos)                    | 10%        |
+| 4. [Quizzes. Al final de cada tema.](#exámenes)    | 10%        |
+| 5. [Exámenes parciales](#exámenes)                | 30%        |
 | Total                                             | 100%       |
 
 ### Tareas
