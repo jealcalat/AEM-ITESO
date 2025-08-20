@@ -51,10 +51,7 @@ format:
 | 16     | 31     | 4 de diciembre   | Proyecto Final                                                     |                                             |
 |        | 32     | 8 de diciembre   | Calificaciones y firma de Acta                                       |                                             |
 
-## Calendario de ITESO para O-2023
 
-<figure>
-<p align="center">
-  <img src="./imgs/Cal_O2023.png" width='70%'/>
-</p>
-</figure>
+## Calendario de ITESO
+
+[Calendario ITESO O-2025](https://www.iteso.mx/documents/1027724/2469213/Calendario+escolar+2025.pdf/deacc2b0-279f-0bf3-1a93-c37976481eed?t=1730404414045)
