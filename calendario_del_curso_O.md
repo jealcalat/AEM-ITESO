@@ -27,18 +27,19 @@ format:
 |        | 8      | 11 de septiembre | Máxima Verosimilitud                                               |                                             |
 | 5      | 9      | 18 de septiembre | Razón de Verosimilitud                                             |                                             |
 |        | 10     | 23 de septiembre | Razón de Verosimilitud                                             |                                             |
-| 6      | 11     | 25 de septiembre | Primer Examen Parcial_Parte 1                                      | Aplicar en una sesión                       |
-|        | 12     | 30 de septiembre | Primer Examen Parcial_Parte 2                                      |                                             |
+| 6      | 11     | 25 de septiembre | Examen Parcial_Parte 1                                             | Aplicar en una sesión                       |
+|        | 12     | 30 de septiembre | Examen Parcial_Parte 2                                             |                                             |
 | 7      | 13     | 2 de octubre     | Prueba de Hipótesis Lineal                                         |                                             |
 |        | 14     | 7 de octubre     | Prueba de Hipótesis Lineal                                         |                                             |
 | 8      | 15     | 9 de octubre     | Regresión Lineal                                                   |                                             |
 |        | 16     | 14 de octubre    | Regresión Lineal                                                   |                                             |
 | 9      | 17     | 16 de octubre    | **Exposición Regresión Logística**                                 | La exposición se puede alargar a dos clases |
-|        | 18     | 21 de octubre    | ANOVA/MANOVA                                                       |                                             |
-| 10     | 19     | 23 de octubre    | ANOVA/MANOVA                                                       |                                             |
-|        | 20     | 28 de octubre    | Exposición ANCOVA/MANCOVA                                          | La exposición se puede alargar a dos clases |
-| 11     | 21     | 30 de octubre    | Segundo Examen Parcial_Parte 1                                     | Aplicar en una sesión                       |
-|        | 22     | 4 de noviembre   | Segundo Examen Parcial_Parte 2                                     | **Semana de Bajas**                         |
+|        | 18     | 21 de octubre    | Regresión logística (continuación)                                 |                                             |
+| 10     | 19     | 23 de octubre    | Prueba de hipótesis                                                |                                             |
+|        | 20     | 28 de octubre    | ANOVA                                                              | La exposición se puede alargar a dos clases |
+| 11     | 21     | 30 de octubre    | ANOVA                                                              |                                             |
+|        | 22     | 3 de noviembre   | Análisis post-hoc                                                  |                                             |
+|        | 22     | 4 de noviembre   | Análisis post-hoc                                                  | **Semana de Bajas**                         |
 | 12     | 23     | 6 de noviembre   | Análisis de Componentes Principales                                |                         |
 |        | 24     | 11 de noviembre  | Análisis de Componentes Principales                                |                                             |
 | 13     | 25     | 13 de noviembre  | **Exposición Análisis Factorial**                                  | La exposición se puede alargar a dos clases |
@@ -48,7 +49,7 @@ format:
 | 15     | 29     | 27 de noviembre  | **Exposición GMM**                                                 | La exposición se puede alargar a dos clases |
 |        | 30     | 2 de diciembre   | Proyecto Final                                                     |                                             |
 | 16     | 31     | 4 de diciembre   | Proyecto Final                                                     |                                             |
-|        | 32     | 8 de diciembre   | Calificaciones y firma de Acta                                     |                                             |
+|        | 32     | 8 de diciembre   | Calificaciones y firma de Acta                                       |                                             |
 
 ## Calendario de ITESO para O-2023
 
