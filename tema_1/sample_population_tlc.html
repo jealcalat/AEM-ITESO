@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulación del Teorema del Límite Central</title>
+  <!-- Tailwind CSS para un diseño moderno y responsivo -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js para la visualización de datos -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Estilo personalizado para una mejor apariencia en el modo oscuro */
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .chart-container {
+      position: relative;
+      height: 300px;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 p-4 sm:p-6 md:p-8">
+
+  <div class="max-w-screen-2xl mx-auto">
+    <header class="text-center mb-8">
+      <h1 class="text-3xl sm:text-4xl font-bold text-blue-600 dark:text-blue-400">Simulación Interactiva de Muestreo
+      </h1>
+      <p class="mt-2 text-lg text-gray-600 dark:text-gray-400">Explorando la relación entre Población, Muestra y la
+        Distribución de Medias Muestrales.</p>
+    </header>
+
+    <!-- Panel de Controles -->
+    <div
+      class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg mb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 items-center">
+      <!-- Control Tamaño de la Población (N) -->
+      <div class="space-y-2">
+        <label for="populationSize" class="font-medium">Población (N): <span id="populationSizeLabel"
+            class="font-bold text-blue-600 dark:text-blue-400">10000</span></label>
+        <input type="range" id="populationSize" min="1000" max="50000" step="1000" value="10000"
+          class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+      </div>
+
+      <!-- Control Tamaño de la Muestra (n) -->
+      <div class="space-y-2">
+        <label for="sampleSize" class="font-medium">Muestra (n): <span id="sampleSizeLabel"
+            class="font-bold text-green-600 dark:text-green-400">30</span></label>
+        <input type="range" id="sampleSize" min="2" max="10000" step="2" value="30"
+          class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+      </div>
+
+      <!-- Control Número de Simulaciones (K) -->
+      <div class="space-y-2">
+        <label for="simulations" class="font-medium"># Muestras (K): <span id="simulationsLabel"
+            class="font-bold text-red-600 dark:text-red-400">100</span></label>
+        <input type="range" id="simulations" min="1" max="10000" step="1" value="100"
+          class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+      </div>
+
+      <!-- Control de Velocidad -->
+      <div class="space-y-2">
+        <label for="speed" class="font-medium">Velocidad: <span id="speedLabel"
+            class="font-bold text-purple-600 dark:text-purple-400">10</span></label>
+        <input type="range" id="speed" min="1" max="100" step="1" value="10"
+          class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+      </div>
+
+      <!-- Botones de Acción -->
+      <div class="flex flex-col sm:flex-row gap-3 justify-self-center lg:justify-self-end w-full">
+        <button id="startStopBtn"
+          class="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300">Iniciar</button>
+        <button id="resetBtn"
+          class="w-full bg-red-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-red-600 transition-colors duration-300">Reiniciar</button>
+      </div>
+    </div>
+
+    <!-- Contenedor de Gráficas -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+      <!-- 1. Distribución de la Población -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg">
+        <h2 class="text-xl font-bold text-center mb-4">1. Población</h2>
+        <div class="chart-container">
+          <canvas id="populationChart"></canvas>
+        </div>
+        <div id="populationStats" class="mt-4 text-center font-mono bg-gray-100 dark:bg-gray-700 p-3 rounded-lg"></div>
+      </div>
+
+      <!-- 2. Muestra Aleatoria Actual -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg">
+        <h2 class="text-xl font-bold text-center mb-4">2. Muestra Actual</h2>
+        <div class="chart-container">
+          <canvas id="sampleChart"></canvas>
+        </div>
+        <div id="sampleStats" class="mt-4 text-center font-mono bg-gray-100 dark:bg-gray-700 p-3 rounded-lg"></div>
+      </div>
+
+      <!-- 3. Distribución de Medias Muestrales -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg">
+        <h2 class="text-xl font-bold text-center mb-4">3. Dist. de Medias</h2>
+        <div class="chart-container">
+          <canvas id="samplingDistributionChart"></canvas>
+        </div>
+        <div id="samplingStats" class="mt-4 text-center font-mono bg-gray-100 dark:bg-gray-700 p-3 rounded-lg"></div>
+      </div>
+
+      <!-- 4. Convergencia de la Media -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg">
+        <h2 class="text-xl font-bold text-center mb-4">4. Convergencia</h2>
+        <div class="chart-container">
+          <canvas id="convergenceChart"></canvas>
+        </div>
+        <div id="convergenceStats" class="mt-4 text-center font-mono bg-gray-100 dark:bg-gray-700 p-3 rounded-lg"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- CONFIGURACIÓN E INICIALIZACIÓN ---
+
+    // Referencias a los elementos del DOM
+    const populationSizeSlider = document.getElementById('populationSize');
+    const sampleSizeSlider = document.getElementById('sampleSize');
+    const simulationsSlider = document.getElementById('simulations');
+    const speedSlider = document.getElementById('speed');
+    const startStopBtn = document.getElementById('startStopBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    const populationSizeLabel = document.getElementById('populationSizeLabel');
+    const sampleSizeLabel = document.getElementById('sampleSizeLabel');
+    const simulationsLabel = document.getElementById('simulationsLabel');
+    const speedLabel = document.getElementById('speedLabel');
+
+    const populationStatsEl = document.getElementById('populationStats');
+    const sampleStatsEl = document.getElementById('sampleStats');
+    const samplingStatsEl = document.getElementById('samplingStats');
+    const convergenceStatsEl = document.getElementById('convergenceStats');
+
+    const popCtx = document.getElementById('populationChart').getContext('2d');
+    const sampleCtx = document.getElementById('sampleChart').getContext('2d');
+    const samplingCtx = document.getElementById('samplingDistributionChart').getContext('2d');
+    const convergenceCtx = document.getElementById('convergenceChart').getContext('2d');
+
+    // Variables de estado
+    let populationData = [];
+    let sampleMeans = [];
+    let simulationInterval = null;
+    let isRunning = false;
+    let actualPopulationMean; // Variable para guardar la media real de la población generada
+
+    const POPULATION_MEAN = 100; // Media teórica para la generación de datos
+    const POPULATION_STD_DEV = 15;
+
+    let populationChart, sampleChart, samplingDistributionChart, convergenceChart;
+    let minX, maxX;
+
+    // --- FUNCIONES AUXILIARES ---
+
+    function generateNormalRandom(mean, stdDev) {
+      let u1 = 0, u2 = 0;
+      while (u1 === 0) u1 = Math.random();
+      while (u2 === 0) u2 = Math.random();
+      const z0 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
+      return z0 * stdDev + mean;
+    }
+
+    function createPopulation(size) {
+      populationData = [];
+      for (let i = 0; i < size; i++) {
+        populationData.push(generateNormalRandom(POPULATION_MEAN, POPULATION_STD_DEV));
+      }
+      const dataMin = Math.min(...populationData);
+      const dataMax = Math.max(...populationData);
+      minX = Math.floor(dataMin / 10) * 10 - 10;
+      maxX = Math.ceil(dataMax / 10) * 10 + 10;
+    }
+
+    function getStats(data) {
+      if (data.length === 0) return { mean: NaN, stdDev: NaN };
+      const sum = data.reduce((acc, val) => acc + val, 0);
+      const mean = sum / data.length;
+      const sqDiff = data.map(val => (val - mean) ** 2);
+      const variance = sqDiff.reduce((acc, val) => acc + val, 0) / data.length;
+      const stdDev = Math.sqrt(variance);
+      return { mean, stdDev };
+    }
+
+    function createHistogramData(data, binWidth) {
+      if (data.length === 0) return { labels: [], datasets: [{ data: [] }] };
+      const bins = {};
+      const labels = [];
+      data.forEach(value => {
+        const bin = Math.floor(value / binWidth) * binWidth;
+        bins[bin] = (bins[bin] || 0) + 1;
+      });
+      const chartData = [];
+      for (let i = minX; i <= maxX; i += binWidth) {
+        labels.push(i);
+        chartData.push(bins[i] || 0);
+      }
+      return {
+        labels: labels,
+        datasets: [{ data: chartData, barPercentage: 1.0, categoryPercentage: 1.0 }]
+      };
+    }
+
+    function displayStats(element, stats, count, label = "N") {
+      const mean = isNaN(stats.mean) ? '---' : stats.mean.toFixed(2);
+      const stdDev = isNaN(stats.stdDev) ? '---' : stats.stdDev.toFixed(2);
+      element.innerHTML = `
+                <p>Media: <span class="font-bold">${mean}</span></p>
+                <p>DE: <span class="font-bold">${stdDev}</span></p>
+                <p>${label}: <span class="font-bold">${count}</span></p>
+            `;
+    }
+
+    // --- LÓGICA DE LA SIMULACIÓN ---
+
+    function initialize() {
+      stopSimulation();
+
+      const N = parseInt(populationSizeSlider.value);
+      createPopulation(N);
+      sampleMeans = [];
+
+      const popStats = getStats(populationData);
+      actualPopulationMean = popStats.mean; // Guardar la media real
+      displayStats(populationStatsEl, popStats, N);
+
+      displayStats(sampleStatsEl, { mean: NaN, stdDev: NaN }, 0, 'n');
+      displayStats(samplingStatsEl, { mean: NaN, stdDev: NaN }, 0, 'K');
+      // Mostrar la media real en el panel de convergencia
+      convergenceStatsEl.innerHTML = `<p>Media Poblacional (Real): <span class="font-bold">${actualPopulationMean.toFixed(2)}</span></p><p>&nbsp;</p><p>&nbsp;</p>`;
+
+      if (populationChart) populationChart.destroy();
+      if (sampleChart) sampleChart.destroy();
+      if (samplingDistributionChart) samplingDistributionChart.destroy();
+      if (convergenceChart) convergenceChart.destroy();
+
+      populationChart = createHistogramChart(popCtx, createHistogramData(populationData, 2), 'rgba(59, 130, 246, 0.7)');
+      sampleChart = createHistogramChart(sampleCtx, createHistogramData([], 2), 'rgba(16, 185, 129, 0.7)');
+      samplingDistributionChart = createHistogramChart(samplingCtx, createHistogramData([], 0.5), 'rgba(239, 68, 68, 0.7)');
+      convergenceChart = createConvergenceChart(convergenceCtx);
+    }
+
+    function createHistogramChart(ctx, data, color) {
+      return new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: data.labels,
+          datasets: [{ data: data.datasets[0].data, backgroundColor: color }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { display: false }, tooltip: { enabled: false } },
+          scales: {
+            y: { beginAtZero: true, ticks: { color: '#9ca3af' } },
+            x: { min: minX, max: maxX, ticks: { color: '#9ca3af' } }
+          },
+          animation: { duration: 0 }
+        }
+      });
+    }
+
+    function createConvergenceChart(ctx) {
+      return new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: [],
+          datasets: [
+            {
+              label: 'Media de Medias Muestrales',
+              data: [],
+              borderColor: 'rgba(249, 115, 22, 0.8)',
+              backgroundColor: 'rgba(249, 115, 22, 0.2)',
+              fill: false,
+              tension: 0.1,
+              pointRadius: 0
+            },
+            {
+              label: 'Media Poblacional (Real)',
+              data: [],
+              borderColor: 'rgba(6, 182, 212, 0.8)',
+              fill: false,
+              borderDash: [5, 5],
+              pointRadius: 0
+            }
+          ]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { display: false }, tooltip: { enabled: false } },
+          scales: {
+            y: {
+              ticks: { color: '#9ca3af' },
+              // Centrar la vista en la media real de la población
+              min: actualPopulationMean - POPULATION_STD_DEV,
+              max: actualPopulationMean + POPULATION_STD_DEV
+            },
+            x: {
+              ticks: { color: '#9ca3af' },
+              title: { display: true, text: '# de Muestras', color: '#9ca3af' }
+            }
+          },
+          animation: { duration: 0 }
+        }
+      });
+    }
+
+    function simulationStep() {
+      const maxSimulations = parseInt(simulationsSlider.value);
+      if (sampleMeans.length >= maxSimulations) {
+        stopSimulation();
+        return;
+      }
+
+      const n = parseInt(sampleSizeSlider.value);
+
+      const currentSample = [];
+      for (let i = 0; i < n; i++) {
+        currentSample.push(populationData[Math.floor(Math.random() * populationData.length)]);
+      }
+
+      const sampleStats = getStats(currentSample);
+      displayStats(sampleStatsEl, sampleStats, n, 'n');
+      const sampleHistData = createHistogramData(currentSample, 2);
+      sampleChart.data.labels = sampleHistData.labels;
+      sampleChart.data.datasets[0].data = sampleHistData.datasets[0].data;
+      sampleChart.update();
+
+      sampleMeans.push(sampleStats.mean);
+      const samplingStats = getStats(sampleMeans);
+      displayStats(samplingStatsEl, samplingStats, sampleMeans.length, 'K');
+      const samplingHistData = createHistogramData(sampleMeans, 0.5);
+      samplingDistributionChart.data.labels = samplingHistData.labels;
+      samplingDistributionChart.data.datasets[0].data = samplingHistData.datasets[0].data;
+      samplingDistributionChart.update();
+
+      // Actualizar gráfico de convergencia con la media real
+      const currentK = sampleMeans.length;
+      convergenceChart.data.labels.push(currentK);
+      convergenceChart.data.datasets[0].data.push(samplingStats.mean);
+      convergenceChart.data.datasets[1].data.push(actualPopulationMean); // Usar la media real
+      convergenceChart.options.scales.x.max = maxSimulations;
+      convergenceChart.update();
+    }
+
+    function startSimulation() {
+      if (isRunning) return;
+
+      const maxSimulations = parseInt(simulationsSlider.value);
+      if (sampleMeans.length >= maxSimulations) {
+        sampleMeans = [];
+        if (convergenceChart) {
+          convergenceChart.data.labels = [];
+          convergenceChart.data.datasets[0].data = [];
+          convergenceChart.data.datasets[1].data = [];
+        }
+      }
+
+      isRunning = true;
+      startStopBtn.textContent = 'Detener';
+      startStopBtn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+      startStopBtn.classList.add('bg-yellow-500', 'hover:bg-yellow-600');
+      const speed = 1000 / parseInt(speedSlider.value);
+      simulationInterval = setInterval(simulationStep, speed);
+    }
+
+    function stopSimulation() {
+      if (!isRunning) return;
+      isRunning = false;
+      startStopBtn.textContent = 'Iniciar';
+      startStopBtn.classList.remove('bg-yellow-500', 'hover:bg-yellow-600');
+      startStopBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
+      clearInterval(simulationInterval);
+      simulationInterval = null;
+    }
+
+    // --- MANEJADORES DE EVENTOS ---
+
+    startStopBtn.addEventListener('click', () => { isRunning ? stopSimulation() : startSimulation(); });
+    resetBtn.addEventListener('click', initialize);
+
+    populationSizeSlider.addEventListener('input', (e) => { populationSizeLabel.textContent = e.target.value; });
+    populationSizeSlider.addEventListener('change', initialize);
+
+    sampleSizeSlider.addEventListener('input', (e) => { sampleSizeLabel.textContent = e.target.value; });
+    sampleSizeSlider.addEventListener('change', () => {
+      // Reiniciar la distribución de medias, ya que depende de 'n'
+      sampleMeans = [];
+      if (convergenceChart) {
+        convergenceChart.data.labels = [];
+        convergenceChart.data.datasets[0].data = [];
+        convergenceChart.data.datasets[1].data = [];
+      }
+      displayStats(samplingStatsEl, { mean: NaN, stdDev: NaN }, 0, 'K');
+    });
+
+    simulationsSlider.addEventListener('input', (e) => { simulationsLabel.textContent = e.target.value; });
+
+    speedSlider.addEventListener('input', (e) => {
+      speedLabel.textContent = e.target.value;
+      if (isRunning) {
+        stopSimulation();
+        startSimulation();
+      }
+    });
+
+    window.onload = initialize;
+  </script>
+</body>
+
+</html>
